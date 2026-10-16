@@ -1,0 +1,140 @@
+# Google Play production
+# ----------------------
+# Manual only. There is no push trigger: a merge to main never publishes to
+# production. Open testing is .github/workflows/android.yml.
+#
+# Promotes the current open-testing release (highest version code on Play's
+# beta track) of no.cryptonordic.app to the production track. It does not
+# build a new binary. rollout_percentage 100 releases to everyone; 1-99 is a
+# staged rollout. sync_metadata uploads the store listing in
+# android/fastlane/metadata/android (texts, screenshots, graphics) in the
+# same edit.
+#
+# The promote job uses the GitHub Environment `production`. Add required
+# reviewers on that environment (Settings → Environments → production) before
+# the first run, and limit deployment branches to main. Until reviewers are
+# required, a dispatch publishes as soon as the guard job passes. No new
+# secrets: the job uses the repository secret PLAY_SERVICE_ACCOUNT_JSON.
+# The keystore is not needed.
+#
+# How to run, from main:
+#   gh workflow run android-production.yml --ref main \
+#     -f rollout_percentage=100 -f sync_metadata=true
+# Then approve the production deployment on that Actions run. Or: Actions →
+# Google Play production → Run workflow → branch main.
+#
+# One Play deploy at a time, shared with the Android workflow (concurrency
+# group google-play). This run holds the queue while it waits for approval,
+# so an open-testing upload cannot change the release between approval and
+# promotion. Cancel the run to release the queue. cancel-in-progress is off:
+# a later push does not cancel a production release that is waiting or running.
+
+name: Google Play production
+
+on:
+  workflow_dispatch:
+    inputs:
+      rollout_percentage:
+        description: "Rollout percentage (1–100). 100 releases to everyone."
+        type: number
+        default: 100
+        required: false
+      sync_metadata:
+        description: "Upload store listing text, screenshots and graphics with this release"
+        type: boolean
+        default: true
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: google-play
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    name: Check the request
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require main, and a rollout from 1 to 100
+        env:
+          ROLLOUT: ${{ inputs.rollout_percentage }}
+          SYNC: ${{ inputs.sync_metadata }}
+        run: |
+          set -eu
+          if [ "$GITHUB_REF" != refs/heads/main ]; then
+            echo "::error::Run this workflow on main. Production promotes the current open-testing release, and the store listing is taken from main."
+            exit 1
+          fi
+          case "$SYNC" in
+            true|false) ;;
+            *) echo "::error::sync_metadata must be true or false (got '$SYNC')."; exit 1 ;;
+          esac
+          percent="${ROLLOUT:-100}"
+          if ! printf '%s' "$percent" | grep -Eq '^[0-9]+(\.0+)?$'; then
+            echo "::error::Rollout percentage must be a whole number from 1 to 100 (got '$percent')."
+            exit 1
+          fi
+          value=$((10#${percent%%.*}))
+          if [ "$value" -lt 1 ] || [ "$value" -gt 100 ]; then
+            echo "::error::Rollout percentage must be from 1 to 100 (got '$percent')."
+            exit 1
+          fi
+          if [ "$value" -eq 100 ]; then
+            who="100% (everyone)"
+          else
+            who="${value}% staged rollout"
+          fi
+          echo "Open testing → production at ${who}. Store listing: ${SYNC}."
+          {
+            echo "### Production promotion"
+            echo
+            echo "Approving the \`production\` environment promotes the current open-testing release of \`no.cryptonordic.app\` to production at **${who}**."
+            echo
+            echo "Store listing upload: **${SYNC}**. This does not build a new binary."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  promote:
+    name: Promote open testing to production
+    needs: guard
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: production
+    defaults:
+      run:
+        working-directory: android
+    env:
+      FASTLANE_SKIP_UPDATE_CHECK: "1"
+      FASTLANE_HIDE_CHANGELOG: "1"
+      FASTLANE_OPT_OUT_USAGE: "1"
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    steps:
+      - name: Require the Google Play key
+        working-directory: .
+        env:
+          HAS_PLAY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        run: |
+          if [ "$HAS_PLAY" != true ]; then
+            echo "::error::PLAY_SERVICE_ACCOUNT_JSON is not set. See README (Deploying to Google Play)."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: android
+
+      - name: Promote to production
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          ROLLOUT_PERCENTAGE: ${{ inputs.rollout_percentage }}
+          SYNC_METADATA: ${{ inputs.sync_metadata }}
+        run: bundle exec fastlane android promote_to_production
