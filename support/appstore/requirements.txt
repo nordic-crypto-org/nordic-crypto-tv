@@ -1,0 +1,4 @@
+pillow>=10
+pyjwt>=2
+cryptography>=42
+requests>=2
