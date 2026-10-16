@@ -236,7 +236,7 @@ struct StatusPill: View {
         .padding(.vertical, 6)
         .background(NL.hairline, in: Capsule())
         .onAppear {
-            guard !reduceMotion, case .live = store.status else { return }
+            guard !SnapshotMode.isOn, !reduceMotion, case .live = store.status else { return }
             withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) { pulse = true }
         }
         .accessibilityElement(children: .combine)

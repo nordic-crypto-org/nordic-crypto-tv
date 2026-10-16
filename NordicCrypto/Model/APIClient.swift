@@ -98,8 +98,9 @@ struct APIClient {
     }
 
     /// Last good network copy, or the bundled snapshot.
+    /// `-NCSnapshot` ignores the cache so screenshots always show the fixture.
     func offline<T: Decodable>(_ type: T.Type, path: String) -> T? {
-        if let url = cacheURL(path), let data = try? Data(contentsOf: url),
+        if !SnapshotMode.isOn, let url = cacheURL(path), let data = try? Data(contentsOf: url),
            let value = try? Self.decoder.decode(T.self, from: data) {
             return value
         }

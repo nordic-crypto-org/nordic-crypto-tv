@@ -1,5 +1,6 @@
 #!/bin/sh
 # App Store screenshots from a booted simulator (Debug build: uses -NCScreen/-NCOpen/-NCFreeze).
+# The GitHub workflow uses support/appstore/capture_screenshots.sh instead (it passes -NCSnapshot).
 # Usage: support/appstore-screenshots.sh <platform: iphone|ipad|tv|vision> <sim-id> <path/to/Nordic Crypto.app> <out-dir> [lang]
 set -e
 KIND="$1"; SIM="$2"; APP="$3"; OUT="$4"; LANG_CODE="${5:-en}"
