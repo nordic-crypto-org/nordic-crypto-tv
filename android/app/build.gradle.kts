@@ -14,7 +14,8 @@ android {
         applicationId = "no.cryptonordic.app"
         minSdk = 26
         targetSdk = 36
-        // CI sets VERSION_CODE from the run number so every build installs over the last one.
+        // CI sets VERSION_CODE (workflow run number + offset, raised above the
+        // highest version code already on Google Play). Local builds use 1.
         versionCode = System.getenv("VERSION_CODE")?.toIntOrNull() ?: 1
         versionName = "1.1.0"
 
