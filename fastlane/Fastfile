@@ -333,6 +333,8 @@ platform :ios do
       UI.message("#{internal.name}: build added")
     end
 
+    next if ENV["TESTFLIGHT_INTERNAL_ONLY"] == "true"
+
     # External group with the public link: needs What to Test and (for a new
     # version) Beta App Review. While another build of this platform and
     # version is waiting for or in review, Apple refuses a second submission;
