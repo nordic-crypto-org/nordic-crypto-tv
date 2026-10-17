@@ -3,7 +3,8 @@ import SwiftUI
 
 /// Apple TV runs as an information screen ("Kveldsnytt" design): one page
 /// whose parts stay in place while each rotates its own content, so the
-/// viewer never loses context. Play/Pause switches the radio. The page takes
+/// viewer never loses context. Play/Pause switches the radio on and off and
+/// Select changes station. The page takes
 /// focus at launch so the tab bar slides away; Menu or up brings it back.
 struct SignageView: View {
     @Environment(Radio.self) private var radio
@@ -24,6 +25,7 @@ struct SignageView: View {
                 focused = true
             }
             .onPlayPauseCommand { radio.toggle() }
+            .onTapGesture { radio.next() }
     }
 }
 
@@ -119,30 +121,26 @@ extension View {
 }
 
 /// Radio status, with the hint that the remote's Play/Pause controls it.
-/// Selecting it switches to the next station.
 struct RadioPill: View {
     @Environment(Radio.self) private var radio
 
     var body: some View {
-        Button { radio.next() } label: {
-            HStack(spacing: 12) {
-                Image(systemName: radio.isOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                    .symbolEffect(.variableColor.iterative, isActive: radio.isPlaying)
-                    .foregroundStyle(radio.isOn ? NL.accent : NL.textTertiary)
-                VStack(alignment: .leading, spacing: 0) {
-                    Text(verbatim: radio.station.name)
-                        .font(NLFont.kicker)
-                        .foregroundStyle(NL.textPrimary)
-                    Text(radio.isOn ? "Press ⏯ to turn off" : "Press ⏯ to turn on")
-                        .font(NLFont.caption)
-                        .foregroundStyle(NL.textTertiary)
-                }
+        HStack(spacing: 12) {
+            Image(systemName: radio.isOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                .symbolEffect(.variableColor.iterative, isActive: radio.isPlaying)
+                .foregroundStyle(radio.isOn ? NL.accent : NL.textTertiary)
+            VStack(alignment: .leading, spacing: 0) {
+                Text(verbatim: radio.station.name)
+                    .font(NLFont.kicker)
+                    .foregroundStyle(NL.textPrimary)
+                Text(radio.isOn ? "Press ⏯ to turn off" : "Press ⏯ to turn on")
+                    .font(NLFont.caption)
+                    .foregroundStyle(NL.textTertiary)
             }
-            .padding(.horizontal, 22)
-            .padding(.vertical, 10)
-            .background(NL.surface.opacity(0.8), in: Capsule())
         }
-        .buttonStyle(.plain)
+        .padding(.horizontal, 22)
+        .padding(.vertical, 10)
+        .background(NL.surface.opacity(0.8), in: Capsule())
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("radio")
         .accessibilityValue(Text(radio.isOn ? "On" : "Off"))
