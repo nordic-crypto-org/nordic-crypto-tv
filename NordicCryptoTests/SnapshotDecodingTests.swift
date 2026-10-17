@@ -2,7 +2,9 @@ import XCTest
 @testable import Nordic_Crypto
 
 final class SnapshotDecodingTests: XCTestCase {
-    private let client = APIClient(bundle: Bundle(for: FeedStore.self))
+    /// The bundled snapshot only: the host app's live cache can list a newer
+    /// issue whose detail it has not fetched yet.
+    private let client = APIClient(bundle: Bundle(for: FeedStore.self), caches: nil)
 
     func testNewsSnapshotDecodes() throws {
         let feed = try XCTUnwrap(client.offline(NewsFeed.self, path: "news.json"))
