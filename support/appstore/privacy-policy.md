@@ -27,7 +27,7 @@ Legal basis: your consent (turning notifications on), which you can withdraw at 
 - **Nordic Crypto data** (`nordiccrypto.no`, `cryptonordic.no`, `jqrgen.github.io` and `raw.githubusercontent.com`): the app downloads the public news, events and newsletter files. These are ordinary web requests; we do not run code on these servers that identifies you.
 - **Push server** (`nordic-crypto-app-push.nordiccrypto.workers.dev`, Cloudflare), only with notifications on: see Notifications above. Cloudflare sees the IP address of the request, as any web server does; our code does not store it and request logging is off.
 - **Newsletter video** (`github.com`): the newsreel is streamed from a public GitHub release when you choose to play it.
-- **Radio Norge** (Apple TV only, `live-bauerno.sharp-stream.com`): the radio stream is played from the broadcaster's public stream while the radio is on. You can switch it off with Play/Pause on the remote.
+- **Radio** (Apple TV only; Radio Norge from `live-bauerno.sharp-stream.com`, Techno Underground and Berlin Beach House Radio from FluxFM's `streams.fluxfm.de`): the selected station is played from the broadcaster's public stream while the radio is on. You can switch it off with Play/Pause on the remote, and select the radio to change station.
 
 Like any web request, these services see your IP address. Their own privacy policies apply to that.
 

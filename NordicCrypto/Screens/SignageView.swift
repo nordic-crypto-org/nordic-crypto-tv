@@ -126,26 +126,30 @@ extension View {
 }
 
 /// Radio status, with the hint that the remote's Play/Pause controls it.
+/// Selecting it switches to the next station.
 struct RadioPill: View {
     @Environment(Radio.self) private var radio
 
     var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: radio.isOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
-                .symbolEffect(.variableColor.iterative, isActive: radio.isPlaying)
-                .foregroundStyle(radio.isOn ? NL.accent : NL.textTertiary)
-            VStack(alignment: .leading, spacing: 0) {
-                Text(verbatim: Radio.name)
-                    .font(NLFont.kicker)
-                    .foregroundStyle(NL.textPrimary)
-                Text(radio.isOn ? "Press ⏯ to turn off" : "Press ⏯ to turn on")
-                    .font(NLFont.caption)
-                    .foregroundStyle(NL.textTertiary)
+        Button { radio.next() } label: {
+            HStack(spacing: 12) {
+                Image(systemName: radio.isOn ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                    .symbolEffect(.variableColor.iterative, isActive: radio.isPlaying)
+                    .foregroundStyle(radio.isOn ? NL.accent : NL.textTertiary)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(verbatim: radio.station.name)
+                        .font(NLFont.kicker)
+                        .foregroundStyle(NL.textPrimary)
+                    Text(radio.isOn ? "Press ⏯ to turn off" : "Press ⏯ to turn on")
+                        .font(NLFont.caption)
+                        .foregroundStyle(NL.textTertiary)
+                }
             }
+            .padding(.horizontal, 22)
+            .padding(.vertical, 10)
+            .background(NL.surface.opacity(0.8), in: Capsule())
         }
-        .padding(.horizontal, 22)
-        .padding(.vertical, 10)
-        .background(NL.surface.opacity(0.8), in: Capsule())
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("radio")
         .accessibilityValue(Text(radio.isOn ? "On" : "Off"))
