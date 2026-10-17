@@ -97,7 +97,7 @@ open NordicCrypto.xcodeproj
   [Build workflow](.github/workflows/build.yml), no secrets)
 - Icons and Top Shelf art: `python3 support/make_brand_assets.py`
 - Translations: `python3 support/translations.py` writes `NordicCrypto/Localizable.xcstrings`
-- App Store listing and screenshots: see `support/appstore/`
+- App Store listing and screenshots: see `support/appstore/`. The [App Store media workflow](.github/workflows/appstore-media.yml) captures and uploads them.
 
 ### Android (Kotlin, Jetpack Compose)
 ```sh
@@ -167,6 +167,44 @@ It stores the App Store Connect API key and the match password as repository sec
 read-only deploy key for that repo (secret `MATCH_GIT_PRIVATE_KEY`) and sets the variables
 `APPLE_TEAM_ID`, `MATCH_GIT_URL` and `MATCH_GIT_BRANCH`. Until then the TestFlight workflow skips with
 a notice. To deploy by hand: `gh workflow run testflight.yml --ref main`.
+
+## App Store screenshots and product page
+The [App Store media workflow](.github/workflows/appstore-media.yml) runs on jQrgen's Mac mini
+(the self-hosted runner labelled `self-hosted` and `macOS`, where Xcode is installed). It captures
+the bundled news snapshot with a UI test, frames the shots in teal `#1E3A45` and gold `#D9A034`,
+draws the product-page header (3840×1646) and the universal creative (5244×2950), and uploads them
+to version `MARKETING_VERSION` in `project.yml` while that version is **Prepare for Submission** on
+iOS, macOS, tvOS and visionOS. It never submits the version or the images for review.
+
+It runs when you start it by hand (Actions → App Store media) and when a `v*` or `appstore-v*` tag
+is pushed. A hand run can skip the upload, or print the API plan without sending anything. The Mac
+mini needs a logged-in desktop session, Xcode selected with `xcode-select` (iPhone 6.9" and 6.5",
+iPad Pro 13", Apple TV and Apple Vision Pro simulators), and Python 3 with the `venv` module.
+
+Screenshots, for the sizes Apple asks for on this app:
+
+| Display | Pixels | Where it goes |
+|---|---|---|
+| iPhone 6.9" | 1320 × 2868 | iOS version |
+| iPhone 6.5" | 1284 × 2778 | iOS version (Apple scales this for the 6.3" slot) |
+| iPad 13" | 2064 × 2752 | iOS version |
+| Mac | 2880 × 1800 | macOS version |
+| Apple TV | 1920 × 1080 | tvOS version |
+| Apple Vision Pro | 3840 × 2160 | visionOS version |
+
+Repository secrets for the upload (the TestFlight key is stored under different names and is not
+read here). Role: App Manager. `ASC_KEY_P8` is the contents of `AuthKey_<KEY_ID>.p8`.
+
+```sh
+gh secret set ASC_KEY_ID --repo nordic-crypto-org/nordic-crypto-tv
+gh secret set ASC_ISSUER_ID --repo nordic-crypto-org/nordic-crypto-tv
+gh secret set ASC_KEY_P8 --repo nordic-crypto-org/nordic-crypto-tv < AuthKey_XXXXXXXXXX.p8
+```
+
+Until those three exist, the workflow still keeps the PNGs as the `appstore-media` artifact and
+skips the upload with a notice. After a run, look at each platform's screenshots and at iOS
+**Header and Search Results** in App Store Connect, then submit version 1.1.0 yourself when it
+looks right. Details of what stays manual are in the workflow file's header.
 
 ## Licence and contributing
 MIT, see [LICENSE](LICENSE). Issues and pull requests are welcome. The news data comes from the

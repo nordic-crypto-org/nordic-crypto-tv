@@ -86,6 +86,17 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: NordicCrypto
+  NordicCryptoScreenshotTests:
+    type: bundle.ui-testing
+    supportedDestinations: [iOS, tvOS, macOS, visionOS]
+    sources:
+      - NordicCryptoScreenshotTests
+    dependencies:
+      - target: NordicCrypto
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: NordicCrypto
 schemes:
   NordicCrypto:
     build:
@@ -97,3 +108,11 @@ schemes:
       targets:
         - NordicCryptoTests
         - NordicCryptoTVUITests
+  NordicCryptoScreenshots:
+    build:
+      targets:
+        NordicCrypto: all
+        NordicCryptoScreenshotTests: [test]
+    test:
+      targets:
+        - NordicCryptoScreenshotTests

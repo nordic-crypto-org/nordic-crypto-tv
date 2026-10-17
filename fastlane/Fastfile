@@ -367,4 +367,18 @@ platform :ios do
       )
     end
   end
+
+  desc "Upload framed screenshots and product-page creatives for the editable version. Never submits for review."
+  lane :appstore_media do
+    require_env("ASC_KEY_ID", "ASC_ISSUER_ID", "ASC_KEY_P8")
+    UI.important("Uploading App Store media for #{marketing_version}. This lane does not submit for review.")
+    args = [
+      "python3", "support/appstore/upload.py", "--media-only",
+      "--screenshots", File.join(ROOT_DIR, "build/appstore/framed"),
+      "--headers", File.join(ROOT_DIR, "build/appstore/headers")
+    ]
+    args << "--dry-run" if ENV["ASC_DRY_RUN"] == "true"
+    Dir.chdir(ROOT_DIR) { sh(*args) }
+    UI.success("Media upload finished without submitting for review.")
+  end
 end
