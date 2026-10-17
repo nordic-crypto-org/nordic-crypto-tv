@@ -5,6 +5,9 @@ enum APIConfig {
     /// redirects there once HTTPS is enforced on the Pages site. The raw
     /// gh-pages branch works even while the custom domain is down.
     static let bases: [URL] = [
+        // Content Worker: approved stories read live from D1 (60 s cache). Paths it does
+        // not serve answer 404, and the next base (the static site) is tried.
+        URL(string: "https://api.nordiccrypto.no/api/v1/")!,
         URL(string: "https://nordiccrypto.no/api/v1/")!,
         URL(string: "https://cryptonordic.no/api/v1/")!,
         URL(string: "https://jqrgen.github.io/nordic-crypto/api/v1/")!,
