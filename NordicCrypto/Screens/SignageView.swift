@@ -3,34 +3,27 @@ import SwiftUI
 
 /// Apple TV runs as an information screen ("Kveldsnytt" design): one page
 /// whose parts stay in place while each rotates its own content, so the
-/// viewer never loses context. Play/Pause switches the radio. Contact us and
-/// Badge, at the top of the side column, open the publisher's contact details
-/// and the Nordic Crypto Shield badge; Menu closes that screen.
+/// viewer never loses context. Play/Pause switches the radio. The page takes
+/// focus at launch so the tab bar slides away; Menu or up brings it back.
 struct SignageView: View {
     @Environment(Radio.self) private var radio
-    @State private var overlay: Overlay?
-
-    private enum Overlay { case contact, badge }
+    @FocusState private var focused: Bool
+    @State private var launched = false
 
     var body: some View {
-        ZStack {
-            KveldsnyttLayout(onContact: { overlay = .contact }, onBadge: { overlay = .badge }, covered: overlay != nil)
-                .disabled(overlay != nil)
-                .accessibilityHidden(overlay != nil)
-            switch overlay {
-            case .contact:
-                ContactView(onClose: { overlay = nil })
-                    .frame(width: 1920, height: 1080)
-            case .badge:
-                BadgeView(onClose: { overlay = nil })
-                    .frame(width: 1920, height: 1080)
-            case nil:
-                EmptyView()
+        KveldsnyttLayout()
+            .frame(width: 1920, height: 1080)
+            .ignoresSafeArea()
+            .focusable()
+            .focusEffectDisabled()
+            .focused($focused)
+            .accessibilityElement(children: .contain)
+            .onAppear {
+                guard !launched else { return }
+                launched = true
+                focused = true
             }
-        }
-        .frame(width: 1920, height: 1080)
-        .ignoresSafeArea()
-        .onPlayPauseCommand { radio.toggle() }
+            .onPlayPauseCommand { radio.toggle() }
     }
 }
 

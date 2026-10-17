@@ -53,6 +53,8 @@ struct APIClient {
         return URLSession(configuration: config)
     }()
     var bundle: Bundle = .main
+    /// Where good network copies are kept; nil reads only the bundled snapshot.
+    var caches: URL? = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
 
     static let decoder: JSONDecoder = {
         let d = JSONDecoder()
@@ -82,7 +84,7 @@ struct APIClient {
                     throw APIError.unavailable("\(url) HTTP \((response as? HTTPURLResponse)?.statusCode ?? 0)")
                 }
                 let value = try Self.decoder.decode(T.self, from: data)
-                try? data.write(to: cacheURL(path), options: .atomic)
+                if let url = cacheURL(path) { try? data.write(to: url, options: .atomic) }
                 BaseMemory.shared.remember(base)
                 return value
             } catch {
@@ -94,7 +96,7 @@ struct APIClient {
 
     /// Last good network copy, or the bundled snapshot.
     func offline<T: Decodable>(_ type: T.Type, path: String) -> T? {
-        if let data = try? Data(contentsOf: cacheURL(path)),
+        if let url = cacheURL(path), let data = try? Data(contentsOf: url),
            let value = try? Self.decoder.decode(T.self, from: data) {
             return value
         }
@@ -103,9 +105,8 @@ struct APIClient {
         return try? Self.decoder.decode(T.self, from: data)
     }
 
-    private func cacheURL(_ path: String) -> URL {
-        let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        return dir.appending(path: "api-v1-" + path.replacingOccurrences(of: "/", with: "-"))
+    private func cacheURL(_ path: String) -> URL? {
+        caches?.appending(path: "api-v1-" + path.replacingOccurrences(of: "/", with: "-"))
     }
 }
 

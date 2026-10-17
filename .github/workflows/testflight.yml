@@ -4,6 +4,8 @@
 # four platforms: iPhone and iPad (ios), Apple TV (tvos), Apple Vision Pro
 # (visionos) and Mac (macos).
 #
+# tests       .github/workflows/build.yml (every platform); nothing is built
+#             for upload unless they pass.
 # gate        ubuntu-latest: checks that the signing secrets and variables exist
 #             and reads the version. Without them it passes with a notice and
 #             the other jobs are skipped (grey, not red), so main stays green
@@ -25,7 +27,8 @@
 #             the platforms that made it, with the commit message as notes.
 #
 # Runs on pushes to main (except Android-only changes) and by hand (Actions >
-# TestFlight > Run workflow, main only). Never on pull requests: this repo is
+# TestFlight > Run workflow). A run by hand from another branch goes to the
+# internal group only and makes no GitHub release. Never on pull requests: this repo is
 # public, and secrets must never reach code from a fork. Pull requests get
 # .github/workflows/build.yml.
 #
@@ -50,6 +53,10 @@ on:
     # new Apple build.
     paths-ignore: ["android/**", ".github/workflows/android.yml"]
   workflow_dispatch:
+    inputs:
+      platform:
+        description: "One platform (ios, tvos, visionos, macos); empty for all"
+        default: ""
 
 permissions:
   contents: read
@@ -90,7 +97,7 @@ jobs:
           HAS_MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD != '' }}
           HAS_MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
         run: |
-          if [ "$GITHUB_REF" != refs/heads/main ]; then
+          if [ "$GITHUB_REF" != refs/heads/main ] && [ "$GITHUB_EVENT_NAME" != workflow_dispatch ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
             echo "::notice title=TestFlight skipped::Only main is deployed (this run is on $GITHUB_REF)."
             exit 0
@@ -124,8 +131,13 @@ jobs:
           echo "version_name=$version" >> "$GITHUB_OUTPUT"
           echo "VERSION_NAME=$version BUILD_NUMBER=$build"
 
-  plan:
+  tests:
     needs: gate
+    if: needs.gate.outputs.ready == 'true'
+    uses: ./.github/workflows/build.yml
+
+  plan:
+    needs: [gate, tests]
     if: needs.gate.outputs.ready == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -156,7 +168,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ios, tvos, visionos, macos]
+        platform: ${{ fromJSON(inputs.platform && format('["{0}"]', inputs.platform) || '["ios","tvos","visionos","macos"]') }}
     env:
       DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
       BUILD_NUMBER: ${{ needs.plan.outputs.build_number }}
@@ -220,6 +232,7 @@ jobs:
           TESTFLIGHT_INTERNAL_GROUP: ${{ vars.TESTFLIGHT_INTERNAL_GROUP }}
           TESTFLIGHT_EXTERNAL_GROUP: ${{ vars.TESTFLIGHT_EXTERNAL_GROUP }}
           TESTFLIGHT_REJECT_BUILD_WAITING_FOR_REVIEW: ${{ vars.TESTFLIGHT_REJECT_BUILD_WAITING_FOR_REVIEW }}
+          TESTFLIGHT_INTERNAL_ONLY: ${{ github.ref != 'refs/heads/main' }}
         run: bundle exec fastlane ios distribute
       - name: Mark this platform as deployed (for the GitHub release)
         run: |
@@ -246,7 +259,7 @@ jobs:
   release:
     name: GitHub release
     needs: [gate, plan, testflight]
-    if: always() && needs.plan.result == 'success'
+    if: always() && needs.plan.result == 'success' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
