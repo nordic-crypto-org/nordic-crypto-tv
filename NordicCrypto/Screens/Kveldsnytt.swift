@@ -5,13 +5,6 @@ import SwiftUI
 /// story with an aurora glow, cards under it, and the agenda and spotlight
 /// on the right. Every part keeps its place and rotates its own content.
 struct KveldsnyttLayout: View {
-    var onContact: () -> Void
-    var onBadge: () -> Void
-    /// True while a screen covers this page, so focus can return to its button.
-    var covered: Bool
-    @FocusState private var focus: SignageButton?
-    @State private var last: SignageButton = .contact
-
     var body: some View {
         ZStack(alignment: .topLeading) {
             K.ground
@@ -31,10 +24,6 @@ struct KveldsnyttLayout: View {
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                     VStack(spacing: 18) {
-                        HStack(spacing: 18) {
-                            button(.contact, "Contact us", systemImage: "envelope", action: onContact)
-                            button(.badge, "Badge", systemImage: "checkmark.shield", action: onBadge)
-                        }
                         KAgenda()
                         SpotlightModule(compact: true)
                             .frame(height: 196)   // room for the description sentence (2 lines)
@@ -55,32 +44,7 @@ struct KveldsnyttLayout: View {
             .padding(.horizontal, 64)
             .padding(.vertical, 44)
         }
-        .onAppear { focus = .contact }
-        .onChange(of: covered) { _, covered in
-            if !covered { focus = last }
-        }
     }
-
-    private func button(_ id: SignageButton, _ title: LocalizedStringKey, systemImage: String, action: @escaping () -> Void) -> some View {
-        Button {
-            last = id
-            action()
-        } label: {
-            Label(title, systemImage: systemImage)
-                .font(.system(size: 28, weight: .semibold))
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-        }
-        .buttonStyle(.bordered)
-        .focused($focus, equals: id)
-        .accessibilityIdentifier(id == .contact ? "contact-us" : "badge")
-    }
-}
-
-private enum SignageButton: Hashable {
-    case contact, badge
 }
 
 /// Colours of the Kveldsnytt design.

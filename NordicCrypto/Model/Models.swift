@@ -123,11 +123,21 @@ struct EventItem: Decodable, Identifiable, Hashable {
     var past: Bool
     /// People signed up (Meetup RSVPs), when the API knows.
     var going: Int?
+    /// Where the listing came from ("Litteraturhuset Oslo").
+    var source: String?
+    var description: EventDescription?
+    /// Where the venue was looked up, and when.
+    var placeSource: EventSource?
+    /// The event's page on nordiccrypto.no, per language.
+    var htmlURL: URL?
+    var htmlURLs: [String: URL]
+    var ongoing: Bool
 
     enum CodingKeys: String, CodingKey {
         case id, title, start, end, place, city, country, online, organiser, url, paid, sponsored, note, past
-        case going
+        case going, source, description, ongoing
         case titleOriginal = "title_original", noteI18n = "note_i18n"
+        case placeSource = "place_source", htmlURL = "html_url", htmlURLs = "html_urls"
     }
 
     init(from decoder: Decoder) throws {
@@ -154,11 +164,84 @@ struct EventItem: Decodable, Identifiable, Hashable {
         noteI18n = (try? c.decodeIfPresent([String: String].self, forKey: .noteI18n)) ?? [:]
         past = (try? c.decodeIfPresent(Bool.self, forKey: .past)) ?? false
         going = try? c.decodeIfPresent(Int.self, forKey: .going)
+        source = try? c.decodeIfPresent(String.self, forKey: .source)
+        description = try? c.decodeIfPresent(EventDescription.self, forKey: .description)
+        placeSource = try? c.decodeIfPresent(EventSource.self, forKey: .placeSource)
+        htmlURL = try? c.decodeIfPresent(URL.self, forKey: .htmlURL)
+        htmlURLs = (try? c.decodeIfPresent([String: URL].self, forKey: .htmlURLs)) ?? [:]
+        ongoing = (try? c.decodeIfPresent(Bool.self, forKey: .ongoing)) ?? false
     }
 
     func note(for lang: String) -> String? {
         noteI18n[lang] ?? note
     }
+
+    /// The event's page on nordiccrypto.no in the reader's language.
+    func page(for lang: String) -> URL? {
+        htmlURLs[lang] ?? htmlURL
+    }
+
+    /// Venue, city and country in one line, as the website shows it.
+    func location(lang: String) -> String? {
+        if online { return String(localized: "Online") }
+        let countryName = country.flatMap { Formats.locale(lang).localizedString(forRegionCode: $0) }
+        var parts = [place, city, countryName].compactMap { $0?.isEmpty == false ? $0 : nil }
+        // Skip the city when the venue already names it.
+        if let place, let city, place.localizedCaseInsensitiveContains(city) {
+            parts.removeAll { $0 == city }
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: ", ")
+    }
+
+    /// Apple Maps search for the venue.
+    func mapURL(lang: String) -> URL? {
+        guard !online, let query = location(lang: lang) else { return nil }
+        var c = URLComponents(string: "https://maps.apple.com/")!
+        c.queryItems = [URLQueryItem(name: "q", value: query)]
+        return c.url
+    }
+}
+
+/// "About this event": the organiser's text, with translations.
+struct EventDescription: Decodable, Hashable {
+    var text: String
+    /// Language of `text`.
+    var lang: String?
+    var sourceURL: URL?
+    var sourceName: String?
+    var retrieved: Date?
+    var i18n: [String: String]
+
+    enum CodingKeys: String, CodingKey {
+        case text, lang, retrieved, i18n
+        case sourceURL = "source_url", sourceName = "source_name"
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        text = try c.decode(String.self, forKey: .text)
+        lang = try? c.decodeIfPresent(String.self, forKey: .lang)
+        sourceURL = try? c.decodeIfPresent(URL.self, forKey: .sourceURL)
+        sourceName = try? c.decodeIfPresent(String.self, forKey: .sourceName)
+        retrieved = try? c.decodeIfPresent(Date.self, forKey: .retrieved)
+        i18n = (try? c.decodeIfPresent([String: String].self, forKey: .i18n)) ?? [:]
+    }
+
+    /// The text in the reader's language, else the original.
+    func text(for reader: String) -> String {
+        reader == lang ? text : (i18n[reader] ?? text)
+    }
+
+    /// The original, when it differs from what `text(for:)` shows.
+    func original(for reader: String) -> String? {
+        text(for: reader) == text ? nil : text
+    }
+}
+
+struct EventSource: Decodable, Hashable {
+    var name: String?
+    var url: URL?
+    var retrieved: Date?
 }
 
 struct NewslettersFeed: Decodable {

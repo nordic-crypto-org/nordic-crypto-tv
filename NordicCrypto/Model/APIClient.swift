@@ -5,6 +5,9 @@ enum APIConfig {
     /// redirects there once HTTPS is enforced on the Pages site. The raw
     /// gh-pages branch works even while the custom domain is down.
     static let bases: [URL] = [
+        // Content Worker: approved stories read live from D1 (60 s cache). Paths it does
+        // not serve answer 404, and the next base (the static site) is tried.
+        URL(string: "https://api.nordiccrypto.no/api/v1/")!,
         URL(string: "https://nordiccrypto.no/api/v1/")!,
         URL(string: "https://cryptonordic.no/api/v1/")!,
         URL(string: "https://jqrgen.github.io/nordic-crypto/api/v1/")!,
@@ -53,6 +56,8 @@ struct APIClient {
         return URLSession(configuration: config)
     }()
     var bundle: Bundle = .main
+    /// Where good network copies are kept; nil reads only the bundled snapshot.
+    var caches: URL? = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
 
     static let decoder: JSONDecoder = {
         let d = JSONDecoder()
@@ -82,7 +87,7 @@ struct APIClient {
                     throw APIError.unavailable("\(url) HTTP \((response as? HTTPURLResponse)?.statusCode ?? 0)")
                 }
                 let value = try Self.decoder.decode(T.self, from: data)
-                try? data.write(to: cacheURL(path), options: .atomic)
+                if let url = cacheURL(path) { try? data.write(to: url, options: .atomic) }
                 BaseMemory.shared.remember(base)
                 return value
             } catch {
@@ -94,7 +99,7 @@ struct APIClient {
 
     /// Last good network copy, or the bundled snapshot.
     func offline<T: Decodable>(_ type: T.Type, path: String) -> T? {
-        if let data = try? Data(contentsOf: cacheURL(path)),
+        if let url = cacheURL(path), let data = try? Data(contentsOf: url),
            let value = try? Self.decoder.decode(T.self, from: data) {
             return value
         }
@@ -103,9 +108,8 @@ struct APIClient {
         return try? Self.decoder.decode(T.self, from: data)
     }
 
-    private func cacheURL(_ path: String) -> URL {
-        let dir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0]
-        return dir.appending(path: "api-v1-" + path.replacingOccurrences(of: "/", with: "-"))
+    private func cacheURL(_ path: String) -> URL? {
+        caches?.appending(path: "api-v1-" + path.replacingOccurrences(of: "/", with: "-"))
     }
 }
 

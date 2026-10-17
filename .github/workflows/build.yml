@@ -11,12 +11,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # TestFlight runs these tests before it builds for upload.
+  workflow_call:
 
 permissions:
   contents: read
 
 concurrency:
-  group: build-${{ github.ref }}
+  group: build-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -42,6 +44,7 @@ jobs:
           - platform: tvos
             device: generic/platform=tvOS
             simulator: tvOS
+            ui: NordicCryptoTVUITests
           - platform: visionos
             device: generic/platform=visionOS
           - platform: macos
@@ -74,18 +77,19 @@ jobs:
           print(next((d["udid"] for d in found if d["name"].startswith(prefer)), found[0]["udid"] if found else ""))')
           [ -n "$id" ] || { echo "::error::No $SIM_OS simulator on this image"; xcrun simctl list devices available; exit 1; }
           echo "id=$id" >> "$GITHUB_OUTPUT"
-      - name: Unit tests (simulator, unsigned)
+      - name: Tests (simulator, unsigned)
         if: matrix.simulator
         env:
           SIM_OS: ${{ matrix.simulator }}
           SIM_ID: ${{ steps.sim.outputs.id }}
+          UI: ${{ matrix.ui }}
         run: |
           set -o pipefail
           xcodebuild test \
             -project NordicCrypto.xcodeproj \
             -scheme NordicCrypto \
             -destination "platform=$SIM_OS Simulator,id=$SIM_ID" \
-            -only-testing:NordicCryptoTests \
+            -only-testing:NordicCryptoTests ${UI:+-only-testing:$UI} \
             -derivedDataPath build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
             | tee build/xcodebuild-test.log | grep -E "error:|Test Suite|Executed|\*\* " || true

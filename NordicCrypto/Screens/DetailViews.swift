@@ -1,4 +1,8 @@
 import SwiftUI
+#if os(iOS) || os(visionOS)
+import EventKit
+import EventKitUI
+#endif
 
 // MARK: - Story
 
@@ -232,7 +236,7 @@ struct EventDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         #endif
         .safeAreaInset(edge: .bottom) {
-            if let url = event.url { SourceActions(url: url, source: nil) }
+            EventActions(event: event, lang: store.lang)
         }
         #endif
     }
@@ -247,6 +251,10 @@ struct EventDetailView: View {
                         EntryBadge(event: event)
                         if event.past {
                             Text("Past event").font(NLFont.caption).foregroundStyle(NL.textTertiary)
+                        } else if event.ongoing {
+                            Text("Happening now").font(NLFont.caption).foregroundStyle(NL.accent)
+                        } else {
+                            Text("Upcoming").font(NLFont.caption).foregroundStyle(NL.textTertiary)
                         }
                     }
                     Text(event.title)
@@ -260,10 +268,11 @@ struct EventDetailView: View {
             }
             Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 24, verticalSpacing: 14) {
                 InfoRow(label: "When", value: whenText)
-                InfoRow(label: "Where", value: event.online ? String(localized: "Online") : (event.place ?? event.city ?? ""))
+                InfoRow(label: "Where", value: event.location(lang: store.lang) ?? "", link: mapLink)
                 if let organiser = event.organiser { InfoRow(label: "Organiser", value: organiser) }
                 if let sponsor = event.sponsored, !sponsor.isEmpty { InfoRow(label: "Sponsor", value: sponsor) }
                 if let note = event.note(for: store.lang) { InfoRow(label: "Note", value: note) }
+                if let source = sourceText { InfoRow(label: "Source", value: source, link: sourceLink) }
             }
             .padding(NLMetrics.cardPadding)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -272,7 +281,63 @@ struct EventDetailView: View {
             .focusable()
             .focused($focused)
             #endif
+            if let description = event.description {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("About this event")
+                        .font(NLFont.kicker)
+                        .foregroundStyle(NL.accent)
+                    Text(description.text(for: store.lang))
+                        .font(NLFont.body)
+                        .lineSpacing(4)
+                        .foregroundStyle(NL.textPrimary)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let original = description.original(for: store.lang) {
+                        Text("Original text")
+                            .font(NLFont.kicker)
+                            .foregroundStyle(NL.textTertiary)
+                            .padding(.top, 6)
+                        Text(original)
+                            .font(NLFont.body).italic()
+                            .foregroundStyle(NL.textSecondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
+                .padding(NLMetrics.cardPadding)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .nlGlass()
+                .overlay(alignment: .leading) {
+                    Capsule().fill(NL.accent).frame(width: 4).padding(.vertical, NLMetrics.cardPadding)
+                }
+            }
         }
+    }
+
+    /// "Map" for the venue, as on the website. No links on tvOS.
+    private var mapLink: (title: LocalizedStringKey, url: URL)? {
+        #if os(tvOS)
+        return nil
+        #else
+        guard let url = event.mapURL(lang: store.lang) else { return nil }
+        return (title: "Map", url: url)
+        #endif
+    }
+
+    /// "Litteraturhuset Oslo · retrieved 14 Oct", from the listing or the venue lookup.
+    private var sourceText: String? {
+        let name = event.source ?? event.description?.sourceName ?? event.placeSource?.name
+        guard let name, !name.isEmpty else { return nil }
+        let retrieved = event.description?.retrieved ?? event.placeSource?.retrieved
+        guard let retrieved else { return name }
+        return name + " · " + String(localized: "retrieved \(Formats.day(retrieved, lang: store.lang))")
+    }
+
+    private var sourceLink: (title: LocalizedStringKey, url: URL)? {
+        #if os(tvOS)
+        return nil
+        #else
+        guard let url = event.description?.sourceURL ?? event.placeSource?.url ?? event.url else { return nil }
+        return (title: "Open source", url: url)
+        #endif
     }
 
     private var whenText: String {
@@ -286,17 +351,128 @@ struct EventDetailView: View {
 private struct InfoRow: View {
     let label: LocalizedStringKey
     let value: String
+    var link: (title: LocalizedStringKey, url: URL)? = nil
 
     var body: some View {
         GridRow {
             Text(label)
                 .font(NLFont.kicker)
                 .foregroundStyle(NL.textTertiary)
-            Text(value)
-                .font(NLFont.body)
-                .foregroundStyle(NL.textPrimary)
-                .fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(value)
+                    .font(NLFont.body)
+                    .foregroundStyle(NL.textPrimary)
+                    .fixedSize(horizontal: false, vertical: true)
+                if let link {
+                    Link(destination: link.url) {
+                        Label(link.title, systemImage: "arrow.up.right.square")
+                    }
+                    .font(NLFont.caption)
+                    .foregroundStyle(NL.accent)
+                }
+            }
         }
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .contain)
     }
 }
+
+#if !os(tvOS)
+/// Official event page, add to calendar, share the Nordic Crypto page.
+private struct EventActions: View {
+    let event: EventItem
+    let lang: String
+    @State private var addingToCalendar = false
+
+    private var shareURL: URL? { event.page(for: lang) ?? event.url }
+
+    var body: some View {
+        if event.url != nil || shareURL != nil || canAddToCalendar {
+            HStack(spacing: 12) {
+                if let url = event.url {
+                    Link(destination: url) {
+                        Label("Open event page", systemImage: "safari")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                }
+                if canAddToCalendar {
+                    Button {
+                        addingToCalendar = true
+                    } label: {
+                        Label("Add to calendar", systemImage: "calendar.badge.plus")
+                    }
+                    .labelStyle(.iconOnly)
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                    .accessibilityLabel("Add to calendar")
+                }
+                if let url = shareURL {
+                    ShareLink(item: url) {
+                        Label("Share", systemImage: "square.and.arrow.up")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                }
+            }
+            .padding(.horizontal, NLMetrics.margin)
+            .padding(.vertical, 10)
+            .background(.bar)
+            #if os(iOS) || os(visionOS)
+            .sheet(isPresented: $addingToCalendar) {
+                AddToCalendarSheet(event: event, lang: lang).ignoresSafeArea()
+            }
+            #endif
+        }
+    }
+
+    private var canAddToCalendar: Bool {
+        #if os(iOS) || os(visionOS)
+        event.start != nil && !event.past
+        #else
+        false
+        #endif
+    }
+}
+#endif
+
+#if os(iOS) || os(visionOS)
+/// The system "New Event" sheet, prefilled. Since iOS 17 it needs no
+/// calendar permission: the user picks the calendar and taps Add.
+private struct AddToCalendarSheet: UIViewControllerRepresentable {
+    let event: EventItem
+    let lang: String
+    @Environment(\.dismiss) private var dismiss
+
+    func makeCoordinator() -> Coordinator { Coordinator(dismiss: dismiss) }
+
+    func makeUIViewController(context: Context) -> EKEventEditViewController {
+        let store = EKEventStore()
+        let item = EKEvent(eventStore: store)
+        item.title = event.title
+        item.startDate = event.start
+        item.endDate = event.end ?? event.start?.addingTimeInterval(60 * 60)
+        item.location = event.location(lang: lang)
+        item.url = event.url ?? event.page(for: lang)
+        item.notes = [event.organiser.map { String(localized: "Organiser: \($0)") },
+                      event.description?.text(for: lang),
+                      event.page(for: lang)?.absoluteString]
+            .compactMap { $0 }.joined(separator: "\n\n")
+        let controller = EKEventEditViewController()
+        controller.eventStore = store
+        controller.event = item
+        controller.editViewDelegate = context.coordinator
+        return controller
+    }
+
+    func updateUIViewController(_ controller: EKEventEditViewController, context: Context) {}
+
+    final class Coordinator: NSObject, EKEventEditViewDelegate {
+        let dismiss: DismissAction
+        init(dismiss: DismissAction) { self.dismiss = dismiss }
+        func eventEditViewController(_ controller: EKEventEditViewController, didCompleteWith action: EKEventEditViewAction) {
+            dismiss()
+        }
+    }
+}
+#endif

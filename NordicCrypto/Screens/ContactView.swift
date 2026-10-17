@@ -3,13 +3,10 @@ import SwiftUI
 /// Publisher contact details. The section title is the localized "Contact us"
 /// (Play's News and magazines policy: a clearly labeled contact section).
 struct ContactView: View {
-    /// When set, the screen can be closed (Apple TV overlay, not a tab).
-    var onClose: (() -> Void)? = nil
-
     @Environment(\.openURL) private var openURL
     @FocusState private var focus: Field?
 
-    private enum Field: Hashable { case email, website, page, close }
+    private enum Field: Hashable { case email, website, page }
 
     var body: some View {
         ScrollView {
@@ -25,20 +22,6 @@ struct ContactView: View {
                 link(.email, title: "Email", value: APIConfig.contactEmail, url: APIConfig.contactMailto)
                 link(.website, title: "Website", value: APIConfig.website.absoluteString, url: APIConfig.website)
                 link(.page, title: "Contact page", value: APIConfig.contactPage.absoluteString, url: APIConfig.contactPage)
-
-                if let onClose {
-                    Button(action: onClose) {
-                        Text("Done")
-                            .font(NLFont.row)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 8)
-                    }
-                    #if os(tvOS)
-                    .buttonStyle(.bordered)
-                    #endif
-                    .focused($focus, equals: .close)
-                    .accessibilityIdentifier("contact-done")
-                }
             }
             .padding(NLMetrics.margin)
             .frame(maxWidth: 720, alignment: .leading)
@@ -49,9 +32,8 @@ struct ContactView: View {
         #if os(iOS)
         .navigationBarTitleDisplayMode(.inline)
         #endif
+        #if !os(tvOS)
         .onAppear { focus = .email }
-        #if os(tvOS)
-        .onExitCommand { onClose?() }
         #endif
     }
 
@@ -119,7 +101,6 @@ struct ContactView: View {
         case .email: "contact-email"
         case .website: "contact-website"
         case .page: "contact-page"
-        case .close: "contact-done"
         }
     }
 }
