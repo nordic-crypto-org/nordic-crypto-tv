@@ -19,7 +19,8 @@ final class SignageRemoteTests: XCTestCase {
         let contact = app.buttons["contact-us"]
         XCTAssertTrue(contact.waitForExistence(timeout: 5))
         XCTAssertEqual(contact.label, "Contact us")
-        contact.tap()
+        XCTAssertTrue(contact.hasFocus)
+        remote.press(.select)
         XCTAssertTrue(app.staticTexts["publisher-company"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["publisher-company"].label, "jQrgenCorp")
         XCTAssertEqual(app.staticTexts["publisher-org"].label, "org.nr. 919 057 343")
@@ -29,6 +30,18 @@ final class SignageRemoteTests: XCTestCase {
         remote.press(.menu)
         XCTAssertTrue(contact.waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["publisher-company"].exists)
+    }
+
+    func testBadgeOpensFromTheMainScreen() {
+        let badge = app.buttons["badge"]
+        XCTAssertTrue(badge.waitForExistence(timeout: 10))
+        remote.press(.right)
+        XCTAssertTrue(badge.hasFocus)
+        remote.press(.select)
+        XCTAssertTrue(app.staticTexts["badge-screen"].waitForExistence(timeout: 5))
+        remote.press(.menu)
+        XCTAssertTrue(badge.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["badge-screen"].exists)
     }
 
     private func shows(_ identifier: String, _ text: String) {
