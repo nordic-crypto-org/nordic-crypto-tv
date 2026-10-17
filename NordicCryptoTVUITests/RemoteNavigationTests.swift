@@ -1,7 +1,7 @@
 import XCTest
 
-/// Apple TV is an information screen. Play/Pause switches the radio, and
-/// Contact us opens the publisher's contact details.
+/// Apple TV opens on the information screen with the tab bar hidden. Up
+/// shows the tab bar (Today, Badge, Contact us), Play/Pause switches the radio.
 final class SignageRemoteTests: XCTestCase {
     private let remote = XCUIRemote.shared
     private var app: XCUIApplication!
@@ -13,35 +13,29 @@ final class SignageRemoteTests: XCTestCase {
         app.launch()
     }
 
-    func testContactUsOpensFromTheMainScreen() {
+    func testTabBarReachesBadgeAndContactUs() {
         XCTAssertTrue(app.descendants(matching: .any)["radio"].waitForExistence(timeout: 10))
-        XCTAssertEqual(app.tabBars.count, 0, "no tab bar on the information screen")
-        let contact = app.buttons["contact-us"]
-        XCTAssertTrue(contact.waitForExistence(timeout: 5))
-        XCTAssertEqual(contact.label, "Contact us")
-        XCTAssertTrue(contact.hasFocus)
-        remote.press(.select)
+        attach("signage")
+        remote.press(.up)
+        let tabs = app.tabBars.firstMatch
+        XCTAssertTrue(tabs.waitForExistence(timeout: 5))
+        XCTAssertTrue(tabs.buttons["Today"].hasFocus)
+        attach("tab-bar")
+
+        remote.press(.right)
+        XCTAssertTrue(tabs.buttons["Badge"].hasFocus)
+        XCTAssertTrue(app.staticTexts["badge-screen"].waitForExistence(timeout: 5))
+        sleep(3)
+        attach("badge")
+
+        remote.press(.right)
+        XCTAssertTrue(tabs.buttons["Contact us"].hasFocus)
         XCTAssertTrue(app.staticTexts["publisher-company"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["publisher-company"].label, "jQrgenCorp")
         XCTAssertEqual(app.staticTexts["publisher-org"].label, "org.nr. 919 057 343")
         shows("contact-email", "jqrgen@nordiccrypto.no")
         shows("contact-website", "https://nordiccrypto.no")
         shows("contact-page", "https://nordiccrypto.no/contact/")
-        remote.press(.menu)
-        XCTAssertTrue(contact.waitForExistence(timeout: 5))
-        XCTAssertFalse(app.staticTexts["publisher-company"].exists)
-    }
-
-    func testBadgeOpensFromTheMainScreen() {
-        let badge = app.buttons["badge"]
-        XCTAssertTrue(badge.waitForExistence(timeout: 10))
-        remote.press(.right)
-        XCTAssertTrue(badge.hasFocus)
-        remote.press(.select)
-        XCTAssertTrue(app.staticTexts["badge-screen"].waitForExistence(timeout: 5))
-        remote.press(.menu)
-        XCTAssertTrue(badge.waitForExistence(timeout: 5))
-        XCTAssertFalse(app.staticTexts["badge-screen"].exists)
     }
 
     private func shows(_ identifier: String, _ text: String) {
@@ -49,6 +43,13 @@ final class SignageRemoteTests: XCTestCase {
         XCTAssertTrue(element.waitForExistence(timeout: 5), identifier)
         let shown = "\(element.label) \(element.value as? String ?? "")"
         XCTAssertTrue(shown.contains(text), "\(identifier) showed \(shown)")
+    }
+
+    private func attach(_ name: String) {
+        let shot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        shot.name = name
+        shot.lifetime = .keepAlways
+        add(shot)
     }
 
     func testPlayPauseSwitchesTheRadio() {

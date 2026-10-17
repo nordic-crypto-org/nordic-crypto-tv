@@ -37,12 +37,15 @@ struct RootView: View {
 
     var body: some View {
         #if os(tvOS)
-        // Apple TV is an information screen: no tabs, nothing to navigate.
-        SignageView()
-            .environment(store)
-            .environment(radio)
-            .task { await store.run() }
-            .onAppear { radio.start() }
+        TabView {
+            Tab("Today", systemImage: "sun.horizon") { SignageView() }
+            Tab("Badge", systemImage: "checkmark.shield") { BadgeView() }
+            Tab("Contact us", systemImage: "envelope") { ContactView() }
+        }
+        .environment(store)
+        .environment(radio)
+        .task { await store.run() }
+        .onAppear { radio.start() }
         #else
         tabs
         #endif

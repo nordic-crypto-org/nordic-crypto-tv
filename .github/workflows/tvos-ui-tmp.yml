@@ -1,0 +1,39 @@
+# Temporary: tvOS UI tests with screenshots for PR #21. Removed before merge.
+name: tvOS UI (temporary)
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  ui:
+    runs-on: xcode-27
+    timeout-minutes: 40
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: scripts/xcodegen.sh
+      - name: UI tests
+        run: |
+          id=$(xcrun simctl list devices available --json | python3 -I -c '
+          import json, sys
+          ds = [d for r, l in sorted(json.load(sys.stdin)["devices"].items(), reverse=True) if "SimRuntime.tvOS-" in r for d in l]
+          print(next((d["udid"] for d in ds if d["name"].startswith("Apple TV 4K")), ds[0]["udid"]))')
+          set -o pipefail
+          mkdir -p build
+          xcodebuild test -project NordicCrypto.xcodeproj -scheme NordicCrypto \
+            -destination "platform=tvOS Simulator,id=$id" -only-testing:NordicCryptoTVUITests \
+            -resultBundlePath build/ui.xcresult -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO \
+            | tee build/ui.log | grep -E "error:|Test Case|\*\* " || true
+          xcrun xcresulttool export attachments --path build/ui.xcresult --output-path build/shots || true
+          grep -q "\*\* TEST SUCCEEDED \*\*" build/ui.log
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: tvos-ui
+          path: |
+            build/shots
+            build/ui.log
+          retention-days: 7

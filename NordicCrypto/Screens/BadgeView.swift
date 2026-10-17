@@ -82,11 +82,7 @@ final class BadgeStore {
 }
 
 struct BadgeView: View {
-    /// When set, the screen can be closed (Apple TV overlay, not a tab).
-    var onClose: (() -> Void)? = nil
-
     @State private var store = BadgeStore()
-    @FocusState private var closeFocused: Bool
 
     private static let gold = Color(hex: 0xD9A034)
     private static let teal = Color(hex: 0x1E3A45)
@@ -99,10 +95,6 @@ struct BadgeView: View {
             .navigationBarTitleDisplayMode(.inline)
             #endif
             .task { await store.run() }
-            #if os(tvOS)
-            .onAppear { closeFocused = true }
-            .onExitCommand { onClose?() }
-            #endif
     }
 
     #if os(tvOS)
@@ -114,21 +106,10 @@ struct BadgeView: View {
                 Text("Terms and privacy: \(BadgeStore.page.host() ?? "")")
                     .font(NLFont.caption)
                     .foregroundStyle(NL.textTertiary)
-                if let onClose {
-                    Button(action: onClose) {
-                        Text("Done")
-                            .font(NLFont.row)
-                            .padding(.horizontal, 40)
-                            .padding(.vertical, 8)
-                    }
-                    .buttonStyle(.bordered)
-                    .focused($closeFocused)
-                    .accessibilityIdentifier("badge-done")
-                }
             }
             .frame(maxWidth: 820, alignment: .leading)
             VStack(spacing: 24) {
-                qr(620)
+                qr(560)
                 Text(scanHint)
                     .font(NLFont.row)
                     .foregroundStyle(NL.textPrimary)
