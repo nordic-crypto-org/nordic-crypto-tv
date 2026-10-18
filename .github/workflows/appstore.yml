@@ -1,0 +1,176 @@
+# Apple TV to App Store Connect, only after the Build workflow's tests pass.
+# Uploads a signed tvOS build; App Store review is a separate opt-in
+# (submit_for_review, default false; never on tag pushes). Same secrets and
+# variables as testflight.yml. Run by hand or push a tag appstore-tvos-v<MARKETING_VERSION>.
+
+name: App Store (Apple TV)
+
+on:
+  workflow_dispatch:
+    inputs:
+      submit_for_review:
+        description: "Also submit for App Store review (only once the store listing is approved)"
+        type: boolean
+        default: false
+  push:
+    tags: ["appstore-tvos-v*"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appstore-tvos
+  cancel-in-progress: false
+
+env:
+  FASTLANE_SKIP_UPDATE_CHECK: "1"
+  FASTLANE_HIDE_CHANGELOG: "1"
+  FASTLANE_OPT_OUT_USAGE: "1"
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      build_number: ${{ steps.version.outputs.build_number }}
+      version_name: ${{ steps.version.outputs.version_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check signing secrets and variables
+        env:
+          HAS_APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID != '' }}
+          HAS_MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL != '' }}
+          HAS_APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID != '' }}
+          HAS_APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID != '' }}
+          HAS_APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY != '' }}
+          HAS_MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD != '' }}
+          HAS_MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY != '' }}
+        run: |
+          missing=""
+          for name in APPLE_TEAM_ID MATCH_GIT_URL APP_STORE_CONNECT_API_KEY_ID APP_STORE_CONNECT_API_KEY_ISSUER_ID \
+                      APP_STORE_CONNECT_API_KEY MATCH_PASSWORD MATCH_GIT_PRIVATE_KEY; do
+            has="HAS_$name"
+            [ "${!has}" = true ] || missing="$missing $name"
+          done
+          [ -z "$missing" ] || { echo "::error::Not set:$missing (scripts/setup-signing-github.sh)"; exit 1; }
+      - name: Version and build number
+        id: version
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
+          BUILD_NUMBER_OFFSET: ${{ vars.BUILD_NUMBER_OFFSET || '10' }}
+        run: |
+          version=$(sed -n 's/^[[:space:]]*MARKETING_VERSION:[[:space:]]*"\{0,1\}\([0-9.]*\)"\{0,1\}.*/\1/p' project.yml | head -n 1)
+          [ -n "$version" ] || { echo "::error::MARKETING_VERSION not found in project.yml"; exit 1; }
+          if [ "$GITHUB_REF_TYPE" = tag ] && [ "$GITHUB_REF_NAME" != "appstore-tvos-v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match MARKETING_VERSION $version"; exit 1
+          fi
+          echo "build_number=$(( RUN_NUMBER + BUILD_NUMBER_OFFSET ))" >> "$GITHUB_OUTPUT"
+          echo "version_name=$version" >> "$GITHUB_OUTPUT"
+
+  tests:
+    needs: gate
+    uses: ./.github/workflows/build.yml
+
+  plan:
+    needs: [gate, tests]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      build_number: ${{ steps.number.outputs.build_number }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: fastlane ios build_number
+        id: number
+        env:
+          BUILD_NUMBER: ${{ needs.gate.outputs.build_number }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        run: bundle exec fastlane ios build_number
+
+  upload:
+    name: Apple TV to App Store Connect
+    needs: [gate, plan]
+    runs-on: xcode-27
+    timeout-minutes: 120
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
+      BUILD_NUMBER: ${{ needs.plan.outputs.build_number }}
+      VERSION_NAME: ${{ needs.gate.outputs.version_name }}
+      TESTFLIGHT_PLATFORM: tvos
+      FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: "120"
+      APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+      APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Toolchain
+        id: toolchain
+        run: |
+          sw_vers; xcodebuild -version; ruby -v; bundle -v
+          echo "ruby=$(ruby -e 'print RUBY_VERSION')" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: vendor/bundle
+          key: gems-${{ runner.os }}-${{ runner.arch }}-ruby${{ steps.toolchain.outputs.ruby }}-${{ hashFiles('Gemfile.lock') }}
+      - name: Bundle install
+        run: |
+          bundle config set --local path vendor/bundle
+          bundle install --jobs 4 --retry 3
+      - name: Generate the Xcode project
+        run: scripts/xcodegen.sh
+      - name: Deploy key for the certificates repo
+        env:
+          MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          umask 077
+          dir="$RUNNER_TEMP/match-ssh"
+          rm -rf "$dir"; mkdir -p "$dir"
+          printf '%s\n' "$MATCH_GIT_PRIVATE_KEY" > "$dir/id"
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/meta \
+            | python3 -I -c 'import json,sys; [print("github.com", k) for k in json.load(sys.stdin)["ssh_keys"]]' \
+            > "$dir/known_hosts"
+          test -s "$dir/known_hosts"
+          echo "GIT_SSH_COMMAND=ssh -F /dev/null -i $dir/id -o IdentitiesOnly=yes -o IdentityAgent=none -o UserKnownHostsFile=$dir/known_hosts -o StrictHostKeyChecking=yes -o BatchMode=yes" >> "$GITHUB_ENV"
+      - name: Archive, sign and upload (fastlane ios beta platform:tvos)
+        env:
+          APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+          MATCH_GIT_URL: ${{ vars.MATCH_GIT_URL }}
+          MATCH_GIT_BRANCH: ${{ vars.MATCH_GIT_BRANCH || 'main' }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+        run: bundle exec fastlane ios beta
+      - name: Clean up signing
+        if: always()
+        run: |
+          rm -rf "$RUNNER_TEMP/match-ssh"
+          security delete-keychain nordic-crypto-ci.keychain >/dev/null 2>&1 || true
+      - name: Submit for App Store review (opt-in)
+        if: inputs.submit_for_review
+        run: bundle exec fastlane ios submit_review
+      - name: Summary
+        env:
+          SUBMITTED: ${{ inputs.submit_for_review && 'submitted for review' || 'uploaded, not submitted for review' }}
+        run: |
+          echo "Apple TV $VERSION_NAME ($BUILD_NUMBER): $SUBMITTED." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: appstore-tvos-${{ needs.gate.outputs.version_name }}-${{ needs.plan.outputs.build_number }}
+          path: |
+            build/tvos/*.ipa
+            build/tvos/*.dSYM.zip
+          if-no-files-found: ignore
+          retention-days: 14
