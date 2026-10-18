@@ -176,9 +176,10 @@ private fun Lead(feed: Feed, lang: String, tick: Long, modifier: Modifier) {
             Text(story.headline(lang), color = NL.textPrimary, fontSize = 58.sp, lineHeight = 62.sp, fontFamily = NL.serif,
                 fontWeight = FontWeight.Bold, maxLines = 3, overflow = TextOverflow.Ellipsis)
             story.originalHeadline(lang)?.let { Text(it, color = NL.textTertiary, fontSize = 16.sp, fontStyle = FontStyle.Italic, maxLines = 1) }
-            Row(verticalAlignment = Alignment.Bottom) {
+            // Summary takes the rest of the panel; ellipsis only if it runs out of room.
+            Row(Modifier.weight(1f, fill = false), verticalAlignment = Alignment.Bottom) {
                 story.summary(lang)?.let {
-                    Text(it, color = NL.body, fontSize = 20.sp, lineHeight = 28.sp, maxLines = 3, overflow = TextOverflow.Ellipsis,
+                    Text(it, color = NL.body, fontSize = 20.sp, lineHeight = 28.sp, overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f))
                 }
                 story.url?.let { Spacer(Modifier.width(20.dp)); QrCode(it, 92.dp) }

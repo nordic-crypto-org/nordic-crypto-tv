@@ -145,7 +145,7 @@ private struct KLead: View {
                             .font(.system(size: 30))
                             .lineSpacing(6)
                             .foregroundStyle(K.body)
-                            .lineLimit(3)
+                            .minimumScaleFactor(0.6)   // full text; shrink rather than cut very long ones
                             .frame(maxWidth: 1000, alignment: .leading)
                     }
                     Spacer(minLength: 0)
