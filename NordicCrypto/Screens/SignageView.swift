@@ -38,6 +38,7 @@ struct Rotating<Item, Content: View>: View {
     let items: [Item]
     var interval: Double
     var offset: Double = 0
+    var showsProgress = false
     @ViewBuilder var content: (Item, Int) -> Content
 
     var body: some View {
@@ -47,12 +48,17 @@ struct Rotating<Item, Content: View>: View {
             TimelineView(.periodic(from: .now, by: 1)) { context in
                 let tick = Int((context.date.timeIntervalSinceReferenceDate + offset) / interval)
                 let index = Self.freeze ?? (tick % items.count)
-                ZStack {
-                    content(items[index], index)
-                        .id(index)
-                        .transition(.opacity)
+                VStack(spacing: 10) {
+                    ZStack {
+                        content(items[index], index)
+                            .id(index)
+                            .transition(.opacity)
+                    }
+                    .animation(.easeInOut(duration: 0.9), value: index)
+                    if showsProgress, items.count > 1, Self.freeze == nil {
+                        RotationProgress(interval: interval, offset: offset)
+                    }
                 }
-                .animation(.easeInOut(duration: 0.9), value: index)
             }
         }
     }
@@ -185,7 +191,7 @@ struct SpotlightModule: View {
     }
 
     private var compactBody: some View {
-        Rotating(items: store.spotlight, interval: 12, offset: 5) { item, _ in
+        Rotating(items: store.spotlight, interval: 12, offset: 5, showsProgress: true) { item, _ in
             VStack(alignment: .leading, spacing: 6) {
                 HStack(alignment: .center, spacing: 16) {
                     picture(item, side: 72)
@@ -239,7 +245,7 @@ struct SpotlightModule: View {
     }
 
     private var fullBody: some View {
-        Rotating(items: store.spotlight, interval: 12, offset: 5) { item, _ in
+        Rotating(items: store.spotlight, interval: 12, offset: 5, showsProgress: true) { item, _ in
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 10) {
                     Text("Spotlight")

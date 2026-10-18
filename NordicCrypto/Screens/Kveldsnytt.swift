@@ -118,7 +118,7 @@ private struct KLead: View {
 
     var body: some View {
         let top = Array(store.news.prefix(5))
-        Rotating(items: top, interval: dwell) { item, index in
+        Rotating(items: top, interval: dwell, showsProgress: true) { item, index in
             VStack(alignment: .leading, spacing: 22) {
                 HStack(spacing: 14) {
                     Kicker(item: item, lang: store.lang)
@@ -166,7 +166,7 @@ private struct KCards: View {
     var body: some View {
         let pages = Array(store.news.dropFirst(5)).chunked(2)
         HStack(spacing: 20) {
-            Rotating(items: pages, interval: 14, offset: 3) { page, _ in
+            Rotating(items: pages, interval: 14, offset: 3, showsProgress: true) { page, _ in
                 HStack(spacing: 20) {
                     ForEach(Array(page.enumerated()), id: \.offset) { _, item in
                         StoryCard(item: item)

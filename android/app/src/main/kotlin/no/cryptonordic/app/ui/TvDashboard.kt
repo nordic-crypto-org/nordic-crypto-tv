@@ -120,6 +120,16 @@ private fun ContactUsButton(focus: FocusRequester, onFocused: (Boolean) -> Unit,
 private fun <T> rotate(list: List<T>, tick: Long, every: Long, offset: Long = 0): Pair<T, Int>? =
     if (list.isEmpty()) null else ((tick + offset) / every % list.size).toInt().let { list[it] to it }
 
+/** Thin bar filling up until the next rotation. */
+@Composable
+private fun RotationBar(tick: Long, every: Long, offset: Long = 0) {
+    val fraction by androidx.compose.animation.core.animateFloatAsState(((tick + offset) % every + 1).toFloat() / every,
+        androidx.compose.animation.core.tween(if ((tick + offset) % every == 0L) 0 else 1000, easing = androidx.compose.animation.core.LinearEasing), label = "rotation")
+    Box(Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(50)).background(NL.textTertiary.copy(alpha = 0.2f))) {
+        Box(Modifier.fillMaxWidth(fraction).fillMaxHeight().background(NL.accent.copy(alpha = 0.7f)))
+    }
+}
+
 @Composable
 private fun Header(feed: Feed, radio: Radio, tick: Long) {
     val now = ZonedDateTime.now()
@@ -144,8 +154,9 @@ private fun Header(feed: Feed, radio: Radio, tick: Long) {
 
 @Composable
 private fun Lead(feed: Feed, lang: String, tick: Long, modifier: Modifier) {
-    val (item, index) = rotate(feed.news.take(5), tick, 15) ?: return
-    Crossfade(item, modifier, animationSpec = tween(900), label = "lead") { story ->
+    val (item, index) = rotate(feed.news.take(5), tick, 90) ?: return
+    Column(modifier, verticalArrangement = Arrangement.spacedBy(10.dp)) {
+    Crossfade(item, Modifier.weight(1f), animationSpec = tween(900), label = "lead") { story ->
         Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 CountryChip(story.country, 15)
@@ -165,6 +176,8 @@ private fun Lead(feed: Feed, lang: String, tick: Long, modifier: Modifier) {
                 story.url?.let { Spacer(Modifier.width(20.dp)); QrCode(it, 92.dp) }
             }
         }
+    }
+    RotationBar(tick, 90)
     }
 }
 
@@ -267,5 +280,7 @@ private fun Spotlight(feed: Feed, tick: Long, modifier: Modifier) {
         image?.takeIf { it.displayableUrl != null && it.license?.lowercase() != "public domain" }?.creditLine?.let {
             Text(Lang.tr(if (e.image != null) "Photo: %@" else "Logo: %@", it), color = NL.textTertiary, fontSize = 9.sp, maxLines = 1)
         }
+        Spacer(Modifier.weight(1f))
+        RotationBar(tick, 12, 5)
     }
 }

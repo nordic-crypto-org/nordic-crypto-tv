@@ -443,3 +443,25 @@ enum Formats {
         String(format: "%d:%02d", seconds / 60, seconds % 60)
     }
 }
+
+/// Thin bar filling up until a clock-driven rotation moves on.
+struct RotationProgress: View {
+    let interval: Double
+    var offset: Double = 0
+
+    var body: some View {
+        TimelineView(.animation(minimumInterval: 0.25)) { context in
+            let t = (context.date.timeIntervalSinceReferenceDate + offset) / interval
+            let fraction = t - t.rounded(.down)
+            GeometryReader { geo in
+                Capsule().fill(NL.textTertiary.opacity(0.2))
+                    .overlay(alignment: .leading) {
+                        Capsule().fill(NL.accent.opacity(0.7))
+                            .frame(width: geo.size.width * fraction)
+                    }
+            }
+            .frame(height: 3)
+        }
+        .accessibilityHidden(true)
+    }
+}
