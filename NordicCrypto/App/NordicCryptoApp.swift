@@ -71,10 +71,8 @@ struct NordicCryptoApp: App {
             }
             .frame(width: 520, height: 560)
         }
-        if !SnapshotMode.isOn {
-            MenuBarExtra("Nordic Crypto", systemImage: "sparkle") {
-                MenuBarHeadlines()
-            }
+        MenuBarExtra("Nordic Crypto", systemImage: "sparkle", isInserted: .constant(!SnapshotMode.isOn)) {
+            MenuBarHeadlines()
         }
         #endif
     }
