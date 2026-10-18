@@ -20,7 +20,7 @@ struct NordicCryptoApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                .environment(\.locale, AppLanguage.current == "nn" ? Locale(identifier: "nn_NO") : .autoupdatingCurrent)
+                .environment(\.locale, AppLanguage.locale)
                 #if os(tvOS)
                 .preferredColorScheme(.dark)
                 // A news screen meant to stay on: never hand over to the screensaver.

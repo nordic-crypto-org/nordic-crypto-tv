@@ -64,26 +64,15 @@ struct NewsItem: Decodable, Identifiable, Hashable {
         ownStory = (try? c.decodeIfPresent(Bool.self, forKey: .ownStory)) ?? false
     }
 
-    /// Headline in the reader's language when we have one, else the original.
+    /// Headline in the reader's language (nynorsk, then bokmål), else English.
     func headline(for lang: String) -> String {
-        for l in AppLanguage.fallbacks(lang) {
-            if languageCode == l || (l == "nb" && languageCode == "no") { return title }
-            if let t = titleI18n[l] { return t }
-        }
-        if languageCode.map({ AppLanguage.sameFamily($0, lang) }) == true { return title }
-        return titleEn ?? title
-    }
-
-    /// The original-language headline, when it differs from `headline(for:)`
-    /// (not the bokmål original under a nynorsk headline).
-    func originalHeadline(for lang: String) -> String? {
-        let shown = headline(for: lang)
-        if shown == title || languageCode.map({ AppLanguage.sameFamily($0, lang) }) == true { return nil }
-        return title
+        var i18n = titleI18n
+        if let titleEn { i18n["en"] = titleEn }
+        return i18n.localized(lang, base: title, baseLang: languageCode) ?? title
     }
 
     func summary(for lang: String) -> String? {
-        summaryI18n.localized(lang) ?? summary
+        summaryI18n.localized(lang, base: summary)
     }
 }
 
@@ -116,7 +105,6 @@ struct EventsFeed: Decodable {
 struct EventItem: Decodable, Identifiable, Hashable {
     var id: String
     var title: String
-    var titleOriginal: String?
     var start: Date?
     var end: Date?
     var place: String?
@@ -148,7 +136,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
     enum CodingKeys: String, CodingKey {
         case id, title, start, end, place, city, country, online, organiser, url, paid, sponsored, note, past
         case going, source, description, ongoing
-        case titleOriginal = "title_original", noteI18n = "note_i18n"
+        case noteI18n = "note_i18n"
         case placeSource = "place_source", htmlURL = "html_url", htmlURLs = "html_urls"
     }
 
@@ -156,7 +144,6 @@ struct EventItem: Decodable, Identifiable, Hashable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         title = try c.decode(String.self, forKey: .title)
-        titleOriginal = try c.decodeIfPresent(String.self, forKey: .titleOriginal)
         start = try? c.decodeIfPresent(Date.self, forKey: .start)
         if let raw = try? c.decodeIfPresent(String.self, forKey: .start) {
             allDay = !raw.contains("T")
@@ -189,7 +176,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
     }
 
     func note(for lang: String) -> String? {
-        noteI18n.localized(lang) ?? note
+        noteI18n.localized(lang, base: note)
     }
 
     /// The organiser's own title when it is in the reader's language.
@@ -264,18 +251,9 @@ struct EventDescription: Decodable, Hashable {
         i18n = (try? c.decodeIfPresent([String: String].self, forKey: .i18n)) ?? [:]
     }
 
-    /// The text in the reader's language, else the original.
-    func text(for reader: String) -> String {
-        for l in AppLanguage.fallbacks(reader) {
-            if l == lang || (l == "nb" && lang == "no") { return text }
-            if let t = i18n[l] { return t }
-        }
-        return text
-    }
-
-    /// The original, when it differs from what `text(for:)` shows.
-    func original(for reader: String) -> String? {
-        text(for: reader) == text ? nil : text
+    /// The text in the reader's language, else English; nil when neither exists.
+    func text(for reader: String) -> String? {
+        i18n.localized(reader, base: text, baseLang: lang)
     }
 }
 
@@ -337,9 +315,9 @@ struct NewsletterIssue: Decodable, Identifiable, Hashable {
         video = try? c.decodeIfPresent(Newsreel.self, forKey: .video)
     }
 
-    func title(for lang: String) -> String { titleI18n.localized(lang) ?? title }
-    func subtitle(for lang: String) -> String? { subtitleI18n.localized(lang) ?? subtitle }
-    func text(for lang: String) -> String? { textI18n.localized(lang) ?? text }
+    func title(for lang: String) -> String { titleI18n.localized(lang, base: title) ?? title }
+    func subtitle(for lang: String) -> String? { subtitleI18n.localized(lang, base: subtitle) }
+    func text(for lang: String) -> String? { textI18n.localized(lang, base: text) }
 }
 
 struct Newsreel: Decodable, Hashable {
@@ -400,39 +378,47 @@ enum AppLanguage {
     /// Summaries stay in English for these.
     static let interfaceOnly = ["zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr"]
 
-    /// The best language for this device: a Nordic code, one of `interfaceOnly`, or en.
-    static var current: String { resolve(Locale.preferredLanguages, region: Locale.current.region?.identifier) }
+    /// The device's language for this app, used for interface and content alike.
+    static let current = resolve(Locale.preferredLanguages)
 
-    /// Norwegian (no, nb, nn) reads nynorsk, as does English in Norway.
-    static func resolve(_ preferred: [String], region: String? = nil) -> String {
-        var found = "en"
+    /// The first preferred language the app has, else English. Norwegian (no, nb, nn) reads nynorsk.
+    static func resolve(_ preferred: [String]) -> String {
         for tag in preferred {
             let code = Locale(identifier: tag).language.languageCode?.identifier ?? tag
             if ["no", "nb", "nn"].contains(code) { return "nn" }
-            if supported.contains(code) || interfaceOnly.contains(code) || code == "en" { found = code; break }
+            if code == "en" || supported.contains(code) || interfaceOnly.contains(code) { return code }
         }
-        return found == "en" && region == "NO" ? "nn" : found
+        return "en"
     }
 
-    /// Where to look for a translation, best first: nynorsk falls back to bokmål.
+    /// Where to look for text, best first: nynorsk falls back to bokmål, everything to English.
     static func fallbacks(_ lang: String) -> [String] {
-        lang == "nn" ? ["nn", "nb"] : [lang]
+        (lang == "nn" ? ["nn", "nb"] : [lang]) + (lang == "en" ? [] : ["en"])
     }
-
-    /// The app's string catalogue in `current`, for `String(localized:bundle:)`
-    /// when that differs from the system's pick (nynorsk on a bokmål Apple TV).
-    static let bundle: Bundle = current == "nn" ? Bundle.main.path(forResource: "nn", ofType: "lproj").flatMap(Bundle.init(path:)) ?? .main : .main
 
     /// Norwegian sources are tagged "no"; treat nb and nn as the same family.
     static func sameFamily(_ a: String, _ b: String) -> Bool {
         let norsk: Set<String> = ["no", "nb", "nn"]
         return a == b || (norsk.contains(a) && norsk.contains(b))
     }
+
+    /// The string catalogue's name for `current` (Chinese ships as zh-Hans).
+    static let localization = current == "zh" ? "zh-Hans" : current
+    static let locale = Locale(identifier: localization)
+
+    /// The app's string catalogue in `current`, for `String(localized:bundle:)`; English when missing.
+    static let bundle: Bundle = [localization, "en"].lazy
+        .compactMap { Bundle.main.path(forResource: $0, ofType: "lproj").flatMap(Bundle.init(path:)) }.first ?? .main
 }
 
 extension Dictionary where Key == String, Value == String {
-    /// The translation for `lang`, following `AppLanguage.fallbacks`.
-    func localized(_ lang: String) -> String? {
-        AppLanguage.fallbacks(lang).lazy.compactMap { self[$0] }.first
+    /// The text for `lang` following `AppLanguage.fallbacks`. `base` is the untranslated
+    /// text, written in `baseLang`; it wins over a translation into that same language.
+    func localized(_ lang: String, base: String? = nil, baseLang: String? = "en") -> String? {
+        for l in AppLanguage.fallbacks(lang) {
+            if let base, !base.isEmpty, baseLang == l || (l == "nb" && baseLang == "no") { return base }
+            if let t = self[l], !t.isEmpty { return t }
+        }
+        return nil
     }
 }

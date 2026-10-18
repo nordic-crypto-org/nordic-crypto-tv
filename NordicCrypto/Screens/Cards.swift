@@ -24,12 +24,6 @@ struct LeadCard: View {
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
                         .layoutPriority(1)
-                    if let original = item.originalHeadline(for: store.lang) {
-                        Text(original)
-                            .font(NLFont.body).italic()
-                            .foregroundStyle(NL.textSecondary)
-                            .lineLimit(1)
-                    }
                     if summaryLines > 0, let summary = item.summary(for: store.lang) {
                         Text(summary)
                             .font(NLFont.body)

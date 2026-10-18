@@ -28,31 +28,55 @@ final class SnapshotDecodingTests: XCTestCase {
     }
 
     func testLanguageResolution() {
+        XCTAssertEqual(AppLanguage.resolve(["sv-SE"]), "sv")
+        XCTAssertEqual(AppLanguage.resolve(["de-DE"]), "de")
+        XCTAssertEqual(AppLanguage.resolve(["ko-KR"]), "en")
+        XCTAssertEqual(AppLanguage.resolve(["en-NO"]), "en")
+        XCTAssertEqual(AppLanguage.resolve(["en-NO", "nb-NO"]), "en")
         XCTAssertEqual(AppLanguage.resolve(["nb-NO"]), "nn")
         XCTAssertEqual(AppLanguage.resolve(["no"]), "nn")
         XCTAssertEqual(AppLanguage.resolve(["nn-NO"]), "nn")
-        XCTAssertEqual(AppLanguage.resolve(["en-GB"], region: "NO"), "nn")
-        XCTAssertEqual(AppLanguage.resolve(["sv-SE"], region: "NO"), "sv")
-        XCTAssertEqual(AppLanguage.resolve(["en-GB"], region: "GB"), "en")
-        XCTAssertEqual(AppLanguage.resolve(["sv-SE", "en"]), "sv")
         XCTAssertEqual(AppLanguage.resolve(["ko-KR", "da"]), "da")
-        XCTAssertEqual(AppLanguage.resolve(["de-DE"]), "de")
         XCTAssertEqual(AppLanguage.resolve(["zh-Hans-CN"]), "zh")
-        XCTAssertEqual(AppLanguage.resolve(["it-IT"]), "en")
+        XCTAssertEqual(AppLanguage.resolve([]), "en")
     }
 
-    func testNynorskFallsBackToBokmal() throws {
+    func testContentFallsBackToEnglish() throws {
         let json = """
-        {"id": "a", "title": "Bokmål", "title_en": "English", "language_code": "no",
-         "title_i18n": {"nn": "Nynorsk"}, "summary": "Summary", "summary_i18n": {"nb": "Sammendrag"}}
+        {"id": "a", "title": "Så kan Sverige", "title_en": "How Sweden", "language_code": "sv",
+         "title_i18n": {"nn": "Slik kan Sverige"}, "summary": "Summary", "summary_i18n": {"nb": "Sammendrag", "sv": "Sammanfattning"}}
         """
         let item = try JSONDecoder().decode(NewsItem.self, from: Data(json.utf8))
-        XCTAssertEqual(item.headline(for: "nn"), "Nynorsk")
-        XCTAssertNil(item.originalHeadline(for: "nn"))
-        XCTAssertEqual(item.headline(for: "nb"), "Bokmål")
+        XCTAssertEqual(item.headline(for: "sv"), "Så kan Sverige")
+        XCTAssertEqual(item.headline(for: "nn"), "Slik kan Sverige")
+        XCTAssertEqual(item.headline(for: "da"), "How Sweden")
+        XCTAssertEqual(item.headline(for: "de"), "How Sweden")
         XCTAssertEqual(item.summary(for: "nn"), "Sammendrag")
-        XCTAssertEqual(item.summary(for: "sv"), "Summary")
+        XCTAssertEqual(item.summary(for: "sv"), "Sammanfattning")
+        XCTAssertEqual(item.summary(for: "de"), "Summary")
         XCTAssertEqual(["nb": "Nett"].localized("nn"), "Nett")
+        XCTAssertEqual(["sv": "Nät"].localized("da", base: "Online"), "Online")
+        XCTAssertNil(["sv": "Nät"].localized("da"))
+    }
+
+    func testNorwegianOriginalCountsAsBokmal() throws {
+        let json = """
+        {"id": "a", "title": "Bokmål", "title_en": "English", "language_code": "no"}
+        """
+        let item = try JSONDecoder().decode(NewsItem.self, from: Data(json.utf8))
+        XCTAssertEqual(item.headline(for: "nn"), "Bokmål")
+        XCTAssertEqual(item.headline(for: "sv"), "English")
+        XCTAssertEqual(item.headline(for: "en"), "English")
+    }
+
+    func testEventDescriptionNeverShowsAnotherLanguage() throws {
+        let json = #"{"text": "Velkommen", "lang": "no", "i18n": {"en": "Welcome", "sv": "Välkommen"}}"#
+        let d = try JSONDecoder().decode(EventDescription.self, from: Data(json.utf8))
+        XCTAssertEqual(d.text(for: "nn"), "Velkommen")
+        XCTAssertEqual(d.text(for: "sv"), "Välkommen")
+        XCTAssertEqual(d.text(for: "de"), "Welcome")
+        let original = try JSONDecoder().decode(EventDescription.self, from: Data(#"{"text": "Velkommen", "lang": "no"}"#.utf8))
+        XCTAssertNil(original.text(for: "de"))
     }
 
     func testNynorskCatalogue() throws {
@@ -65,6 +89,5 @@ final class SnapshotDecodingTests: XCTestCase {
         let norwegian = try XCTUnwrap(feed.items.first { $0.languageCode == "no" && $0.titleEn != nil })
         XCTAssertEqual(norwegian.headline(for: "nb"), norwegian.title)
         XCTAssertEqual(norwegian.headline(for: "en"), norwegian.titleEn)
-        XCTAssertEqual(norwegian.originalHeadline(for: "en"), norwegian.title)
     }
 }
