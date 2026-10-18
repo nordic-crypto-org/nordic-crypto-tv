@@ -42,19 +42,31 @@ export async function seenIds(db, ids) {
   return new Set(results.map((r) => r.id));
 }
 
-/** Remembers stories as seen; the ones in `announce` are queued for every device that wants their country. */
+const publishedMs = (s) => {
+  const t = s.published ? Date.parse(s.published) : NaN;
+  return Number.isNaN(t) ? Infinity : t; // undated counts as newest, as in newStories
+};
+
+/**
+ * Remembers stories as seen and queues the ones in `announce`. A device gets at
+ * most one notification per run (one run = one publish): the newest announced
+ * story in one of its countries. The other new stories are only remembered.
+ */
 export async function recordStories(db, unseen, announce, nowMs) {
   const queue = new Set(announce.map((s) => s.id));
   const stmts = [];
   for (const s of unseen) {
     stmts.push(db.prepare("INSERT OR IGNORE INTO stories (id, seen_at, item) VALUES (?, ?, ?)")
       .bind(s.id, nowMs, queue.has(s.id) ? JSON.stringify(s) : null));
-    if (queue.has(s.id) && s.country) {
-      stmts.push(db.prepare(
-        "INSERT OR IGNORE INTO deliveries (story_id, token, queued_at) "
-        + "SELECT ?, token, ? FROM devices WHERE instr(countries, ?) > 0",
-      ).bind(s.id, nowMs, "," + s.country + ","));
-    }
+  }
+  const newestFirst = [...announce].sort((a, b) => publishedMs(b) - publishedMs(a));
+  for (const s of newestFirst) {
+    if (!s.country) continue;
+    stmts.push(db.prepare(
+      "INSERT OR IGNORE INTO deliveries (story_id, token, queued_at) "
+      + "SELECT ?, token, ? FROM devices WHERE instr(countries, ?) > 0 "
+      + "AND token NOT IN (SELECT token FROM deliveries WHERE queued_at = ?)",
+    ).bind(s.id, nowMs, "," + s.country + ",", nowMs));
   }
   if (stmts.length) await db.batch(stmts);
 }

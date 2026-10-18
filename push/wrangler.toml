@@ -4,8 +4,9 @@
 # that story's country. See docs/push.md.
 #
 # Do not put secrets in this file. The Worker secrets APNS_KEY_P8, APNS_KEY_ID,
-# APNS_TEAM_ID and FCM_SERVICE_ACCOUNT_JSON are GitHub repository secrets (set by
-# scripts/setup-push-secrets.sh); the deploy job uploads them (push/deploy.sh).
+# APNS_TEAM_ID, FCM_SERVICE_ACCOUNT_JSON and PUSH_PUBLISH_TOKEN are GitHub
+# repository secrets (set by scripts/setup-push-secrets.sh); the deploy job
+# uploads them (push/deploy.sh).
 name = "nordic-crypto-app-push"
 main = "src/worker.js"
 compatibility_date = "2026-09-01"
@@ -16,9 +17,11 @@ preview_urls = false
 [observability]
 enabled = false
 
-# Every five minutes: check the news API, queue new stories, send what is queued.
+# Hourly fallback: check the news API, queue new stories, send what is queued.
+# The normal path is POST /v1/publish from the site's "Deploy site" workflow
+# right after each successful publish (nordic-crypto-org/nordic-crypto).
 [triggers]
-crons = ["*/5 * * * *"]
+crons = ["0 * * * *"]
 
 [vars]
 FEED_URL = "https://nordiccrypto.no/api/v1/news/latest.json"
@@ -28,6 +31,9 @@ APNS_TOPIC = "no.cryptonordic.tv"
 # Pushes sent per cron run. The Workers Free plan allows 50 subrequests per
 # run; raise this (up to about 900) on Workers Paid.
 SENDS_PER_RUN = "40"
+# Language of every notification (headline and country name). Empty means the
+# language the device registered with.
+PUSH_LANGUAGE = "en"
 
 [[d1_databases]]
 binding = "DB"

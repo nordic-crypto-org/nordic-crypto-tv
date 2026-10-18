@@ -15,6 +15,8 @@
 #   CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
 #   APNS_KEY_P8, APNS_KEY_ID, APNS_TEAM_ID   (APNs key of the personal team YQBXSUUVJD)
 #   FCM_SERVICE_ACCOUNT_JSON                 (Firebase service account key)
+#   PUSH_PUBLISH_TOKEN                       (POST /v1/publish; the same value is
+#                                             APP_PUSH_PUBLISH_TOKEN in nordic-crypto-org/nordic-crypto)
 # A secret that is not set is skipped with a notice; the Worker keeps its value.
 name: Push server
 
@@ -95,6 +97,7 @@ jobs:
           APNS_KEY_ID: ${{ secrets.APNS_KEY_ID }}
           APNS_TEAM_ID: ${{ secrets.APNS_TEAM_ID }}
           FCM_SERVICE_ACCOUNT_JSON: ${{ secrets.FCM_SERVICE_ACCOUNT_JSON }}
+          PUSH_PUBLISH_TOKEN: ${{ secrets.PUSH_PUBLISH_TOKEN }}
           WRANGLER_SEND_METRICS: "false"
         run: |
           npm ci --no-audit --no-fund

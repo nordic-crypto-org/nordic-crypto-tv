@@ -1,5 +1,7 @@
 // Nordic Crypto app push server. See docs/push.md.
-//   Cron (every 5 minutes): poll the news API, queue new stories per country, send.
+//   POST   /v1/publish         run now (the site's Deploy site workflow, after a publish;
+//                              Authorization: Bearer <PUSH_PUBLISH_TOKEN>)
+//   Cron (hourly fallback): the same run: poll the news API, queue new stories, send.
 //   POST   /v1/devices         register or update a device
 //   DELETE /v1/devices/:token  forget a device
 //   GET    /v1/health          liveness
@@ -45,7 +47,21 @@ async function readBody(request) {
   try { return { value: JSON.parse(text) }; } catch { return { error: "bad_json" }; }
 }
 
-export async function handleFetch(request, env, nowMs = Date.now()) {
+/** Constant-time check of the publish bearer token (compares SHA-256 digests). */
+export async function publishAuthorized(request, env) {
+  const want = (env.PUSH_PUBLISH_TOKEN || "").trim();
+  const m = /^Bearer\s+(\S+)$/.exec(request.headers.get("authorization") || "");
+  if (!want || !m) return false;
+  const enc = new TextEncoder();
+  const [a, b] = await Promise.all([m[1], want].map((s) => crypto.subtle.digest("SHA-256", enc.encode(s))));
+  const x = new Uint8Array(a);
+  const y = new Uint8Array(b);
+  let diff = 0;
+  for (let i = 0; i < x.length; i++) diff |= x[i] ^ y[i];
+  return diff === 0;
+}
+
+export async function handleFetch(request, env, nowMs = Date.now(), fetchImpl = fetch) {
   const url = new URL(request.url);
   const path = url.pathname.replace(/\/+$/, "") || "/";
 
@@ -56,8 +72,17 @@ export async function handleFetch(request, env, nowMs = Date.now()) {
       service: SERVICE,
       apns: apnsConfigured(env),
       fcm: fcmConfigured(env),
+      publish: Boolean((env.PUSH_PUBLISH_TOKEN || "").trim()),
       platforms: Object.keys(PLATFORMS),
     });
+  }
+
+  if (path === "/v1/publish") {
+    if (request.method !== "POST") return json({ ok: false, error: "method" }, 405);
+    if (!(env.PUSH_PUBLISH_TOKEN || "").trim()) return json({ ok: false, error: "not_configured" }, 503);
+    if (!(await publishAuthorized(request, env))) return json({ ok: false, error: "unauthorized" }, 401);
+    const result = await runCron(env, nowMs, fetchImpl);
+    return json({ ok: true, ...result });
   }
 
   if (path === "/v1/devices") {
@@ -170,7 +195,8 @@ export async function sendQueued(env, nowMs, fetchImpl = fetch) {
 
   async function one(row) {
     const item = JSON.parse(row.item);
-    const device = { token: row.token, platform: row.platform, environment: row.environment, language: row.language };
+    const language = (env.PUSH_LANGUAGE || "").trim() || row.language;
+    const device = { token: row.token, platform: row.platform, environment: row.environment, language };
     const t = transportFor(row.platform);
     let req;
     let classify;
