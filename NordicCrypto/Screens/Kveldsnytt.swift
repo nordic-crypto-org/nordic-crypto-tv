@@ -235,7 +235,7 @@ private struct KAgenda: View {
 
     var body: some View {
         let events = store.upcomingEvents
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(alignment: .firstTextBaseline) {
                 Text("Coming up")
                     .font(.system(size: 26, weight: .bold))
@@ -248,6 +248,7 @@ private struct KAgenda: View {
             if events.isEmpty {
                 Text("No upcoming events").font(.system(size: 22)).foregroundStyle(NL.textTertiary)
             } else {
+                AgendaTimeline(events: events, shown: min(7, events.count), interval: 15, offset: 7)
                 Rotating(items: Array(events.indices), interval: 15, offset: 7) { i, _ in
                     VStack(alignment: .leading, spacing: 6) {
                         FeaturedEventK(event: events[i], isNext: i == 0)
@@ -262,6 +263,98 @@ private struct KAgenda: View {
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(K.aside, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+    }
+}
+
+/// Date axis over the agenda: today, months ahead, every event as a dot,
+/// the events on screen highlighted, and a bar filling up to the next switch.
+private struct AgendaTimeline: View {
+    let events: [EventItem]
+    let shown: Int
+    let interval: Double
+    let offset: Double
+    @Environment(FeedStore.self) private var store
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 1)) { context in
+            let t = context.date.timeIntervalSinceReferenceDate + offset
+            let page = Rotating<Int, EmptyView>.freeze ?? (Int(t / interval) % events.count)
+            let progress = Rotating<Int, EmptyView>.freeze == nil ? (t / interval).truncatingRemainder(dividingBy: 1) : 0
+            GeometryReader { geo in
+                axis(page: page, width: geo.size.width, now: context.date)
+            }
+            .frame(height: 36)
+            .overlay(alignment: .bottomLeading) {
+                GeometryReader { geo in
+                    Capsule().fill(K.rule)
+                    Capsule().fill(NL.accent.opacity(0.6))
+                        .frame(width: geo.size.width * progress)
+                        .animation(progress < 0.1 ? nil : .linear(duration: 1), value: progress)
+                }
+                .frame(height: 3)
+                .offset(y: 8)
+            }
+            .padding(.bottom, 8)
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func axis(page: Int, width: CGFloat, now: Date) -> some View {
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: now)
+        let last = events.compactMap(\.start).max() ?? today
+        let end = max(last, cal.date(byAdding: .day, value: 30, to: today) ?? last)
+        let span = max(end.timeIntervalSince(today), 1)
+        let inset: CGFloat = 8
+        func x(_ date: Date) -> CGFloat {
+            inset + (width - 2 * inset) * CGFloat(min(max(date.timeIntervalSince(today) / span, 0), 1))
+        }
+        let window = (0..<shown).map { (page + $0) % events.count }
+        let runs = [window.prefix { $0 >= page }, window.drop { $0 >= page }].filter { !$0.isEmpty }
+        let months = sequence(first: cal.dateInterval(of: .month, for: today)?.end ?? end) {
+            cal.date(byAdding: .month, value: 1, to: $0)
+        }.prefix { $0 <= end }
+        let lineY: CGFloat = 26
+
+        return ZStack(alignment: .topLeading) {
+            Rectangle().fill(K.rule).frame(height: 2).offset(y: lineY - 1)
+            ForEach(Array(months), id: \.self) { month in
+                Rectangle().fill(K.rule).frame(width: 2, height: 12).offset(x: x(month) - 1, y: lineY - 6)
+                if x(month) > 70, x(month) < width - 44 {
+                    Text(month.formatted(.dateTime.month(.abbreviated).locale(Formats.locale(store.lang))))
+                        .font(.system(size: 14, weight: .bold))
+                        .textCase(.uppercase)
+                        .foregroundStyle(NL.textTertiary)
+                        .fixedSize()
+                        .offset(x: x(month) + 5)
+                }
+            }
+            Text("Today")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(NL.accent)
+                .fixedSize()
+            ForEach(Array(runs.enumerated()), id: \.offset) { _, run in
+                if let a = events[run.first!].start, let b = events[run.last!].start {
+                    Capsule()
+                        .fill(NL.accent.opacity(0.22))
+                        .frame(width: x(b) - x(a) + 18, height: 18)
+                        .offset(x: x(a) - 9, y: lineY - 9)
+                }
+            }
+            ForEach(Array(events.enumerated()), id: \.offset) { i, event in
+                if let start = event.start {
+                    let d: CGFloat = i == page ? 14 : 8
+                    Circle()
+                        .fill(NL.country(event.country).opacity(window.contains(i) ? 1 : 0.35))
+                        .frame(width: d, height: d)
+                        .overlay { if i == page { Circle().stroke(NL.textPrimary, lineWidth: 2) } }
+                        .offset(x: x(start) - d / 2, y: lineY - d / 2)
+                }
+            }
+            Rectangle().fill(NL.accent).frame(width: 2, height: 20).offset(x: inset - 1, y: lineY - 10)
+        }
+        .frame(width: width, alignment: .topLeading)
+        .animation(.smooth(duration: 0.9), value: page)
     }
 }
 
