@@ -168,6 +168,13 @@ read-only deploy key for that repo (secret `MATCH_GIT_PRIVATE_KEY`) and sets the
 `APPLE_TEAM_ID`, `MATCH_GIT_URL` and `MATCH_GIT_BRANCH`. Until then the TestFlight workflow skips with
 a notice. To deploy by hand: `gh workflow run testflight.yml --ref main`.
 
+## Deploying Apple TV to the App Store
+The [App Store workflow](.github/workflows/appstore.yml) runs the Build workflow's tests, then archives,
+signs and uploads the tvOS app to App Store Connect (same secrets as TestFlight). It runs by hand
+(`gh workflow run appstore.yml --ref main`) or on a tag `appstore-tvos-v<MARKETING_VERSION>`, never on
+pushes to `main`. Submitting for App Store review is opt-in: `-f submit_for_review=true`, only after the
+store listing has been approved.
+
 ## Licence and contributing
 MIT, see [LICENSE](LICENSE). Issues and pull requests are welcome. The news data comes from the
 [Nordic Crypto API](https://github.com/jQrgen/nordic-crypto) (also MIT); headlines belong to their
