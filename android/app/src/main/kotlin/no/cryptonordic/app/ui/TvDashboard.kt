@@ -24,7 +24,6 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -175,7 +174,6 @@ private fun Lead(feed: Feed, lang: String, tick: Long, modifier: Modifier) {
             }
             Text(story.headline(lang), color = NL.textPrimary, fontSize = 58.sp, lineHeight = 62.sp, fontFamily = NL.serif,
                 fontWeight = FontWeight.Bold, maxLines = 3, overflow = TextOverflow.Ellipsis)
-            story.originalHeadline(lang)?.let { Text(it, color = NL.textTertiary, fontSize = 16.sp, fontStyle = FontStyle.Italic, maxLines = 1) }
             // Summary takes the rest of the panel; ellipsis only if it runs out of room.
             Row(Modifier.weight(1f, fill = false), verticalAlignment = Alignment.Bottom) {
                 story.summary(lang)?.let {

@@ -31,18 +31,11 @@ data class NewsItem(
 ) {
     val publishedAt: OffsetDateTime? get() = published?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
 
-    /** The reader's language (nynorsk, then bokmål) when we have it, else the English title. */
-    fun headline(lang: String): String {
-        for (l in Lang.fallbacks(lang)) {
-            if (languageCode == l || (l == "nb" && languageCode == "no")) return title
-            titleI18n[l]?.let { return it }
-        }
-        return if (languageCode != null && Lang.sameFamily(languageCode, lang)) title else titleEn ?: title
-    }
+    /** Headline in the reader's language (nynorsk, then bokmål), else English. */
+    fun headline(lang: String): String =
+        (titleI18n + listOfNotNull(titleEn?.let { "en" to it })).localized(lang, title, languageCode) ?: title
 
-    fun originalHeadline(lang: String): String? =
-        headline(lang).let { if (it == title || (languageCode != null && Lang.sameFamily(languageCode, lang))) null else title }
-    fun summary(lang: String): String? = summaryI18n.localized(lang) ?: summary
+    fun summary(lang: String): String? = summaryI18n.localized(lang, summary)
 }
 
 @Serializable
@@ -67,6 +60,7 @@ data class EventItem(
     val past: Boolean? = false,
     val going: Int? = null,
 ) {
+    fun note(lang: String): String? = noteI18n.localized(lang, note)
     val startAt: OffsetDateTime? get() = start?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
     val endAt: OffsetDateTime? get() = end?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
 }
@@ -90,9 +84,9 @@ data class NewsletterIssue(
     val text: String? = null,
     @SerialName("text_i18n") val textI18n: Map<String, String> = emptyMap(),
 ) {
-    fun title(lang: String) = titleI18n.localized(lang) ?: title
-    fun subtitle(lang: String) = subtitleI18n.localized(lang) ?: subtitle
-    fun text(lang: String) = textI18n.localized(lang) ?: text
+    fun title(lang: String) = titleI18n.localized(lang, title) ?: title
+    fun subtitle(lang: String) = subtitleI18n.localized(lang, subtitle)
+    fun text(lang: String) = textI18n.localized(lang, text)
     val day: LocalDate? get() = date?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
 }
 

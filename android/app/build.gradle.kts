@@ -72,4 +72,5 @@ dependencies {
     implementation("androidx.work:work-runtime-ktx:2.11.2")
     implementation("com.google.zxing:core:3.5.3")
     implementation("com.google.firebase:firebase-messaging:25.1.3")
+    testImplementation("junit:junit:4.13.2")
 }
