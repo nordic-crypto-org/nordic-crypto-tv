@@ -25,7 +25,6 @@ class Radio(private val context: Context) {
         )
     }
 
-    private val prefs = context.getSharedPreferences("radio", Context.MODE_PRIVATE)
     var isOn by mutableStateOf(false)
         private set
     var station by mutableStateOf(stations[0])
