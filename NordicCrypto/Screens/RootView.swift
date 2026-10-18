@@ -39,7 +39,7 @@ struct RootView: View {
         #if os(tvOS)
         TabView {
             Tab("Today", systemImage: "sun.horizon") { SignageView() }
-            Tab("Badge", systemImage: "checkmark.shield") { BadgeView() }
+            Tab("Nordic Shield NFT", systemImage: "checkmark.shield") { BadgeView() }
             Tab("Contact us", systemImage: "envelope") { ContactView() }
         }
         .environment(store)
@@ -67,7 +67,7 @@ struct RootView: View {
             Tab("Newsletter", systemImage: "envelope.open", value: AppTab.newsletter) {
                 stack(.newsletter) { NewsletterView() }
             }
-            Tab("Badge", systemImage: "checkmark.shield", value: AppTab.badge) {
+            Tab("Nordic Shield NFT", systemImage: "checkmark.shield", value: AppTab.badge) {
                 NavigationStack { BadgeView() }
             }
             Tab("Contact us", systemImage: "envelope", value: AppTab.contact) {
