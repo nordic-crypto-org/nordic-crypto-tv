@@ -1,1 +1,1 @@
-Android TV: tab bar with Today, Nordic Shield NFT and Contact us, and three radio stations (Radio Norge, Techno Underground | Fluxmusic, Berlin Beach House Radio) that play through the TV's chosen audio output.
+Android TV: tab bar with Today, Nordic Shield NFT and Contact us, and Radio Norge, which plays through the TV's chosen audio output.

@@ -13,7 +13,7 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.session.MediaSession
 
-/** Radio behind the Android TV screen, like the Apple TV one. On by default; station and on/off are remembered. */
+/** Radio Norge behind the Android TV screen, like the Apple TV one. On by default; on/off is remembered. The other stations are an easter egg (see [select]). */
 class Radio(private val context: Context) {
     data class Station(val name: String, val stream: String)
 
@@ -28,12 +28,13 @@ class Radio(private val context: Context) {
     private val prefs = context.getSharedPreferences("radio", Context.MODE_PRIVATE)
     var isOn by mutableStateOf(prefs.getBoolean("on", true))
         private set
-    var station by mutableStateOf(stations.firstOrNull { it.name == prefs.getString("station", null) } ?: stations[0])
+    var station by mutableStateOf(stations[0])
         private set
     var isPlaying by mutableStateOf(false)
         private set
     private var player: ExoPlayer? = null
     private var session: MediaSession? = null
+    private val presses = mutableListOf<Long>()
 
     fun start() { if (isOn) play() }
 
@@ -43,9 +44,17 @@ class Radio(private val context: Context) {
         if (isOn) play() else stop()
     }
 
-    fun next() {
+    /** OK on the radio chip: five quick presses switch to the next station. */
+    fun select(now: Long = System.currentTimeMillis()) {
+        if (presses.isNotEmpty() && now - presses.last() > 1500) presses.clear()
+        presses += now
+        if (presses.size < 5) return
+        presses.clear()
+        next()
+    }
+
+    private fun next() {
         station = stations[(stations.indexOf(station) + 1) % stations.size]
-        prefs.edit().putString("station", station.name).apply()
         if (isOn) play()
     }
 

@@ -37,7 +37,7 @@ import java.time.ZonedDateTime
 /**
  * The Android TV app, like the Apple TV one: a tab bar with Today (the "Kveldsnytt"
  * page: lead story, cards, agenda and spotlight), Nordic Shield NFT and Contact us.
- * Play/Pause switches the radio, fast forward or OK on the radio chip changes station.
+ * Play/Pause switches the radio.
  */
 @Composable
 fun TvDashboard(store: Store, radio: Radio) {
@@ -60,7 +60,6 @@ fun TvDashboard(store: Store, radio: Radio) {
                 if (it.type != KeyEventType.KeyUp) return@onPreviewKeyEvent false
                 when (it.key) {
                     Key.MediaPlayPause, Key.MediaPlay, Key.MediaPause -> { radio.toggle(); true }
-                    Key.MediaFastForward, Key.MediaNext -> { radio.next(); true }
                     else -> false
                 }
             }
@@ -122,7 +121,7 @@ private fun TabButton(label: String, selected: Boolean, modifier: Modifier, onSe
 private fun RadioChip(radio: Radio) {
     var focused by remember { mutableStateOf(false) }
     Row(Modifier.onFocusChanged { focused = it.isFocused }.clip(RoundedCornerShape(50))
-        .background(if (focused) NL.accent else NL.raised).clickable { radio.next() }
+        .background(if (focused) NL.accent else NL.raised).clickable { radio.select() }
         .padding(horizontal = 14.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(if (radio.isOn) "🔊" else "🔇", fontSize = 14.sp)
