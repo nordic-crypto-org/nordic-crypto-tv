@@ -34,7 +34,7 @@ struct StoryDetailView: View {
                     StoryText(item: item, lang: store.lang, focused: $summaryFocused)
                     Spacer(minLength: 0)
                     HStack {
-                        Text("Headline © \(item.sourceName ?? String(localized: "the publisher")). Summary by the Nordic Crypto team. Not investment advice.")
+                        Text("Headline © \(item.sourceName ?? String(localized: "the publisher", bundle: AppLanguage.bundle)). Summary by the Nordic Crypto team. Not investment advice.")
                         Spacer()
                         if let position {
                             Text(verbatim: "‹  \(position + 1) / \(store.news.count)  ›")
@@ -72,7 +72,7 @@ struct StoryDetailView: View {
                     .padding(NLMetrics.margin)
                     .frame(maxWidth: 720, alignment: .leading)
                     .padding(.top, -90)
-                Text("Headline © \(item.sourceName ?? String(localized: "the publisher")). Summary by the Nordic Crypto team. Not investment advice.")
+                Text("Headline © \(item.sourceName ?? String(localized: "the publisher", bundle: AppLanguage.bundle)). Summary by the Nordic Crypto team. Not investment advice.")
                     .font(NLFont.caption)
                     .foregroundStyle(NL.textTertiary)
                     .padding(.horizontal, NLMetrics.margin)
@@ -176,7 +176,7 @@ private struct SourceActions: View {
     var body: some View {
         HStack(spacing: 12) {
             Link(destination: url) {
-                Label(source.map { String(localized: "Read at \($0)") } ?? String(localized: "Open event page"),
+                Label(source.map { String(localized: "Read at \($0)", bundle: AppLanguage.bundle) } ?? String(localized: "Open event page", bundle: AppLanguage.bundle),
                       systemImage: "safari")
                     .frame(maxWidth: .infinity)
             }
@@ -328,7 +328,7 @@ struct EventDetailView: View {
         guard let name, !name.isEmpty else { return nil }
         let retrieved = event.description?.retrieved ?? event.placeSource?.retrieved
         guard let retrieved else { return name }
-        return name + " · " + String(localized: "retrieved \(Formats.day(retrieved, lang: store.lang))")
+        return name + " · " + String(localized: "retrieved \(Formats.day(retrieved, lang: store.lang))", bundle: AppLanguage.bundle)
     }
 
     private var sourceLink: (title: LocalizedStringKey, url: URL)? {
@@ -454,7 +454,7 @@ private struct AddToCalendarSheet: UIViewControllerRepresentable {
         item.endDate = event.end ?? event.start?.addingTimeInterval(60 * 60)
         item.location = event.location(lang: lang)
         item.url = event.url ?? event.page(for: lang)
-        item.notes = [event.organiser.map { String(localized: "Organiser: \($0)") },
+        item.notes = [event.organiser.map { String(localized: "Organiser: \($0)", bundle: AppLanguage.bundle) },
                       event.description?.text(for: lang),
                       event.page(for: lang)?.absoluteString]
             .compactMap { $0 }.joined(separator: "\n\n")

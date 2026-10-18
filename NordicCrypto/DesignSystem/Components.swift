@@ -253,8 +253,8 @@ struct StatusPill: View {
     private var label: String {
         let time = Formats.time(store.updated, lang: store.lang)
         switch store.status {
-        case .offline: return String(localized: "Offline · showing saved news")
-        default: return String(localized: "Updated \(time)")
+        case .offline: return String(localized: "Offline · showing saved news", bundle: AppLanguage.bundle)
+        default: return String(localized: "Updated \(time)", bundle: AppLanguage.bundle)
         }
     }
 }
@@ -430,8 +430,8 @@ enum Formats {
     /// "Today", "Yesterday", then "Thursday 1 October".
     static func dayHeader(_ date: Date, lang: String) -> String {
         let cal = Calendar.current
-        if cal.isDateInToday(date) { return String(localized: "Today") }
-        if cal.isDateInYesterday(date) { return String(localized: "Yesterday") }
+        if cal.isDateInToday(date) { return String(localized: "Today", bundle: AppLanguage.bundle) }
+        if cal.isDateInYesterday(date) { return String(localized: "Yesterday", bundle: AppLanguage.bundle) }
         return date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(locale(lang)))
     }
 

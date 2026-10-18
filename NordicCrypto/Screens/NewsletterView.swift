@@ -243,8 +243,8 @@ struct ReaderView: View {
                     .font(NLFont.display)
                     .foregroundStyle(NL.textPrimary)
                     .padding(.bottom, 8)
-                Text(verbatim: [issue.stories.map { String(localized: "\($0) stories") },
-                                issue.events.map { String(localized: "\($0) events") }]
+                Text(verbatim: [issue.stories.map { String(localized: "\($0) stories", bundle: AppLanguage.bundle) },
+                                issue.events.map { String(localized: "\($0) events", bundle: AppLanguage.bundle) }]
                         .compactMap { $0 }.joined(separator: " · "))
                     .font(NLFont.kicker)
                     .foregroundStyle(NL.accent2)

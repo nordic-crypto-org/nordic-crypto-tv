@@ -160,7 +160,7 @@ struct EventMiniCard: View {
                         .foregroundStyle(NL.textPrimary)
                         .lineLimit(2)
                         .multilineTextAlignment(.leading)
-                    Text(verbatim: [event.online ? String(localized: "Online") : event.city, Formats.time(event.start, lang: store.lang)]
+                    Text(verbatim: [event.online ? String(localized: "Online", bundle: AppLanguage.bundle) : event.city, Formats.time(event.start, lang: store.lang)]
                         .compactMap { $0 }.joined(separator: " · "))
                         .font(NLFont.caption)
                         .foregroundStyle(NL.textSecondary)

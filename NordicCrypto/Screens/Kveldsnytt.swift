@@ -314,7 +314,7 @@ private struct FeaturedEventK: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
-                Text(verbatim: [event.online ? String(localized: "Online") : event.city, event.organiser]
+                Text(verbatim: [event.online ? String(localized: "Online", bundle: AppLanguage.bundle) : event.city, event.organiser]
                     .compactMap { $0 }.joined(separator: " · "))
                     .font(.system(size: 18))
                     .foregroundStyle(NL.textSecondary)
@@ -364,7 +364,7 @@ private struct EventRowK: View {
                     .font(.system(size: 23, weight: .semibold))
                     .foregroundStyle(NL.textPrimary)
                     .lineLimit(1)
-                Text(verbatim: [event.online ? String(localized: "Online") : event.city,
+                Text(verbatim: [event.online ? String(localized: "Online", bundle: AppLanguage.bundle) : event.city,
                                 Formats.time(event.start, lang: store.lang), event.organiser]
                     .compactMap { $0 }.joined(separator: " · "))
                     .font(.system(size: 17))
