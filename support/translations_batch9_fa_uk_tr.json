@@ -1,0 +1,587 @@
+{
+ "%@, %lld stories": {
+  "fa": "%@، %lld خبر",
+  "uk": "%@, %lld новин",
+  "tr": "%@, %lld haber"
+ },
+ "%lld / %lld minted": {
+  "fa": "%lld / %lld ضرب‌شده",
+  "uk": "%lld / %lld викарбувано",
+  "tr": "%lld / %lld basıldı"
+ },
+ "%lld events": {
+  "fa": "%lld رویداد",
+  "uk": "%lld подій",
+  "tr": "%lld etkinlik"
+ },
+ "%lld going": {
+  "fa": "%lld نفر می‌آیند",
+  "uk": "%lld учасників",
+  "tr": "%lld katılıyor"
+ },
+ "%lld new stories": {
+  "fa": "%lld خبر تازه",
+  "uk": "%lld нових новин",
+  "tr": "%lld yeni haber"
+ },
+ "%lld stories": {
+  "fa": "%lld خبر",
+  "uk": "%lld новин",
+  "tr": "%lld haber"
+ },
+ "%lld stories · %lld upcoming events": {
+  "fa": "%lld خبر · %lld رویداد پیش رو",
+  "uk": "%lld новин · %lld майбутніх подій",
+  "tr": "%lld haber · %lld yaklaşan etkinlik"
+ },
+ "All": {
+  "fa": "همه",
+  "uk": "Усі",
+  "tr": "Tümü"
+ },
+ "All %lld events": {
+  "fa": "همهٔ %lld رویداد",
+  "uk": "Усі %lld подій",
+  "tr": "%lld etkinliğin tümü"
+ },
+ "All 1,000 badges have been minted.": {
+  "fa": "هر ۱٬۰۰۰ نشان ضرب شده‌اند.",
+  "uk": "Усі 1000 значків викарбувано.",
+  "tr": "1.000 rozetin tamamı basıldı."
+ },
+ "Badge": {
+  "fa": "نشان",
+  "uk": "Значок",
+  "tr": "Rozet"
+ },
+ "Badge #%lld sent.": {
+  "fa": "نشان شمارهٔ %lld ارسال شد.",
+  "uk": "Значок № %lld надіслано.",
+  "tr": "%lld numaralı rozet gönderildi."
+ },
+ "Badge sent.": {
+  "fa": "نشان ارسال شد.",
+  "uk": "Значок надіслано.",
+  "tr": "Rozet gönderildi."
+ },
+ "By country": {
+  "fa": "بر اساس کشور",
+  "uk": "За країнами",
+  "tr": "Ülkeye göre"
+ },
+ "Chat on Telegram": {
+  "fa": "گفت‌وگو در تلگرام",
+  "uk": "Чат у Telegram",
+  "tr": "Telegram'da sohbet"
+ },
+ "Collectible badge, no economic rights.": {
+  "fa": "نشان کلکسیونی، بدون هیچ حق اقتصادی.",
+  "uk": "Колекційний значок без жодних економічних прав.",
+  "tr": "Koleksiyon rozeti, ekonomik hak içermez."
+ },
+ "Coming up": {
+  "fa": "به‌زودی",
+  "uk": "Незабаром",
+  "tr": "Yakında"
+ },
+ "Company": {
+  "fa": "شرکت",
+  "uk": "Компанія",
+  "tr": "Şirket"
+ },
+ "Contact page": {
+  "fa": "صفحهٔ تماس",
+  "uk": "Сторінка контактів",
+  "tr": "İletişim sayfası"
+ },
+ "Contact us": {
+  "fa": "تماس با ما",
+  "uk": "Зв’язатися з нами",
+  "tr": "Bize ulaşın"
+ },
+ "Countries": {
+  "fa": "کشورها",
+  "uk": "Країни",
+  "tr": "Ülkeler"
+ },
+ "Country": {
+  "fa": "کشور",
+  "uk": "Країна",
+  "tr": "Ülke"
+ },
+ "Course": {
+  "fa": "درس",
+  "uk": "Курс",
+  "tr": "Ders"
+ },
+ "Denmark": {
+  "fa": "دانمارک",
+  "uk": "Данія",
+  "tr": "Danimarka"
+ },
+ "Done": {
+  "fa": "تمام",
+  "uk": "Готово",
+  "tr": "Bitti"
+ },
+ "Edition of 1,000, while supply lasts.": {
+  "fa": "نسخهٔ محدود ۱٬۰۰۰ عددی، تا پایان موجودی.",
+  "uk": "Тираж 1000, поки є в наявності.",
+  "tr": "1.000 adetlik seri, stoklar tükenene kadar."
+ },
+ "Email": {
+  "fa": "ایمیل",
+  "uk": "Електронна пошта",
+  "tr": "E-posta"
+ },
+ "Events": {
+  "fa": "رویدادها",
+  "uk": "Події",
+  "tr": "Etkinlikler"
+ },
+ "Finland": {
+  "fa": "فنلاند",
+  "uk": "Фінляндія",
+  "tr": "Finlandiya"
+ },
+ "Free": {
+  "fa": "رایگان",
+  "uk": "Безкоштовно",
+  "tr": "Ücretsiz"
+ },
+ "Free from Nordic Crypto, you pay a small Nexa network fee yourself.": {
+  "fa": "رایگان از طرف Nordic Crypto؛ کارمزد کوچک شبکهٔ Nexa را خودتان می‌پردازید.",
+  "uk": "Безкоштовно від Nordic Crypto, невелику комісію мережі Nexa ви сплачуєте самі.",
+  "tr": "Nordic Crypto'dan ücretsiz; küçük Nexa ağ ücretini siz ödersiniz."
+ },
+ "Get Wally Wallet from the App Store or Google Play.": {
+  "fa": "Wally Wallet را از App Store یا Google Play دریافت کنید.",
+  "uk": "Завантажте Wally Wallet з App Store або Google Play.",
+  "tr": "Wally Wallet'ı App Store'dan veya Google Play'den indirin."
+ },
+ "Headline © %@. Summary by the Nordic Crypto team. Not investment advice.": {
+  "fa": "تیتر © %@. خلاصه از تیم Nordic Crypto. توصیهٔ سرمایه‌گذاری نیست.",
+  "uk": "Заголовок © %@. Підсумок від команди Nordic Crypto. Не є інвестиційною порадою.",
+  "tr": "Başlık © %@. Özet: Nordic Crypto ekibi. Yatırım tavsiyesi değildir."
+ },
+ "Hide past events": {
+  "fa": "پنهان کردن رویدادهای گذشته",
+  "uk": "Сховати минулі події",
+  "tr": "Geçmiş etkinlikleri gizle"
+ },
+ "Iceland": {
+  "fa": "ایسلند",
+  "uk": "Ісландія",
+  "tr": "İzlanda"
+ },
+ "Join the Nordic Crypto chat on Telegram": {
+  "fa": "به گفت‌وگوی Nordic Crypto در تلگرام بپیوندید",
+  "uk": "Приєднуйтесь до чату Nordic Crypto у Telegram",
+  "tr": "Telegram'daki Nordic Crypto sohbetine katılın"
+ },
+ "Latest": {
+  "fa": "تازه‌ترین",
+  "uk": "Найновіше",
+  "tr": "En yeni"
+ },
+ "Logo: %@": {
+  "fa": "لوگو: %@",
+  "uk": "Логотип: %@",
+  "tr": "Logo: %@"
+ },
+ "Mint in Wally Wallet": {
+  "fa": "ضرب در Wally Wallet",
+  "uk": "Викарбувати у Wally Wallet",
+  "tr": "Wally Wallet'ta bas"
+ },
+ "Minting opens soon.": {
+  "fa": "ضرب به‌زودی آغاز می‌شود.",
+  "uk": "Карбування скоро відкриється.",
+  "tr": "Basım yakında açılıyor."
+ },
+ "More news": {
+  "fa": "خبرهای بیشتر",
+  "uk": "Більше новин",
+  "tr": "Daha fazla haber"
+ },
+ "New stories arrive as push notifications, delivered by Apple or Google. Our push server keeps only this device's push token, the countries you pick and your language. Turning notifications off deletes them.": {
+  "fa": "خبرهای تازه به‌صورت اعلان از طریق Apple یا Google می‌رسند. سرور اعلان ما فقط توکن اعلان این دستگاه، کشورهای انتخابی و زبان شما را نگه می‌دارد. با خاموش کردن اعلان‌ها این داده‌ها حذف می‌شوند.",
+  "uk": "Нові новини надходять як push-сповіщення через Apple або Google. Наш push-сервер зберігає лише push-токен цього пристрою, вибрані вами країни та вашу мову. Вимкнення сповіщень видаляє ці дані.",
+  "tr": "Yeni haberler Apple veya Google aracılığıyla anlık bildirim olarak gelir. Bildirim sunucumuz yalnızca bu cihazın bildirim belirtecini, seçtiğiniz ülkeleri ve dilinizi saklar. Bildirimleri kapatmak bunları siler."
+ },
+ "Newsletter": {
+  "fa": "خبرنامه",
+  "uk": "Розсилка",
+  "tr": "Bülten"
+ },
+ "Newsreel": {
+  "fa": "ویدئوی خبری",
+  "uk": "Відеоновини",
+  "tr": "Haber videosu"
+ },
+ "Next": {
+  "fa": "بعدی",
+  "uk": "Далі",
+  "tr": "Sıradaki"
+ },
+ "No issues yet": {
+  "fa": "هنوز شماره‌ای منتشر نشده",
+  "uk": "Випусків ще немає",
+  "tr": "Henüz sayı yok"
+ },
+ "No stories yet": {
+  "fa": "هنوز خبری نیست",
+  "uk": "Новин ще немає",
+  "tr": "Henüz haber yok"
+ },
+ "No upcoming events": {
+  "fa": "رویداد پیش رویی نیست",
+  "uk": "Немає майбутніх подій",
+  "tr": "Yaklaşan etkinlik yok"
+ },
+ "Nordic Crypto checks for new stories every 15 minutes while it runs, also from the menu bar. Nothing about you leaves this Mac.": {
+  "fa": "Nordic Crypto تا زمانی که باز است، هر ۱۵ دقیقه خبرهای تازه را بررسی می‌کند، از نوار منو هم. هیچ اطلاعاتی دربارهٔ شما از این Mac خارج نمی‌شود.",
+  "uk": "Nordic Crypto перевіряє нові новини кожні 15 хвилин, поки працює, також із рядка меню. Жодні дані про вас не залишають цей Mac.",
+  "tr": "Nordic Crypto çalıştığı sürece, menü çubuğundan da, her 15 dakikada yeni haberleri denetler. Sizinle ilgili hiçbir şey bu Mac'ten çıkmaz."
+ },
+ "Nordic Crypto summary": {
+  "fa": "خلاصهٔ Nordic Crypto",
+  "uk": "Підсумок від Nordic Crypto",
+  "tr": "Nordic Crypto özeti"
+ },
+ "Norway": {
+  "fa": "نروژ",
+  "uk": "Норвегія",
+  "tr": "Norveç"
+ },
+ "Not investment advice": {
+  "fa": "توصیهٔ سرمایه‌گذاری نیست",
+  "uk": "Не є інвестиційною порадою",
+  "tr": "Yatırım tavsiyesi değildir"
+ },
+ "Not investment advice · Headlines © their publishers · Summaries by Nordic Crypto": {
+  "fa": "توصیهٔ سرمایه‌گذاری نیست · تیترها © ناشران آن‌ها · خلاصه‌ها از Nordic Crypto",
+  "uk": "Не є інвестиційною порадою · Заголовки © їхні видавці · Підсумки від Nordic Crypto",
+  "tr": "Yatırım tavsiyesi değildir · Başlıklar © yayıncılarına aittir · Özetler: Nordic Crypto"
+ },
+ "Note": {
+  "fa": "یادداشت",
+  "uk": "Примітка",
+  "tr": "Not"
+ },
+ "Notifications": {
+  "fa": "اعلان‌ها",
+  "uk": "Сповіщення",
+  "tr": "Bildirimler"
+ },
+ "Notifications are turned off for Nordic Crypto in Settings.": {
+  "fa": "اعلان‌های Nordic Crypto در تنظیمات خاموش است.",
+  "uk": "Сповіщення для Nordic Crypto вимкнено в Параметрах.",
+  "tr": "Nordic Crypto için bildirimler Ayarlar'da kapalı."
+ },
+ "Notifications…": {
+  "fa": "اعلان‌ها…",
+  "uk": "Сповіщення…",
+  "tr": "Bildirimler…"
+ },
+ "Notify me about new stories": {
+  "fa": "خبرهای تازه را به من اطلاع بده",
+  "uk": "Сповіщати про нові новини",
+  "tr": "Yeni haberleri bana bildir"
+ },
+ "Off": {
+  "fa": "خاموش",
+  "uk": "Вимк.",
+  "tr": "Kapalı"
+ },
+ "Offline · showing saved news": {
+  "fa": "آفلاین · نمایش خبرهای ذخیره‌شده",
+  "uk": "Офлайн · показано збережені новини",
+  "tr": "Çevrimdışı · kaydedilen haberler gösteriliyor"
+ },
+ "On": {
+  "fa": "روشن",
+  "uk": "Увімк.",
+  "tr": "Açık"
+ },
+ "Online": {
+  "fa": "آنلاین",
+  "uk": "Онлайн",
+  "tr": "Çevrimiçi"
+ },
+ "Open Settings": {
+  "fa": "باز کردن تنظیمات",
+  "uk": "Відкрити Параметри",
+  "tr": "Ayarlar'ı aç"
+ },
+ "Open event page": {
+  "fa": "باز کردن صفحهٔ رویداد",
+  "uk": "Відкрити сторінку події",
+  "tr": "Etkinlik sayfasını aç"
+ },
+ "Open source on GitHub": {
+  "fa": "متن‌باز در GitHub",
+  "uk": "Відкритий код на GitHub",
+  "tr": "GitHub'da açık kaynak"
+ },
+ "Open the web page": {
+  "fa": "باز کردن صفحهٔ وب",
+  "uk": "Відкрити вебсторінку",
+  "tr": "Web sayfasını aç"
+ },
+ "Organiser": {
+  "fa": "برگزارکننده",
+  "uk": "Організатор",
+  "tr": "Düzenleyen"
+ },
+ "Organization number": {
+  "fa": "شمارهٔ ثبت سازمان",
+  "uk": "Реєстраційний номер організації",
+  "tr": "Kuruluş numarası"
+ },
+ "Oslo, Norway": {
+  "fa": "اسلو، نروژ",
+  "uk": "Осло, Норвегія",
+  "tr": "Oslo, Norveç"
+ },
+ "Paid": {
+  "fa": "پولی",
+  "uk": "Платно",
+  "tr": "Ücretli"
+ },
+ "Paper": {
+  "fa": "مقالهٔ پژوهشی",
+  "uk": "Наукова стаття",
+  "tr": "Makale"
+ },
+ "Paragraph %lld of %lld": {
+  "fa": "بند %lld از %lld",
+  "uk": "Абзац %lld з %lld",
+  "tr": "Paragraf %lld / %lld"
+ },
+ "Past event": {
+  "fa": "رویداد گذشته",
+  "uk": "Минула подія",
+  "tr": "Geçmiş etkinlik"
+ },
+ "Past issues": {
+  "fa": "شماره‌های گذشته",
+  "uk": "Попередні випуски",
+  "tr": "Geçmiş sayılar"
+ },
+ "Paywall": {
+  "fa": "دیوار پرداخت",
+  "uk": "Платний доступ",
+  "tr": "Ödeme duvarı"
+ },
+ "Person": {
+  "fa": "شخص",
+  "uk": "Особа",
+  "tr": "Kişi"
+ },
+ "Photo: %@": {
+  "fa": "عکس: %@",
+  "uk": "Фото: %@",
+  "tr": "Fotoğraf: %@"
+ },
+ "Press ⏯ to turn off": {
+  "fa": "برای خاموش کردن ⏯ را بزنید",
+  "uk": "Натисніть ⏯, щоб вимкнути",
+  "tr": "Kapatmak için ⏯ tuşuna basın"
+ },
+ "Press ⏯ to turn on": {
+  "fa": "برای روشن کردن ⏯ را بزنید",
+  "uk": "Натисніть ⏯, щоб увімкнути",
+  "tr": "Açmak için ⏯ tuşuna basın"
+ },
+ "Privacy": {
+  "fa": "حریم خصوصی",
+  "uk": "Конфіденційність",
+  "tr": "Gizlilik"
+ },
+ "Public body": {
+  "fa": "نهاد دولتی",
+  "uk": "Державний орган",
+  "tr": "Kamu kurumu"
+ },
+ "Publisher": {
+  "fa": "ناشر",
+  "uk": "Видавець",
+  "tr": "Yayıncı"
+ },
+ "QR code linking to %@": {
+  "fa": "کد QR با پیوند به %@",
+  "uk": "QR-код із посиланням на %@",
+  "tr": "%@ bağlantılı QR kodu"
+ },
+ "Quiet in %@ — no stories this week": {
+  "fa": "%@ آرام است — این هفته خبری نیست",
+  "uk": "%@: тихо — цього тижня новин немає",
+  "tr": "%@ sakin — bu hafta haber yok"
+ },
+ "Quit Nordic Crypto": {
+  "fa": "خروج از Nordic Crypto",
+  "uk": "Вийти з Nordic Crypto",
+  "tr": "Nordic Crypto'dan çık"
+ },
+ "Read at %@": {
+  "fa": "خواندن در %@",
+  "uk": "Читати на %@",
+  "tr": "%@ üzerinde oku"
+ },
+ "Read issue": {
+  "fa": "خواندن شماره",
+  "uk": "Читати випуск",
+  "tr": "Sayıyı oku"
+ },
+ "Refresh": {
+  "fa": "بازخوانی",
+  "uk": "Оновити",
+  "tr": "Yenile"
+ },
+ "Research": {
+  "fa": "گروه پژوهشی",
+  "uk": "Дослідницька група",
+  "tr": "Araştırma grubu"
+ },
+ "Scan to open the event page": {
+  "fa": "برای باز کردن صفحهٔ رویداد اسکن کنید",
+  "uk": "Скануйте, щоб відкрити сторінку події",
+  "tr": "Etkinlik sayfasını açmak için tarayın"
+ },
+ "Scan to read the full story": {
+  "fa": "برای خواندن کامل خبر اسکن کنید",
+  "uk": "Скануйте, щоб прочитати новину повністю",
+  "tr": "Haberin tamamını okumak için tarayın"
+ },
+ "Scan to subscribe": {
+  "fa": "برای اشتراک اسکن کنید",
+  "uk": "Скануйте, щоб підписатися",
+  "tr": "Abone olmak için tarayın"
+ },
+ "Scan with Wally Wallet on your phone, then confirm.": {
+  "fa": "با Wally Wallet روی تلفن خود اسکن کنید و سپس تأیید کنید.",
+  "uk": "Відскануйте за допомогою Wally Wallet на телефоні й підтвердьте.",
+  "tr": "Telefonunuzdaki Wally Wallet ile tarayın, ardından onaylayın."
+ },
+ "Scan with your phone": {
+  "fa": "با تلفن خود اسکن کنید",
+  "uk": "Скануйте телефоном",
+  "tr": "Telefonunuzla tarayın"
+ },
+ "Share": {
+  "fa": "هم‌رسانی",
+  "uk": "Поширити",
+  "tr": "Paylaş"
+ },
+ "Show past events (%lld)": {
+  "fa": "نمایش رویدادهای گذشته (%lld)",
+  "uk": "Показати минулі події (%lld)",
+  "tr": "Geçmiş etkinlikleri göster (%lld)"
+ },
+ "Sponsor": {
+  "fa": "حامی",
+  "uk": "Спонсор",
+  "tr": "Sponsor"
+ },
+ "Sponsored": {
+  "fa": "حمایت‌شده",
+  "uk": "Спонсоровано",
+  "tr": "Sponsorlu"
+ },
+ "Spotlight": {
+  "fa": "در کانون توجه",
+  "uk": "У центрі уваги",
+  "tr": "Öne çıkan"
+ },
+ "Stories": {
+  "fa": "خبرها",
+  "uk": "Новини",
+  "tr": "Haberler"
+ },
+ "Student group": {
+  "fa": "گروه دانشجویی",
+  "uk": "Студентське об’єднання",
+  "tr": "Öğrenci topluluğu"
+ },
+ "Subscribe": {
+  "fa": "اشتراک",
+  "uk": "Підписатися",
+  "tr": "Abone ol"
+ },
+ "Sweden": {
+  "fa": "سوئد",
+  "uk": "Швеція",
+  "tr": "İsveç"
+ },
+ "Terms": {
+  "fa": "شرایط",
+  "uk": "Умови",
+  "tr": "Koşullar"
+ },
+ "Terms and privacy: %@": {
+  "fa": "شرایط و حریم خصوصی: %@",
+  "uk": "Умови та конфіденційність: %@",
+  "tr": "Koşullar ve gizlilik: %@"
+ },
+ "The source may require a subscription": {
+  "fa": "ممکن است منبع به اشتراک نیاز داشته باشد",
+  "uk": "Джерело може вимагати передплати",
+  "tr": "Kaynak abonelik gerektirebilir"
+ },
+ "Today": {
+  "fa": "امروز",
+  "uk": "Сьогодні",
+  "tr": "Bugün"
+ },
+ "Top stories": {
+  "fa": "خبرهای برتر",
+  "uk": "Головні новини",
+  "tr": "Öne çıkan haberler"
+ },
+ "Top topics": {
+  "fa": "موضوعات داغ",
+  "uk": "Головні теми",
+  "tr": "Öne çıkan konular"
+ },
+ "Updated %@": {
+  "fa": "به‌روزرسانی: %@",
+  "uk": "Оновлено %@",
+  "tr": "Güncellendi: %@"
+ },
+ "Watch newsreel": {
+  "fa": "تماشای ویدئوی خبری",
+  "uk": "Дивитися відеоновини",
+  "tr": "Haber videosunu izle"
+ },
+ "Website": {
+  "fa": "وب‌سایت",
+  "uk": "Вебсайт",
+  "tr": "Web sitesi"
+ },
+ "When": {
+  "fa": "چه زمانی",
+  "uk": "Коли",
+  "tr": "Ne zaman"
+ },
+ "Where": {
+  "fa": "کجا",
+  "uk": "Де",
+  "tr": "Nerede"
+ },
+ "Yesterday": {
+  "fa": "دیروز",
+  "uk": "Учора",
+  "tr": "Dün"
+ },
+ "Your iPhone or iPad checks for new stories in the background; iOS decides when, so a notification can come some time after a story is published. Nothing about you leaves the device.": {
+  "fa": "آیفون یا آیپد شما در پس‌زمینه خبرهای تازه را بررسی می‌کند؛ زمان آن را iOS تعیین می‌کند، پس ممکن است اعلان مدتی پس از انتشار خبر برسد. هیچ اطلاعاتی دربارهٔ شما از دستگاه خارج نمی‌شود.",
+  "uk": "Ваш iPhone або iPad перевіряє нові новини у фоновому режимі; коли саме — вирішує iOS, тож сповіщення може надійти через деякий час після публікації. Жодні дані про вас не залишають пристрій.",
+  "tr": "iPhone veya iPad'iniz yeni haberleri arka planda denetler; ne zaman olacağına iOS karar verir, bu yüzden bildirim haber yayımlandıktan bir süre sonra gelebilir. Sizinle ilgili hiçbir şey cihazdan çıkmaz."
+ },
+ "the publisher": {
+  "fa": "ناشر",
+  "uk": "видавець",
+  "tr": "yayıncı"
+ }
+}

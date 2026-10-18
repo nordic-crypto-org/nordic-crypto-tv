@@ -388,7 +388,7 @@ enum AppLanguage {
 
     /// Interface languages beyond the Nordic set (Nordic Crypto API language list).
     /// Summaries stay in English for these.
-    static let interfaceOnly = ["zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr"]
+    static let interfaceOnly = ["zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr", "fa", "uk", "tr"]
 
     /// The device's language for this app, used for interface and content alike.
     static let current = resolve(Locale.preferredLanguages)
