@@ -210,6 +210,9 @@ private fun Agenda(feed: Feed, tick: Long, modifier: Modifier) {
         }
         if (events.isEmpty()) { Text(Lang.tr("No upcoming events"), color = NL.textTertiary); return@Column }
         val i = rotate(events.indices.toList(), tick, 15, 7)!!.first
+        Box(Modifier.fillMaxWidth().height(3.dp).clip(RoundedCornerShape(50)).background(NL.rule)) {
+            Box(Modifier.fillMaxWidth(((tick + 7) % 15 + 1) / 15f).fillMaxHeight().background(NL.accent))
+        }
         val f = events[i]
         Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(NL.raised).padding(12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {

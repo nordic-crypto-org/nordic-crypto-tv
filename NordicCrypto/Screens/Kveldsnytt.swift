@@ -287,11 +287,11 @@ private struct AgendaTimeline: View {
             .overlay(alignment: .bottomLeading) {
                 GeometryReader { geo in
                     Capsule().fill(K.rule)
-                    Capsule().fill(NL.accent.opacity(0.6))
+                    Capsule().fill(NL.accent)
                         .frame(width: geo.size.width * progress)
                         .animation(progress < 0.1 ? nil : .linear(duration: 1), value: progress)
                 }
-                .frame(height: 3)
+                .frame(height: 4)
                 .offset(y: 8)
             }
             .padding(.bottom, 8)
