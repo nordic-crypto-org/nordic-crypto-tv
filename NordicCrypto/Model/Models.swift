@@ -105,6 +105,7 @@ struct EventsFeed: Decodable {
 struct EventItem: Decodable, Identifiable, Hashable {
     var id: String
     var title: String
+    var titleOriginal: String?
     var start: Date?
     var end: Date?
     var place: String?
@@ -136,7 +137,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
     enum CodingKeys: String, CodingKey {
         case id, title, start, end, place, city, country, online, organiser, url, paid, sponsored, note, past
         case going, source, description, ongoing
-        case noteI18n = "note_i18n"
+        case titleOriginal = "title_original", noteI18n = "note_i18n"
         case placeSource = "place_source", htmlURL = "html_url", htmlURLs = "html_urls"
     }
 
@@ -144,6 +145,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         title = try c.decode(String.self, forKey: .title)
+        titleOriginal = try c.decodeIfPresent(String.self, forKey: .titleOriginal)
         start = try? c.decodeIfPresent(Date.self, forKey: .start)
         if let raw = try? c.decodeIfPresent(String.self, forKey: .start) {
             allDay = !raw.contains("T")
