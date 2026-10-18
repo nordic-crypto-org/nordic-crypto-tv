@@ -22,6 +22,19 @@ struct ContactView: View {
                 link(.email, title: "Email", value: APIConfig.contactEmail, url: APIConfig.contactMailto)
                 link(.website, title: "Website", value: APIConfig.website.absoluteString, url: APIConfig.website)
                 link(.page, title: "Contact page", value: APIConfig.contactPage.absoluteString, url: APIConfig.contactPage)
+
+                #if os(iOS)
+                NavigationLink {
+                    AdminView()
+                } label: {
+                    Text(verbatim: "Staff sign-in")
+                        .font(NLFont.caption)
+                        .foregroundStyle(NL.textTertiary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.top, NLMetrics.gutter)
+                }
+                .accessibilityIdentifier("admin-entry")
+                #endif
             }
             .padding(NLMetrics.margin)
             .frame(maxWidth: 720, alignment: .leading)
