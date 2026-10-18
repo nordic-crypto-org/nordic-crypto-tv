@@ -12,7 +12,8 @@
 # `wrangler secret bulk` on stdin (never written to a file, never printed);
 # unset ones are skipped with a notice and keep their current value:
 #   APNS_KEY_P8 (contents of the .p8), APNS_KEY_ID, APNS_TEAM_ID,
-#   FCM_SERVICE_ACCOUNT_JSON (contents of the service account key)
+#   FCM_SERVICE_ACCOUNT_JSON (contents of the service account key),
+#   PUSH_PUBLISH_TOKEN (bearer token for POST /v1/publish, shared with the site repo)
 set -euo pipefail
 cd "$(dirname "$0")"
 DB_NAME=nordic-crypto-app-push
@@ -45,9 +46,9 @@ url=$(echo "$out" | grep -oE 'https://[A-Za-z0-9.-]+\.workers\.dev' | head -1 ||
 
 # Worker secrets from the environment. Only names are printed.
 names=$(node -e '
-  const names = ["APNS_KEY_P8", "APNS_KEY_ID", "APNS_TEAM_ID", "FCM_SERVICE_ACCOUNT_JSON"];
+  const names = ["APNS_KEY_P8", "APNS_KEY_ID", "APNS_TEAM_ID", "FCM_SERVICE_ACCOUNT_JSON", "PUSH_PUBLISH_TOKEN"];
   process.stdout.write(names.filter((n) => (process.env[n] || "").trim()).join(" "));')
-for n in APNS_KEY_P8 APNS_KEY_ID APNS_TEAM_ID FCM_SERVICE_ACCOUNT_JSON; do
+for n in APNS_KEY_P8 APNS_KEY_ID APNS_TEAM_ID FCM_SERVICE_ACCOUNT_JSON PUSH_PUBLISH_TOKEN; do
   case " $names " in *" $n "*) ;; *) note "secret $n is not set in this environment; the Worker keeps its current value (if any)" ;; esac
 done
 if [ -n "$names" ]; then

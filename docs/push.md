@@ -16,10 +16,23 @@ mint), so a Worker is the natural home for a push server too.
 
 ## Decision
 
-A Cloudflare Worker in [`push/`](../push/) with a D1 database and a Cron Trigger.
+A Cloudflare Worker in [`push/`](../push/) with a D1 database, triggered by the website's publish
+with an hourly Cron Trigger as the fallback.
+
+**Trigger (since October 2026).** After each successful publish, the site's *Deploy site* workflow
+(`nordic-crypto-org/nordic-crypto`, `.github/workflows/deploy.yml`) waits until the live
+`latest.json` is the one it just built and calls `POST /v1/publish` with
+`Authorization: Bearer <PUSH_PUBLISH_TOKEN>` (repository secret `PUSH_PUBLISH_TOKEN` here, uploaded
+to the Worker by `deploy.sh`; the same value is `APP_PUSH_PUBLISH_TOKEN` in the site repository).
+That runs the same check as the cron right away. The cron runs hourly (`0 * * * *`) and catches
+anything a failed call missed. Each run is one publish: a device gets **at most one notification
+per run**, the newest new story in one of its countries; other new stories are only remembered.
+`PUSH_LANGUAGE` (`wrangler.toml`, `en`) sets the language of every notification; empty means the
+device's language. The payload carries `story` (opens the story in the app) and `url` (the story's
+page, `html_url`).
 
 ```
- every 5 min   GET /api/v1/news/latest.json  (If-None-Match; 304 when nothing changed)
+ publish/hour  GET /api/v1/news/latest.json  (If-None-Match; 304 when nothing changed)
  Cron ───────► new ids? ── no ──► send what is still queued
                   │ yes
                   ▼
@@ -41,7 +54,7 @@ A Cloudflare Worker in [`push/`](../push/) with a D1 database and a Cron Trigger
    already published. A story published more than 48 hours ago that appears late (backfill) is
    remembered but not announced. More than 10 new stories at once looks like a reset and is
    remembered without announcing.
-3. **Who gets it.** One notification per new story to every device whose countries include the
+3. **Who gets it.** One notification per run (the newest new story) to every device whose countries include the
    story's country (`NO`, `SE`, `DK`, `FI`, `IS`; the server also accepts `NORDIC` and `EU`). The
    text is the same as the apps' own notifications: title "Source · Country" (country name in the
    device's language, from the app's string catalogue via `push/scripts/gen-copy.mjs`), body the
@@ -51,7 +64,7 @@ A Cloudflare Worker in [`push/`](../push/) with a D1 database and a Cron Trigger
 4. **Queue.** New stories become rows in `deliveries` (story × device). Each run sends at most
    `SENDS_PER_RUN` (40; the Workers Free plan allows 50 subrequests per run, raise it to about 900
    on Workers Paid). Rows older than 6 hours or tried 3 times are dropped: old news is not worth a
-   buzz. A larger audience on the Free plan is spread over the next runs (40 per 5 minutes);
+   buzz. A larger audience on the Free plan is spread over the next runs (40 per run);
    Cloudflare Queues would be the next step if that gets too slow.
 5. **APNs.** Token-based auth: an ES256 JWT signed with an APNs `.p8` key of the personal team
    **YQBXSUUVJD** (never the Bitcoin Unlimited team 8A87667ULD), topic `no.cryptonordic.tv`, push

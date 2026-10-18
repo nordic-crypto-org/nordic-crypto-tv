@@ -5,6 +5,10 @@ export const MAX_NEW_PER_RUN = 10; // more than this at once looks like a reset,
 
 const ID = /^[A-Za-z0-9_-]{1,64}$/;
 
+function httpsUrl(v) {
+  return typeof v === "string" && /^https:\/\/[^\s]{1,500}$/.test(v.trim()) ? v.trim() : null;
+}
+
 function str(v, max) {
   return typeof v === "string" && v.trim() ? v.trim().slice(0, max) : null;
 }
@@ -33,6 +37,7 @@ export function normalizeItems(doc, limit = LATEST_LIMIT) {
       title,
       title_en: str(r.title_en, 400),
       title_i18n: i18n,
+      url: httpsUrl(r.html_url),
     });
   }
   return out;

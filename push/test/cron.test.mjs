@@ -210,3 +210,67 @@ test("old stories, floods and devices that stopped checking in", async () => {
   await runCron(env, NOW + 181 * 24 * 3600e3, net);
   assert.equal(env.DB.rows("SELECT * FROM devices").length, 0);
 });
+
+const publishReq = (token) => new Request("https://push.example/v1/publish", {
+  method: "POST", headers: token ? { authorization: "Bearer " + token } : {},
+});
+
+test("POST /v1/publish runs a check right away, only with the publish token", async () => {
+  const env = makeEnv({ PUSH_PUBLISH_TOKEN: "s3cret-token" });
+  await register(env, IPHONE, "ios", ["NO"], "en");
+  const net = network([story("old1", 600)]);
+  await runCron(env, NOW, net);
+  net.publish([story("fresh", 2, { html_url: "https://nordiccrypto.no/news/fresh/" }), story("old1", 600)]);
+
+  assert.equal((await handleFetch(publishReq(), env, NOW + MIN, net)).status, 401);
+  assert.equal((await handleFetch(publishReq("wrong"), env, NOW + MIN, net)).status, 401);
+  assert.equal((await handleFetch(new Request("https://push.example/v1/publish"), env, NOW + MIN, net)).status, 405);
+  assert.equal(net.pushes().length, 0);
+
+  const res = await handleFetch(publishReq("s3cret-token"), env, NOW + MIN, net);
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.queued, 1);
+  assert.equal(body.sent, 1);
+  const sent = JSON.parse(net.pushes()[0].init.body);
+  assert.equal(sent.story, "fresh");
+  assert.equal(sent.url, "https://nordiccrypto.no/news/fresh/");
+
+  // A second call for the same publish sends nothing.
+  await handleFetch(publishReq("s3cret-token"), env, NOW + 2 * MIN, net);
+  assert.equal(net.pushes().length, 1);
+
+  const off = makeEnv();
+  assert.equal((await handleFetch(publishReq("anything"), off, NOW, net)).status, 503);
+  const health = await (await handleFetch(new Request("https://push.example/v1/health"), env, NOW)).json();
+  assert.equal(health.publish, true);
+});
+
+test("one publish sends at most one notification per device: the newest story in its countries", async () => {
+  const env = makeEnv({ PUSH_LANGUAGE: "en" });
+  await register(env, IPHONE, "ios", ["NO", "SE"], "sv");
+  await register(env, SWEDE, "ios", ["SE"], "sv");
+  await register(env, PIXEL, "android", ["NO"], "nb");
+  const net = network([]);
+  await runCron(env, NOW, net);
+  net.publish([
+    story("no-older", 30),
+    story("se-new", 5, { country: "SE", language_code: "sv", title: "Svensk rubrik", title_i18n: { sv: "Svensk rubrik" } }),
+    story("no-newest", 1),
+  ]);
+  const run = await runCron(env, NOW + 5 * MIN, net);
+  assert.equal(run.queued, 3);
+  assert.equal(run.sent, 3);
+  const pushes = net.pushes();
+  assert.equal(pushes.length, 3);
+  assert.equal(JSON.parse(pushes.find((p) => p.url.endsWith(IPHONE)).init.body).story, "no-newest");
+  const swede = JSON.parse(pushes.find((p) => p.url.endsWith(SWEDE)).init.body);
+  assert.equal(swede.story, "se-new");
+  // PUSH_LANGUAGE=en: the English headline and country name, whatever the device language.
+  assert.equal(swede.aps.alert.body, "Headline se-new");
+  assert.equal(swede.aps.alert.title, "E24 · Sweden");
+  const pixel = JSON.parse(pushes.find((p) => p.url.startsWith("https://fcm.")).init.body).message;
+  assert.equal(pixel.data.story, "no-newest");
+  assert.equal(pixel.notification.body, "Headline no-newest");
+  assert.equal(env.DB.rows("SELECT * FROM deliveries").length, 0);
+});

@@ -10,15 +10,18 @@ const item = (id, hoursAgo, extra = {}) => ({
 test("normalizeItems keeps only what a notification needs and drops bad rows", () => {
   const items = normalizeItems({
     items: [
-      { ...item("a1", 1), title_en: "E", title_i18n: { sv: "S", bad_key: "x", fi: "" }, summary: "not kept", coverage: {} },
+      { ...item("a1", 1), title_en: "E", title_i18n: { sv: "S", bad_key: "x", fi: "" }, summary: "not kept", coverage: {},
+        html_url: "https://nordiccrypto.no/news/a1/" },
       { id: "../etc", title: "bad id" },
       { id: "b2" },
       null,
     ],
   });
   assert.equal(items.length, 1);
-  assert.deepEqual(Object.keys(items[0]).sort(), ["country", "id", "language_code", "published", "source_name", "title", "title_en", "title_i18n"]);
+  assert.deepEqual(Object.keys(items[0]).sort(), ["country", "id", "language_code", "published", "source_name", "title", "title_en", "title_i18n", "url"]);
   assert.deepEqual(items[0].title_i18n, { sv: "S" });
+  assert.equal(items[0].url, "https://nordiccrypto.no/news/a1/");
+  assert.equal(normalizeItems({ items: [{ ...item("x", 1), html_url: "javascript:alert(1)" }] })[0].url, null);
   assert.equal(normalizeItems({ items: Array.from({ length: 60 }, (_, i) => item("n" + i, 1)) }).length, 25);
   assert.deepEqual(normalizeItems(null), []);
 });

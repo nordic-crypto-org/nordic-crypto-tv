@@ -55,6 +55,7 @@ export function apnsPayload(item, lang) {
       "thread-id": item.country || "news",
     },
     story: item.id,
+    ...(item.url ? { url: item.url } : {}),
   };
 }
 
@@ -64,7 +65,7 @@ export function fcmMessage(token, item, lang) {
   return {
     token,
     notification: { title, body },
-    data: { story: String(item.id), country: String(item.country || "") },
+    data: { story: String(item.id), country: String(item.country || ""), ...(item.url ? { url: String(item.url) } : {}) },
     android: {
       ttl: "21600s",
       collapse_key: String(item.id).slice(0, 64),

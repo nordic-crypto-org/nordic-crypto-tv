@@ -13,7 +13,7 @@
 #     [--google-services ~/keys/google-services.json] \
 #     [--no-deploy]
 #
-# Secrets set on jQrgen/nordic-crypto-tv:
+# Secrets set on nordic-crypto-org/nordic-crypto-tv:
 #   CLOUDFLARE_API_TOKEN (asked for, hidden, unless the variable is set) and
 #   CLOUDFLARE_ACCOUNT_ID (looked up with the token unless the variable is set);
 #   token permissions: Account > Workers Scripts > Edit, Account > D1 > Edit,
@@ -28,7 +28,7 @@
 # The APNs key must belong to the personal team YQBXSUUVJD. Never use the
 # Bitcoin Unlimited team (8A87667ULD).
 set -euo pipefail
-REPO=jQrgen/nordic-crypto-tv
+REPO=nordic-crypto-org/nordic-crypto-tv
 P8="" KEY_ID="" TEAM_ID=YQBXSUUVJD FCM_JSON="" GOOGLE_SERVICES="" DEPLOY=1
 
 die() { echo "error: $*" >&2; exit 1; }
