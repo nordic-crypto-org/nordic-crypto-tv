@@ -2,8 +2,8 @@
 import AVFoundation
 import Observation
 
-/// Radio in the background of the Apple TV app, Radio Norge by default. On by
-/// default; the viewer's choice of station and on/off is remembered.
+/// Radio Norge in the background of the Apple TV app. On by default; on/off
+/// is remembered. The other stations are an easter egg (see `select`).
 @MainActor
 @Observable
 final class Radio {
@@ -25,20 +25,18 @@ final class Radio {
                 homepage: URL(string: "https://www.fluxfm.de/")!),
     ]
     private static let key = "radio.on"
-    private static let stationKey = "radio.station"
 
     private(set) var isOn: Bool
-    private(set) var station: Station
+    private(set) var station = Radio.stations[0]
     private(set) var isPlaying = false
     /// True while something else (the newsreel) has the sound.
     private var yielded = false
     private var player: AVPlayer?
     private var watchdog: Task<Void, Never>?
+    private var presses: [Date] = []
 
     init() {
         isOn = UserDefaults.standard.object(forKey: Self.key) as? Bool ?? true
-        let name = UserDefaults.standard.string(forKey: Self.stationKey)
-        station = Self.stations.first { $0.name == name } ?? Self.stations[0]
     }
 
     func start() {
@@ -60,11 +58,19 @@ final class Radio {
         if isOn && !yielded { play() } else { stop() }
     }
 
+    /// Select on the remote: five quick presses switch to the next station.
+    func select(at now: Date = .now) {
+        if let last = presses.last, now.timeIntervalSince(last) > 1.5 { presses = [] }
+        presses.append(now)
+        guard presses.count == 5 else { return }
+        presses = []
+        next()
+    }
+
     /// Switch to the next station and turn the radio on.
-    func next() {
+    private func next() {
         let index = Self.stations.firstIndex(of: station) ?? 0
         station = Self.stations[(index + 1) % Self.stations.count]
-        UserDefaults.standard.set(station.name, forKey: Self.stationKey)
         isOn = true
         UserDefaults.standard.set(true, forKey: Self.key)
         if !yielded { play() }
