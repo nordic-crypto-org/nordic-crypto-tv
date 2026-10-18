@@ -39,14 +39,19 @@ object Lang {
         }.getOrDefault(emptyMap())
     }
 
+    /** Norwegian (no, nb, nn) reads nynorsk, as does English in Norway. */
     fun resolve(locale: Locale): String {
         val code = locale.language
         return when {
-            code == "no" -> "nb"
+            code in setOf("no", "nb", "nn") -> "nn"
             code in nordic || code in interfaceOnly -> code
+            locale.country == "NO" -> "nn"
             else -> "en"
         }
     }
+
+    /** Where to look for a translation, best first: nynorsk falls back to bokmål. */
+    fun fallbacks(lang: String): List<String> = if (lang == "nn") listOf("nn", "nb") else listOf(lang)
 
     fun sameFamily(a: String, b: String): Boolean {
         val norsk = setOf("no", "nb", "nn")
@@ -85,3 +90,6 @@ object Lang {
         return if (local == java.time.LocalDate.now()) time(t) else day(t)
     }
 }
+
+/** The translation for [lang], following [Lang.fallbacks]. */
+fun Map<String, String>.localized(lang: String): String? = Lang.fallbacks(lang).firstNotNullOfOrNull { this[it] }

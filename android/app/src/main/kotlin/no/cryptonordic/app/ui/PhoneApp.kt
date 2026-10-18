@@ -383,7 +383,7 @@ private fun EventDetail(e: EventItem, lang: String, back: () -> Unit) {
                 e.organiser?.let { Info(Lang.tr("Organiser"), it) }
                 e.going?.takeIf { it > 0 }?.let { Info("👥", Lang.tr("%lld going", it)) }
                 e.sponsored?.takeIf { it.isNotBlank() }?.let { Info(Lang.tr("Sponsor"), it) }
-                (e.noteI18n[lang] ?: e.note)?.let { Info(Lang.tr("Note"), it) }
+                (e.noteI18n.localized(lang) ?: e.note)?.let { Info(Lang.tr("Note"), it) }
             }
         }
         SourceButtons(e.url, Lang.tr("Open event page"))
