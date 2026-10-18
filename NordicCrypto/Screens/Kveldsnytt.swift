@@ -133,12 +133,6 @@ private struct KLead: View {
                     .minimumScaleFactor(0.7)
                     .fixedSize(horizontal: false, vertical: true)
                     .layoutPriority(1)
-                if let original = item.originalHeadline(for: store.lang) {
-                    Text(original)
-                        .font(.system(size: 24)).italic()
-                        .foregroundStyle(NL.textTertiary)
-                        .lineLimit(1)
-                }
                 HStack(alignment: .bottom, spacing: 32) {
                     if let summary = item.summary(for: store.lang) {
                         Text(summary)

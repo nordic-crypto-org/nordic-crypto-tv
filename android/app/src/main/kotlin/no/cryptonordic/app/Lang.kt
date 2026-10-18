@@ -1,6 +1,7 @@
 package no.cryptonordic.app
 
 import android.content.Context
+import android.os.LocaleList
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
@@ -14,7 +15,7 @@ import java.util.Locale
 /**
  * Language and translations. The interface strings are read from the same
  * Localizable.xcstrings the Apple apps use, so all platforms say the same
- * thing in all 21 languages.
+ * thing in all 21 languages. Interface and content use [current], falling back to English.
  */
 object Lang {
     /** Languages the API translates its own text into. */
@@ -26,7 +27,8 @@ object Lang {
     private var table: Map<String, String> = emptyMap()
 
     fun load(context: Context) {
-        current = resolve(Locale.getDefault())
+        val preferred = LocaleList.getDefault()
+        current = resolve((0 until preferred.size()).map { preferred[it].toLanguageTag() })
         val catalogKey = if (current == "zh") "zh-Hans" else current
         table = runCatching {
             val text = context.assets.open("Localizable.xcstrings").bufferedReader().use { it.readText() }
@@ -39,24 +41,19 @@ object Lang {
         }.getOrDefault(emptyMap())
     }
 
-    /** Norwegian (no, nb, nn) reads nynorsk, as does English in Norway. */
-    fun resolve(locale: Locale): String {
-        val code = locale.language
-        return when {
-            code in setOf("no", "nb", "nn") -> "nn"
-            code in nordic || code in interfaceOnly -> code
-            locale.country == "NO" -> "nn"
-            else -> "en"
+    /** The first preferred language the app has, else English. Norwegian (no, nb, nn) reads nynorsk. */
+    fun resolve(preferred: List<String>): String {
+        for (tag in preferred) {
+            val code = Locale.forLanguageTag(tag).language.let { if (it == "in") "id" else it }
+            if (code in setOf("no", "nb", "nn")) return "nn"
+            if (code == "en" || code in nordic || code in interfaceOnly) return code
         }
+        return "en"
     }
 
-    /** Where to look for a translation, best first: nynorsk falls back to bokmål. */
-    fun fallbacks(lang: String): List<String> = if (lang == "nn") listOf("nn", "nb") else listOf(lang)
-
-    fun sameFamily(a: String, b: String): Boolean {
-        val norsk = setOf("no", "nb", "nn")
-        return a == b || (a in norsk && b in norsk)
-    }
+    /** Where to look for text, best first: nynorsk falls back to bokmål, everything to English. */
+    fun fallbacks(lang: String): List<String> =
+        (if (lang == "nn") listOf("nn", "nb") else listOf(lang)) + if (lang == "en") emptyList() else listOf("en")
 
     /** Translate an English catalogue key; Swift's %lld/%@ become %d/%s. */
     fun tr(key: String, vararg args: Any): String {
@@ -91,5 +88,12 @@ object Lang {
     }
 }
 
-/** The translation for [lang], following [Lang.fallbacks]. */
-fun Map<String, String>.localized(lang: String): String? = Lang.fallbacks(lang).firstNotNullOfOrNull { this[it] }
+/**
+ * The text for [lang] following [Lang.fallbacks]. [base] is the untranslated text, written
+ * in [baseLang]; it wins over a translation into that same language.
+ */
+fun Map<String, String>.localized(lang: String, base: String? = null, baseLang: String? = "en"): String? =
+    Lang.fallbacks(lang).firstNotNullOfOrNull { l ->
+        base?.takeIf { it.isNotBlank() && (baseLang == l || (l == "nb" && baseLang == "no")) }
+            ?: this[l]?.takeIf { it.isNotBlank() }
+    }

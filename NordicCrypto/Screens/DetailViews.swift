@@ -127,11 +127,6 @@ private struct StoryText: View {
                 .font(NLFont.display)
                 .foregroundStyle(NL.textPrimary)
                 .fixedSize(horizontal: false, vertical: true)
-            if let original = item.originalHeadline(for: lang) {
-                Text(original)
-                    .font(NLFont.body).italic()
-                    .foregroundStyle(NL.textSecondary)
-            }
             if let summary = item.summary(for: lang) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Nordic Crypto summary")
@@ -263,9 +258,6 @@ struct EventDetailView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
-            if let original = event.titleOriginal {
-                Text(original).font(NLFont.body).italic().foregroundStyle(NL.textSecondary)
-            }
             Grid(alignment: .leadingFirstTextBaseline, horizontalSpacing: 24, verticalSpacing: 14) {
                 InfoRow(label: "When", value: whenText)
                 InfoRow(label: "Where", value: event.location(lang: store.lang) ?? "", link: mapLink)
@@ -281,26 +273,16 @@ struct EventDetailView: View {
             .focusable()
             .focused($focused)
             #endif
-            if let description = event.description {
+            if let about = event.description?.text(for: store.lang) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("About this event")
                         .font(NLFont.kicker)
                         .foregroundStyle(NL.accent)
-                    Text(description.text(for: store.lang))
+                    Text(about)
                         .font(NLFont.body)
                         .lineSpacing(4)
                         .foregroundStyle(NL.textPrimary)
                         .fixedSize(horizontal: false, vertical: true)
-                    if let original = description.original(for: store.lang) {
-                        Text("Original text")
-                            .font(NLFont.kicker)
-                            .foregroundStyle(NL.textTertiary)
-                            .padding(.top, 6)
-                        Text(original)
-                            .font(NLFont.body).italic()
-                            .foregroundStyle(NL.textSecondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
                 }
                 .padding(NLMetrics.cardPadding)
                 .frame(maxWidth: .infinity, alignment: .leading)

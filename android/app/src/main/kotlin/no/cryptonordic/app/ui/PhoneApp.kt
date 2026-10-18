@@ -25,7 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -172,7 +171,6 @@ private fun LeadCard(item: NewsItem, feed: Feed, lang: String, onClick: () -> Un
             Kicker(item, feed)
             Text(item.headline(lang), color = NL.textPrimary, fontSize = 30.sp, lineHeight = 34.sp,
                 fontWeight = FontWeight.Bold, fontFamily = NL.serif, maxLines = 4, overflow = TextOverflow.Ellipsis)
-            item.originalHeadline(lang)?.let { Text(it, color = NL.textSecondary, fontSize = 14.sp, fontStyle = FontStyle.Italic, maxLines = 1) }
         }
     }
 }
@@ -352,7 +350,6 @@ private fun StoryDetail(item: NewsItem, feed: Feed, lang: String, back: () -> Un
             }
             Kicker(item, feed)
             Text(item.headline(lang), color = NL.textPrimary, fontSize = 30.sp, lineHeight = 34.sp, fontWeight = FontWeight.Bold, fontFamily = NL.serif)
-            item.originalHeadline(lang)?.let { Text(it, color = NL.textSecondary, fontStyle = FontStyle.Italic) }
             item.summary(lang)?.let {
                 Column(Modifier.fillMaxWidth().background(NL.panel, RoundedCornerShape(16.dp)).padding(16.dp)) {
                     Text(Lang.tr("Nordic Crypto summary"), color = NL.accent, fontWeight = FontWeight.Bold, fontSize = 13.sp)
@@ -383,7 +380,7 @@ private fun EventDetail(e: EventItem, lang: String, back: () -> Unit) {
                 e.organiser?.let { Info(Lang.tr("Organiser"), it) }
                 e.going?.takeIf { it > 0 }?.let { Info("👥", Lang.tr("%lld going", it)) }
                 e.sponsored?.takeIf { it.isNotBlank() }?.let { Info(Lang.tr("Sponsor"), it) }
-                (e.noteI18n.localized(lang) ?: e.note)?.let { Info(Lang.tr("Note"), it) }
+                e.note(lang)?.let { Info(Lang.tr("Note"), it) }
             }
         }
         SourceButtons(e.url, Lang.tr("Open event page"))

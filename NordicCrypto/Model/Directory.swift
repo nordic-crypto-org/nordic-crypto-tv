@@ -120,8 +120,7 @@ struct AcademiaItem: Decodable, Identifiable, Hashable {
     }
 
     func about(for lang: String) -> String? {
-        let text = aboutI18n[lang] ?? about
-        return text?.isEmpty == true ? nil : text
+        aboutI18n.localized(lang, base: about)
     }
 }
 
