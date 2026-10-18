@@ -55,6 +55,11 @@ object Lang {
     fun fallbacks(lang: String): List<String> =
         (if (lang == "nn") listOf("nn", "nb") else listOf(lang)) + if (lang == "en") emptyList() else listOf("en")
 
+    fun sameFamily(a: String, b: String): Boolean {
+        val norsk = setOf("no", "nb", "nn")
+        return a == b || (a in norsk && b in norsk)
+    }
+
     /** Translate an English catalogue key; Swift's %lld/%@ become %d/%s. */
     fun tr(key: String, vararg args: Any): String {
         val pattern = (table[key] ?: key).replace("%lld", "%d").replace("%@", "%s")

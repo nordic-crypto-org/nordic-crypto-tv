@@ -25,7 +25,7 @@ data class Feed(
     val updated: OffsetDateTime? = null,
     val live: Boolean = false,
 ) {
-    val upcoming get() = events.filter { it.past != true }.sortedBy { it.startAt }
+    val upcoming get() = Agenda.upcoming(events)
     fun inCountry(c: Country) = news.filter { it.country == c.code }
     fun logo(item: NewsItem) = item.sourceLogoUrl ?: item.source?.let { sourceLogos[it] }
 }

@@ -105,6 +105,7 @@ struct EventsFeed: Decodable {
 struct EventItem: Decodable, Identifiable, Hashable {
     var id: String
     var title: String
+    var titleOriginal: String?
     var start: Date?
     var end: Date?
     var place: String?
@@ -129,11 +130,14 @@ struct EventItem: Decodable, Identifiable, Hashable {
     var htmlURL: URL?
     var htmlURLs: [String: URL]
     var ongoing: Bool
+    /// The venue's UTC offset from the feed; a date without a time is a whole day.
+    var zone: TimeZone = .current
+    var allDay = false
 
     enum CodingKeys: String, CodingKey {
         case id, title, start, end, place, city, country, online, organiser, url, paid, sponsored, note, past
         case going, source, description, ongoing
-        case noteI18n = "note_i18n"
+        case titleOriginal = "title_original", noteI18n = "note_i18n"
         case placeSource = "place_source", htmlURL = "html_url", htmlURLs = "html_urls"
     }
 
@@ -141,7 +145,12 @@ struct EventItem: Decodable, Identifiable, Hashable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
         title = try c.decode(String.self, forKey: .title)
+        titleOriginal = try c.decodeIfPresent(String.self, forKey: .titleOriginal)
         start = try? c.decodeIfPresent(Date.self, forKey: .start)
+        if let raw = try? c.decodeIfPresent(String.self, forKey: .start) {
+            allDay = !raw.contains("T")
+            zone = allDay ? .gmt : Self.offset(raw) ?? .current
+        }
         end = try? c.decodeIfPresent(Date.self, forKey: .end)
         place = try c.decodeIfPresent(String.self, forKey: .place)
         city = try c.decodeIfPresent(String.self, forKey: .city)
@@ -170,6 +179,27 @@ struct EventItem: Decodable, Identifiable, Hashable {
 
     func note(for lang: String) -> String? {
         noteI18n.localized(lang, base: note)
+    }
+
+    /// The organiser's own title when it is in the reader's language.
+    func title(for lang: String) -> String {
+        guard let titleOriginal, let source = description?.lang, AppLanguage.sameFamily(source, lang) else { return title }
+        return titleOriginal
+    }
+
+    /// When the event is over; without an end, a whole day or three hours.
+    var finish: Date? {
+        guard let start else { return nil }
+        return end ?? start.addingTimeInterval(allDay ? 86_400 : 3 * 3_600)
+    }
+
+    /// "+01:00" or "Z" at the end of an ISO 8601 time.
+    static func offset(_ raw: String) -> TimeZone? {
+        if raw.hasSuffix("Z") { return .gmt }
+        let tail = raw.suffix(6)
+        guard tail.count == 6, let sign = tail.first, sign == "+" || sign == "-",
+              let h = Int(tail.dropFirst().prefix(2)), let m = Int(tail.suffix(2)) else { return nil }
+        return TimeZone(secondsFromGMT: (sign == "-" ? -1 : 1) * (h * 3_600 + m * 60))
     }
 
     /// The event's page on nordiccrypto.no in the reader's language.
@@ -366,6 +396,12 @@ enum AppLanguage {
     /// Where to look for text, best first: nynorsk falls back to bokmål, everything to English.
     static func fallbacks(_ lang: String) -> [String] {
         (lang == "nn" ? ["nn", "nb"] : [lang]) + (lang == "en" ? [] : ["en"])
+    }
+
+    /// Norwegian sources are tagged "no"; treat nb and nn as the same family.
+    static func sameFamily(_ a: String, _ b: String) -> Bool {
+        let norsk: Set<String> = ["no", "nb", "nn"]
+        return a == b || (norsk.contains(a) && norsk.contains(b))
     }
 
     /// The string catalogue's name for `current` (Chinese ships as zh-Hans).

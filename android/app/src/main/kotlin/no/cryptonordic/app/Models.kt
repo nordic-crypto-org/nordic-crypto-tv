@@ -59,11 +59,28 @@ data class EventItem(
     @SerialName("note_i18n") val noteI18n: Map<String, String> = emptyMap(),
     val past: Boolean? = false,
     val going: Int? = null,
+    @SerialName("title_original") val titleOriginal: String? = null,
+    val description: EventDescription? = null,
 ) {
     fun note(lang: String): String? = noteI18n.localized(lang, note)
-    val startAt: OffsetDateTime? get() = start?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
-    val endAt: OffsetDateTime? get() = end?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
+    val startAt: OffsetDateTime? get() = at(start)
+    val endAt: OffsetDateTime? get() = at(end)
+    /** A date without a time is a whole day. */
+    val allDay: Boolean get() = start != null && 'T' !in start
+    /** When the event is over; without an end, a whole day or three hours. */
+    val finish: OffsetDateTime? get() = startAt?.let { endAt ?: it.plusHours(if (allDay) 24 else 3) }
+
+    /** The organiser's own title when it is in the reader's language. */
+    fun title(lang: String) = titleOriginal?.takeIf { description?.lang?.let { l -> Lang.sameFamily(l, lang) } == true } ?: title
+
+    private fun at(s: String?): OffsetDateTime? = s?.let {
+        runCatching { OffsetDateTime.parse(it) }.getOrNull()
+            ?: runCatching { LocalDate.parse(it).atStartOfDay().atOffset(java.time.ZoneOffset.UTC) }.getOrNull()
+    }
 }
+
+@Serializable
+data class EventDescription(val lang: String? = null)
 
 @Serializable
 data class NewslettersFeed(val issues: List<NewsletterIssue> = emptyList())

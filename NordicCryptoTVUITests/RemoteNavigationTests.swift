@@ -39,6 +39,25 @@ final class SignageRemoteTests: XCTestCase {
         shows("contact-page", "https://nordiccrypto.no/contact/")
     }
 
+    /// The calendar shows at most five rows, all inside its panel, in every language.
+    func testAgendaRowsFitThePanel() {
+        for lang in ["en", "nb", "de"] {
+            app.terminate()
+            app.launchArguments = ["-AppleLanguages", "(\(lang))", "-NCBadgeStub", "-NCFreeze"]
+            app.launch()
+            let agenda = app.descendants(matching: .any)["agenda"]
+            XCTAssertTrue(agenda.waitForExistence(timeout: 10), lang)
+            sleep(2)
+            attach("agenda-\(lang)")
+            let rows = agenda.descendants(matching: .any).matching(identifier: "agenda-row").allElementsBoundByIndex
+            XCTAssertFalse(rows.isEmpty, lang)
+            XCTAssertLessThanOrEqual(rows.count, 5, lang)
+            for row in rows {
+                XCTAssertTrue(agenda.frame.contains(row.frame), "\(lang): \(row.label) \(row.frame) outside \(agenda.frame)")
+            }
+        }
+    }
+
     private func shows(_ identifier: String, _ text: String) {
         let element = app.buttons[identifier]
         XCTAssertTrue(element.waitForExistence(timeout: 5), identifier)

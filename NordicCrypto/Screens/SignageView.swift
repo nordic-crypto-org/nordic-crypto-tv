@@ -51,7 +51,9 @@ struct Rotating<Item, Content: View>: View {
                     ZStack {
                         content(items[index], index)
                             .id(index)
-                            .transition(.opacity)
+                            .transition(.asymmetric(   // out, then in: no overlapping text
+                                insertion: .opacity.animation(.easeInOut(duration: 0.45).delay(0.45)),
+                                removal: .opacity.animation(.easeInOut(duration: 0.45))))
                     }
                     .animation(.easeInOut(duration: 0.9), value: index)
                     if showsProgress, items.count > 1, Self.freeze == nil {
