@@ -122,6 +122,7 @@ data class OrgEntity(
     val sector: String? = null,
     val country: String? = null,
     val description: String? = null,
+    @SerialName("description_i18n") val descriptionI18n: Map<String, String> = emptyMap(),
     val role: String? = null,
     val org: String? = null,
     val group: String? = null,
@@ -129,7 +130,17 @@ data class OrgEntity(
     val image: CreditedImage? = null,
 ) {
     val isPerson get() = type == "person"
+
+    /** The description in [lang]; the English text only when [lang] is English. */
+    fun description(lang: String): String? =
+        (descriptionI18n[lang] ?: description.takeIf { lang == "en" })?.takeIf { it.isNotBlank() }
 }
+
+private val sentenceEnd = Regex("""[.!?؟।](?=\s+[\p{Lu}\p{Lo}]|$)|[。！？]""")
+
+/** Up to the end of the first sentence ("e.g. the" and "Art. 63" do not end one). */
+val String.firstSentence: String
+    get() = trim().let { s -> sentenceEnd.find(s)?.let { s.substring(0, it.range.last + 1) } ?: s }
 
 @Serializable
 data class CreditedImage(

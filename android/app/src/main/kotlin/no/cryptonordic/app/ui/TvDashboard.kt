@@ -86,7 +86,7 @@ fun TvDashboard(store: Store, radio: Radio) {
                         }
                         Column(Modifier.width(440.dp).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                             Agenda(feed, tick, Modifier.weight(1f))
-                            Spotlight(feed, tick, Modifier.fillMaxWidth().height(96.dp))
+                            Spotlight(feed, tick, Modifier.fillMaxWidth().height(124.dp))
                             Text("</> " + Lang.tr("Open source on GitHub") + "  github.com/nordic-crypto-org/nordic-crypto-tv",
                                 color = NL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.End))
                         }
@@ -295,6 +295,13 @@ private fun Spotlight(feed: Feed, tick: Long, modifier: Modifier) {
                 Text(e.name, color = NL.textPrimary, fontSize = 17.sp, fontFamily = NL.serif, fontWeight = FontWeight.Bold, maxLines = 1)
                 val org = e.org?.let { feed.entities[it]?.name }
                 Text(listOfNotNull(e.role, org ?: e.group).joinToString(" · "), color = NL.textSecondary, fontSize = 11.sp, maxLines = 1)
+                val about = e.description(Lang.current)?.firstSentence ?: when {
+                    e.isPerson && org != null -> Lang.tr("A person affiliated with %@.", org)
+                    e.isPerson -> Lang.tr("A person in the crypto community.")
+                    e.sector == "public" -> Lang.tr("A public body with a role in crypto.")
+                    else -> Lang.tr("A company in the crypto industry.")
+                }
+                Text(about, color = NL.textSecondary, fontSize = 12.sp, maxLines = 2, overflow = TextOverflow.Ellipsis)
             }
         }
         image?.takeIf { it.displayableUrl != null && it.license?.lowercase() != "public domain" }?.creditLine?.let {
