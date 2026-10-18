@@ -91,9 +91,20 @@ jobs:
             -destination "platform=$SIM_OS Simulator,id=$SIM_ID" \
             -only-testing:NordicCryptoTests ${UI:+-only-testing:$UI} \
             -derivedDataPath build/DerivedData \
+            -resultBundlePath build/Tests.xcresult \
             CODE_SIGNING_ALLOWED=NO \
             | tee build/xcodebuild-test.log | grep -E "error:|Test Suite|Executed|\*\* " || true
           grep -q "\*\* TEST SUCCEEDED \*\*" build/xcodebuild-test.log
+      - name: Screenshots from the UI tests
+        if: always() && matrix.ui
+        run: xcrun xcresulttool export attachments --path build/Tests.xcresult --output-path build/screenshots || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && matrix.ui
+        with:
+          name: screenshots-${{ matrix.platform }}
+          path: build/screenshots
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Release build for the device (unsigned)
         env:
           DEVICE: ${{ matrix.device }}
