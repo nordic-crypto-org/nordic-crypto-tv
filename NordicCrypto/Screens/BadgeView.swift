@@ -97,7 +97,7 @@ struct BadgeView: View {
     var body: some View {
         content
             .background(NLBackground())
-            .navigationTitle("Badge")
+            .navigationTitle("Nordic Shield NFT")
             #if os(iOS)
             .navigationBarTitleDisplayMode(.inline)
             #endif

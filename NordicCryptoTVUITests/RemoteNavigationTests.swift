@@ -23,7 +23,7 @@ final class SignageRemoteTests: XCTestCase {
         attach("tab-bar")
 
         remote.press(.right)
-        XCTAssertTrue(tabs.buttons["Badge"].hasFocus)
+        XCTAssertTrue(tabs.buttons["Nordic Shield NFT"].hasFocus)
         XCTAssertTrue(app.staticTexts["badge-screen"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["badge-count"].label.hasPrefix("42 /"))
         XCTAssertTrue(app.descendants(matching: .any)["badge-qr"].waitForExistence(timeout: 5))
