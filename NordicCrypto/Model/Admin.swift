@@ -224,15 +224,15 @@ struct AdminAPI {
     }
 
     func verify(code: String, verifier: String) async throws -> AdminSession {
-        try Self.decoder.decode(AdminSession.self, from: send("verify", method: "POST", body: ["code": code, "verifier": verifier]))
+        try await Self.decoder.decode(AdminSession.self, from: send("verify", method: "POST", body: ["code": code, "verifier": verifier]))
     }
 
     func subscribers(token: String) async throws -> AdminSubscribers {
-        try Self.decoder.decode(AdminSubscribers.self, from: send("subscribers", token: token))
+        try await Self.decoder.decode(AdminSubscribers.self, from: send("subscribers", token: token))
     }
 
     func pressSends(token: String) async throws -> [AdminPressSend] {
-        try Self.decoder.decode(AdminPressSends.self, from: send("press-sends", token: token)).sends
+        try await Self.decoder.decode(AdminPressSends.self, from: send("press-sends", token: token)).sends
     }
 
     func logout(token: String) async {
