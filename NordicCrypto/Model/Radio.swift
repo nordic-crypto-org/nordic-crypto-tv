@@ -2,16 +2,33 @@
 import AVFoundation
 import Observation
 
-/// Radio Norge in the background of the Apple TV app. On by default; the
-/// viewer's choice is remembered.
+/// Radio in the background of the Apple TV app, Radio Norge by default. On by
+/// default; the viewer's choice of station and on/off is remembered.
 @MainActor
 @Observable
 final class Radio {
-    static let stream = URL(string: "https://live-bauerno.sharp-stream.com/radionorge_no_mp3")!
-    static let name = "Radio Norge"
+    struct Station: Equatable {
+        let name: String
+        let stream: URL
+        let homepage: URL
+    }
+
+    static let stations = [
+        Station(name: "Radio Norge",
+                stream: URL(string: "https://live-bauerno.sharp-stream.com/radionorge_no_mp3")!,
+                homepage: URL(string: "https://www.radionorge.no/")!),
+        Station(name: "Techno Underground | Fluxmusic",
+                stream: URL(string: "https://streams.fluxfm.de/technoug/mp3-128")!,
+                homepage: URL(string: "https://www.fluxfm.de/")!),
+        Station(name: "Berlin Beach House Radio",
+                stream: URL(string: "https://streams.fluxfm.de/bbeachhouse/mp3-128")!,
+                homepage: URL(string: "https://www.fluxfm.de/")!),
+    ]
     private static let key = "radio.on"
+    private static let stationKey = "radio.station"
 
     private(set) var isOn: Bool
+    private(set) var station: Station
     private(set) var isPlaying = false
     /// True while something else (the newsreel) has the sound.
     private var yielded = false
@@ -20,6 +37,8 @@ final class Radio {
 
     init() {
         isOn = UserDefaults.standard.object(forKey: Self.key) as? Bool ?? true
+        let name = UserDefaults.standard.string(forKey: Self.stationKey)
+        station = Self.stations.first { $0.name == name } ?? Self.stations[0]
     }
 
     func start() {
@@ -41,6 +60,16 @@ final class Radio {
         if isOn && !yielded { play() } else { stop() }
     }
 
+    /// Switch to the next station and turn the radio on.
+    func next() {
+        let index = Self.stations.firstIndex(of: station) ?? 0
+        station = Self.stations[(index + 1) % Self.stations.count]
+        UserDefaults.standard.set(station.name, forKey: Self.stationKey)
+        isOn = true
+        UserDefaults.standard.set(true, forKey: Self.key)
+        if !yielded { play() }
+    }
+
     /// Pause for other audio, e.g. while the newsreel plays.
     func yield(_ value: Bool) {
         yielded = value
@@ -54,7 +83,7 @@ final class Radio {
             try? AVAudioSession.sharedInstance().setActive(true)
         }
         // A fresh item each time, so playback rejoins the live edge.
-        let player = AVPlayer(url: Self.stream)
+        let player = AVPlayer(url: station.stream)
         player.automaticallyWaitsToMinimizeStalling = true
         player.play()
         self.player?.pause()
