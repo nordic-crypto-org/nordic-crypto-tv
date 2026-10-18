@@ -77,18 +77,23 @@ final class Radio {
     }
 
     private func play() {
-        // Activating the session can block; keep it off the main thread.
-        Task.detached(priority: .userInitiated) {
-            try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-            try? AVAudioSession.sharedInstance().setActive(true)
-        }
         // A fresh item each time, so playback rejoins the live edge.
         let player = AVPlayer(url: station.stream)
         player.automaticallyWaitsToMinimizeStalling = true
-        player.play()
         self.player?.pause()
         self.player = player
         isPlaying = true
+        Task { [weak self] in
+            // Long-form audio follows the speakers picked in Control Center (AirPlay).
+            // Activating the session can block; keep it off the main thread.
+            await Task.detached(priority: .userInitiated) {
+                let session = AVAudioSession.sharedInstance()
+                try? session.setCategory(.playback, mode: .default, policy: .longFormAudio)
+                try? session.setActive(true)
+            }.value
+            guard self?.player === player else { return }
+            player.play()
+        }
     }
 
     private func stop() {
