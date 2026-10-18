@@ -53,7 +53,6 @@ object Api {
     const val CONTACT_MAILTO = "mailto:jqrgen@nordiccrypto.no"
     const val WEBSITE = "https://nordiccrypto.no"
     const val CONTACT_PAGE = "https://nordiccrypto.no/contact/"
-    const val RADIO = "https://live-bauerno.sharp-stream.com/radionorge_no_mp3"
 
     val json = Json { ignoreUnknownKeys = true; coerceInputValues = true; explicitNulls = false }
 

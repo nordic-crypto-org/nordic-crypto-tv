@@ -35,20 +35,20 @@ import no.cryptonordic.app.*
 import java.time.ZonedDateTime
 
 /**
- * The Android TV "Kveldsnytt" page, like the Apple TV one: a large lead story,
- * cards under it, the agenda and a slim spotlight on the right. Play/Pause
- * switches Radio Norge. OK on Contact us opens the publisher's contact details.
+ * The Android TV app, like the Apple TV one: a tab bar with Today (the "Kveldsnytt"
+ * page: lead story, cards, agenda and spotlight), Nordic Shield NFT and Contact us.
+ * Play/Pause switches the radio, fast forward or OK on the radio chip changes station.
  */
 @Composable
 fun TvDashboard(store: Store, radio: Radio) {
     val feed by store.feed.collectAsState()
     val lang = Lang.current
-    val contactFocus = remember { FocusRequester() }
-    var showContact by remember { mutableStateOf(false) }
-    var contactFocused by remember { mutableStateOf(false) }
+    val tabs = listOf("Today", "Nordic Shield NFT", "Contact us")
+    var tab by remember { mutableStateOf(0) }
+    val todayFocus = remember { FocusRequester() }
     val tick by produceState(0L) { while (true) { value = System.currentTimeMillis() / 1000; delay(1000) } }
-    BackHandler(enabled = showContact) { showContact = false }
-    LaunchedEffect(showContact) { if (!showContact) runCatching { contactFocus.requestFocus() } }
+    BackHandler(enabled = tab != 0) { tab = 0; runCatching { todayFocus.requestFocus() } }
+    LaunchedEffect(Unit) { runCatching { todayFocus.requestFocus() } }
 
     // Lay out on a fixed 1280 dp wide canvas so 720p, 1080p and 4K TVs show the same page.
     BoxWithConstraints(Modifier.fillMaxSize()) {
@@ -59,10 +59,8 @@ fun TvDashboard(store: Store, radio: Radio) {
             .onPreviewKeyEvent {
                 if (it.type != KeyEventType.KeyUp) return@onPreviewKeyEvent false
                 when (it.key) {
-                    Key.MediaPlayPause -> { radio.toggle(); true }
-                    // OK still toggles the radio unless Contact us, or that screen, has focus.
-                    Key.DirectionCenter, Key.Enter, Key.NumPadEnter ->
-                        if (!showContact && !contactFocused) { radio.toggle(); true } else false
+                    Key.MediaPlayPause, Key.MediaPlay, Key.MediaPause -> { radio.toggle(); true }
+                    Key.MediaFastForward, Key.MediaNext -> { radio.next(); true }
                     else -> false
                 }
             }
@@ -70,24 +68,30 @@ fun TvDashboard(store: Store, radio: Radio) {
         Box(Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Brush.radialGradient(
             listOf(NL.accent.copy(alpha = 0.22f), Color.Transparent),
             center = androidx.compose.ui.geometry.Offset(300f, 0f), radius = 1400f)))
-        if (showContact) {
-            ContactScreen(large = true, onBack = { showContact = false })
-        } else {
-            Column(Modifier.fillMaxSize().padding(horizontal = 48.dp, vertical = 28.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
-                Header(feed, radio, tick)
-                Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(28.dp)) {
-                    Column(Modifier.weight(1f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(18.dp)) {
-                        Lead(feed, lang, tick, Modifier.weight(1f))
-                        Cards(feed, lang, tick, Modifier.height(170.dp))
-                    }
-                    Column(Modifier.width(440.dp).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                        ContactUsButton(contactFocus, { contactFocused = it }) { showContact = true }
-                        Agenda(feed, tick, Modifier.weight(1f))
-                        Spotlight(feed, tick, Modifier.fillMaxWidth().height(96.dp))
-                        Text("</> " + Lang.tr("Open source on GitHub") + "  github.com/jQrgen/nordic-crypto-tv",
-                            color = NL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.End))
+        Column(Modifier.fillMaxSize().padding(horizontal = 48.dp, vertical = 20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(Modifier.align(Alignment.CenterHorizontally), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                tabs.forEachIndexed { i, name ->
+                    TabButton(Lang.tr(name), selected = tab == i, if (i == 0) Modifier.focusRequester(todayFocus) else Modifier) { tab = i }
+                }
+            }
+            when (tab) {
+                0 -> {
+                    Header(feed, radio, tick)
+                    Row(Modifier.weight(1f), horizontalArrangement = Arrangement.spacedBy(28.dp)) {
+                        Column(Modifier.weight(1f).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(18.dp)) {
+                            Lead(feed, lang, tick, Modifier.weight(1f))
+                            Cards(feed, lang, tick, Modifier.height(170.dp))
+                        }
+                        Column(Modifier.width(440.dp).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                            Agenda(feed, tick, Modifier.weight(1f))
+                            Spotlight(feed, tick, Modifier.fillMaxWidth().height(96.dp))
+                            Text("</> " + Lang.tr("Open source on GitHub") + "  github.com/jQrgen/nordic-crypto-tv",
+                                color = NL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.End))
+                        }
                     }
                 }
+                1 -> TvBadge()
+                else -> ContactScreen(large = true)
             }
         }
     }
@@ -95,26 +99,38 @@ fun TvDashboard(store: Store, radio: Radio) {
     }
 }
 
+/** A tab that is selected as soon as the remote moves focus onto it, like tvOS. */
 @Composable
-private fun ContactUsButton(focus: FocusRequester, onFocused: (Boolean) -> Unit, onClick: () -> Unit) {
+private fun TabButton(label: String, selected: Boolean, modifier: Modifier, onSelect: () -> Unit) {
     var focused by remember { mutableStateOf(false) }
-    val shape = RoundedCornerShape(14.dp)
+    val shape = RoundedCornerShape(50)
     Text(
-        Lang.tr("Contact us"),
-        color = if (focused) NL.ground else NL.textPrimary,
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .focusRequester(focus)
-            .onFocusChanged { focused = it.isFocused; onFocused(it.isFocused) }
+        label,
+        color = if (focused) NL.ground else if (selected) NL.textPrimary else NL.textSecondary,
+        fontSize = 17.sp,
+        fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+        modifier = modifier
+            .onFocusChanged { focused = it.isFocused; if (it.isFocused) onSelect() }
             .clip(shape)
-            .background(if (focused) NL.accent else NL.raised)
-            .border(2.dp, if (focused) NL.accent else NL.rule, shape)
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .background(if (focused) NL.accent else if (selected) NL.raised else Color.Transparent)
+            .clickable(onClick = onSelect)
+            .padding(horizontal = 22.dp, vertical = 8.dp),
     )
+}
+
+@Composable
+private fun RadioChip(radio: Radio) {
+    var focused by remember { mutableStateOf(false) }
+    Row(Modifier.onFocusChanged { focused = it.isFocused }.clip(RoundedCornerShape(50))
+        .background(if (focused) NL.accent else NL.raised).clickable { radio.next() }
+        .padding(horizontal = 14.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(if (radio.isOn) "🔊" else "🔇", fontSize = 14.sp)
+        Column {
+            Text(radio.station.name, color = if (focused) NL.ground else NL.textPrimary, fontSize = 13.sp, fontWeight = FontWeight.SemiBold, maxLines = 1)
+            Text(Lang.tr(if (radio.isOn) "Press ⏯ to turn off" else "Press ⏯ to turn on"), color = if (focused) NL.ground else NL.textTertiary, fontSize = 11.sp)
+        }
+    }
 }
 
 private fun <T> rotate(list: List<T>, tick: Long, every: Long, offset: Long = 0): Pair<T, Int>? =
@@ -129,14 +145,7 @@ private fun Header(feed: Feed, radio: Radio, tick: Long) {
         Text(Lang.longDate(now), color = NL.textSecondary, fontSize = 14.sp)
         Spacer(Modifier.weight(1f))
         Text("✈ Telegram ${Api.TELEGRAM_HANDLE}", color = NL.textSecondary, fontSize = 14.sp)
-        Row(Modifier.background(NL.raised, RoundedCornerShape(50)).padding(horizontal = 14.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Text(if (radio.isOn) "🔊" else "🔇", fontSize = 14.sp)
-            Column {
-                Text("Radio Norge", color = NL.textPrimary, fontSize = 13.sp, fontWeight = FontWeight.SemiBold)
-                Text(Lang.tr(if (radio.isOn) "Press ⏯ to turn off" else "Press ⏯ to turn on"), color = NL.textTertiary, fontSize = 11.sp)
-            }
-        }
+        RadioChip(radio)
         Text(Lang.time(now.toOffsetDateTime()), color = NL.textPrimary, fontSize = 34.sp, fontWeight = FontWeight.Bold,
             maxLines = 1, softWrap = false)
     }
