@@ -1,0 +1,58 @@
+# Apple TV App Store screenshots from the tvOS simulator (Debug build, live
+# data), English and Norwegian, as an artifact laid out for fastlane/screenshots.
+# Nothing is uploaded to App Store Connect; review the images and commit them.
+
+name: App Store screenshots
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: [".github/workflows/appstore-screenshots.yml", "support/appstore-screenshots.sh"]
+
+permissions:
+  contents: read
+
+jobs:
+  appletv:
+    runs-on: xcode-27
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.0.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Generate the Xcode project
+        run: scripts/xcodegen.sh
+      - name: Pick an Apple TV 4K simulator
+        id: sim
+        run: |
+          id=$(xcrun simctl list devices available --json | python3 -I -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          found = [d for runtime, ds in sorted(devices.items(), reverse=True) if "SimRuntime.tvOS-" in runtime for d in ds]
+          print(next((d["udid"] for d in found if d["name"].startswith("Apple TV 4K")), ""))')
+          [ -n "$id" ] || { echo "::error::No Apple TV 4K simulator"; xcrun simctl list devices available; exit 1; }
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+      - name: Debug build for the simulator
+        env:
+          SIM_ID: ${{ steps.sim.outputs.id }}
+        run: |
+          set -o pipefail
+          xcodebuild build -project NordicCrypto.xcodeproj -scheme NordicCrypto -configuration Debug \
+            -destination "platform=tvOS Simulator,id=$SIM_ID" -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO | grep -E "error:|\*\* " || true
+          test -d "build/DerivedData/Build/Products/Debug-appletvsimulator/Nordic Crypto.app"
+      - name: Screenshots
+        env:
+          SIM_ID: ${{ steps.sim.outputs.id }}
+        run: |
+          app="build/DerivedData/Build/Products/Debug-appletvsimulator/Nordic Crypto.app"
+          sh support/appstore-screenshots.sh tv "$SIM_ID" "$app" build/screenshots/en-US en
+          sh support/appstore-screenshots.sh tv "$SIM_ID" "$app" build/screenshots/no nb
+          sips -g pixelWidth -g pixelHeight build/screenshots/*/*.png
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: appletv-screenshots
+          path: build/screenshots
+          retention-days: 14

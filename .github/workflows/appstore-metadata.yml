@@ -1,0 +1,61 @@
+# Uploads the Apple TV App Store listing in fastlane/metadata (and
+# fastlane/screenshots, if any) with `fastlane ios metadata`. No binary, no
+# review submission, no release. Uses the TestFlight App Store Connect API key
+# secrets.
+
+name: App Store metadata
+
+on:
+  push:
+    branches: [main]
+    paths: ["fastlane/metadata/**", "fastlane/screenshots/**", ".github/workflows/appstore-metadata.yml"]
+  workflow_dispatch:
+    inputs:
+      age_rating:
+        description: Also upload the age rating in fastlane/app_rating_config.json
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appstore-metadata
+  cancel-in-progress: false
+
+env:
+  FASTLANE_SKIP_UPDATE_CHECK: "1"
+  FASTLANE_HIDE_CHANGELOG: "1"
+  FASTLANE_OPT_OUT_USAGE: "1"
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check the App Store Connect key
+        id: check
+        env:
+          HAS_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY != '' && secrets.APP_STORE_CONNECT_API_KEY_ID != '' && secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID != '' }}
+        run: |
+          echo "ready=$HAS_KEY" >> "$GITHUB_OUTPUT"
+          [ "$HAS_KEY" = true ] || echo "::notice::App Store Connect API key secrets are not set; skipping."
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: steps.check.outputs.ready == 'true'
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        if: steps.check.outputs.ready == 'true'
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: fastlane ios metadata
+        if: steps.check.outputs.ready == 'true'
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          UPLOAD_AGE_RATING: ${{ inputs.age_rating || false }}
+        run: bundle exec fastlane ios metadata

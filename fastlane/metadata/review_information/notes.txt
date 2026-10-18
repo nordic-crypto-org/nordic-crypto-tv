@@ -1,0 +1,5 @@
+No account or login is needed. The app reads public news, events and newsletter data from nordiccrypto.no.
+
+Apple TV: the Today tab is an information screen that rotates on its own. Play/Pause turns the background radio on or off and Select changes station. The stations are the broadcasters' own public streams (Radio Norge; Techno Underground and Berlin Beach House Radio from FluxFM), played live and not stored.
+
+The Nordic Shield NFT tab shows a QR code for Wally Wallet on the viewer's phone. The badge is a free collectible with no economic rights; there are no in-app purchases and the app handles no payments or keys.
