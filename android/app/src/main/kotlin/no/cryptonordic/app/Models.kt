@@ -26,16 +26,23 @@ data class NewsItem(
     val topics: List<String> = emptyList(),
     val summary: String? = null,
     @SerialName("summary_i18n") val summaryI18n: Map<String, String> = emptyMap(),
+    @SerialName("title_i18n") val titleI18n: Map<String, String> = emptyMap(),
     val paywall: Boolean? = false,
 ) {
     val publishedAt: OffsetDateTime? get() = published?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
 
-    /** The reader's language when the source is in it, else the English title. */
-    fun headline(lang: String): String =
-        if (languageCode != null && Lang.sameFamily(languageCode, lang)) title else titleEn ?: title
+    /** The reader's language (nynorsk, then bokmål) when we have it, else the English title. */
+    fun headline(lang: String): String {
+        for (l in Lang.fallbacks(lang)) {
+            if (languageCode == l || (l == "nb" && languageCode == "no")) return title
+            titleI18n[l]?.let { return it }
+        }
+        return if (languageCode != null && Lang.sameFamily(languageCode, lang)) title else titleEn ?: title
+    }
 
-    fun originalHeadline(lang: String): String? = headline(lang).let { if (it == title) null else title }
-    fun summary(lang: String): String? = summaryI18n[lang] ?: summary
+    fun originalHeadline(lang: String): String? =
+        headline(lang).let { if (it == title || (languageCode != null && Lang.sameFamily(languageCode, lang))) null else title }
+    fun summary(lang: String): String? = summaryI18n.localized(lang) ?: summary
 }
 
 @Serializable
@@ -83,9 +90,9 @@ data class NewsletterIssue(
     val text: String? = null,
     @SerialName("text_i18n") val textI18n: Map<String, String> = emptyMap(),
 ) {
-    fun title(lang: String) = titleI18n[lang] ?: title
-    fun subtitle(lang: String) = subtitleI18n[lang] ?: subtitle
-    fun text(lang: String) = textI18n[lang] ?: text
+    fun title(lang: String) = titleI18n.localized(lang) ?: title
+    fun subtitle(lang: String) = subtitleI18n.localized(lang) ?: subtitle
+    fun text(lang: String) = textI18n.localized(lang) ?: text
     val day: LocalDate? get() = date?.let { runCatching { LocalDate.parse(it) }.getOrNull() }
 }
 

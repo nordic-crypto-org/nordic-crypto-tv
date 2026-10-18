@@ -28,14 +28,36 @@ final class SnapshotDecodingTests: XCTestCase {
     }
 
     func testLanguageResolution() {
-        XCTAssertEqual(AppLanguage.resolve(["nb-NO"]), "nb")
-        XCTAssertEqual(AppLanguage.resolve(["no"]), "nb")
+        XCTAssertEqual(AppLanguage.resolve(["nb-NO"]), "nn")
+        XCTAssertEqual(AppLanguage.resolve(["no"]), "nn")
         XCTAssertEqual(AppLanguage.resolve(["nn-NO"]), "nn")
+        XCTAssertEqual(AppLanguage.resolve(["en-GB"], region: "NO"), "nn")
+        XCTAssertEqual(AppLanguage.resolve(["sv-SE"], region: "NO"), "sv")
+        XCTAssertEqual(AppLanguage.resolve(["en-GB"], region: "GB"), "en")
         XCTAssertEqual(AppLanguage.resolve(["sv-SE", "en"]), "sv")
         XCTAssertEqual(AppLanguage.resolve(["ko-KR", "da"]), "da")
         XCTAssertEqual(AppLanguage.resolve(["de-DE"]), "de")
         XCTAssertEqual(AppLanguage.resolve(["zh-Hans-CN"]), "zh")
         XCTAssertEqual(AppLanguage.resolve(["it-IT"]), "en")
+    }
+
+    func testNynorskFallsBackToBokmal() throws {
+        let json = """
+        {"id": "a", "title": "Bokmål", "title_en": "English", "language_code": "no",
+         "title_i18n": {"nn": "Nynorsk"}, "summary": "Summary", "summary_i18n": {"nb": "Sammendrag"}}
+        """
+        let item = try JSONDecoder().decode(NewsItem.self, from: Data(json.utf8))
+        XCTAssertEqual(item.headline(for: "nn"), "Nynorsk")
+        XCTAssertNil(item.originalHeadline(for: "nn"))
+        XCTAssertEqual(item.headline(for: "nb"), "Bokmål")
+        XCTAssertEqual(item.summary(for: "nn"), "Sammendrag")
+        XCTAssertEqual(item.summary(for: "sv"), "Summary")
+        XCTAssertEqual(["nb": "Nett"].localized("nn"), "Nett")
+    }
+
+    func testNynorskCatalogue() throws {
+        let nn = try XCTUnwrap(Bundle.main.path(forResource: "nn", ofType: "lproj").flatMap(Bundle.init(path:)))
+        XCTAssertEqual(String(localized: "Norway", bundle: nn), "Noreg")
     }
 
     func testNorwegianReaderSeesOriginalNorwegianHeadline() throws {

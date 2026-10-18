@@ -30,6 +30,7 @@ struct NewsItem: Decodable, Identifiable, Hashable {
     var topics: [String]
     var summary: String?
     var summaryI18n: [String: String]
+    var titleI18n: [String: String]
     var paywall: Bool
     var ownStory: Bool
 
@@ -39,6 +40,7 @@ struct NewsItem: Decodable, Identifiable, Hashable {
         case titleEn = "title_en", sourceName = "source_name", languageCode = "language_code"
         case sourceLogoURL = "source_logo_url"
         case summaryI18n = "summary_i18n", ownStory = "own_story"
+        case titleI18n = "title_i18n"
     }
 
     init(from decoder: Decoder) throws {
@@ -57,24 +59,31 @@ struct NewsItem: Decodable, Identifiable, Hashable {
         topics = (try? c.decodeIfPresent([String].self, forKey: .topics)) ?? []
         summary = try c.decodeIfPresent(String.self, forKey: .summary)
         summaryI18n = (try? c.decodeIfPresent([String: String].self, forKey: .summaryI18n)) ?? [:]
+        titleI18n = (try? c.decodeIfPresent([String: String].self, forKey: .titleI18n)) ?? [:]
         paywall = (try? c.decodeIfPresent(Bool.self, forKey: .paywall)) ?? false
         ownStory = (try? c.decodeIfPresent(Bool.self, forKey: .ownStory)) ?? false
     }
 
     /// Headline in the reader's language when we have one, else the original.
     func headline(for lang: String) -> String {
+        for l in AppLanguage.fallbacks(lang) {
+            if languageCode == l || (l == "nb" && languageCode == "no") { return title }
+            if let t = titleI18n[l] { return t }
+        }
         if languageCode.map({ AppLanguage.sameFamily($0, lang) }) == true { return title }
         return titleEn ?? title
     }
 
-    /// The original-language headline, when it differs from `headline(for:)`.
+    /// The original-language headline, when it differs from `headline(for:)`
+    /// (not the bokmål original under a nynorsk headline).
     func originalHeadline(for lang: String) -> String? {
         let shown = headline(for: lang)
-        return shown == title ? nil : title
+        if shown == title || languageCode.map({ AppLanguage.sameFamily($0, lang) }) == true { return nil }
+        return title
     }
 
     func summary(for lang: String) -> String? {
-        summaryI18n[lang] ?? summary
+        summaryI18n.localized(lang) ?? summary
     }
 }
 
@@ -173,7 +182,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
     }
 
     func note(for lang: String) -> String? {
-        noteI18n[lang] ?? note
+        noteI18n.localized(lang) ?? note
     }
 
     /// The event's page on nordiccrypto.no in the reader's language.
@@ -183,7 +192,7 @@ struct EventItem: Decodable, Identifiable, Hashable {
 
     /// Venue, city and country in one line, as the website shows it.
     func location(lang: String) -> String? {
-        if online { return String(localized: "Online") }
+        if online { return String(localized: "Online", bundle: AppLanguage.bundle) }
         let countryName = country.flatMap { Formats.locale(lang).localizedString(forRegionCode: $0) }
         var parts = [place, city, countryName].compactMap { $0?.isEmpty == false ? $0 : nil }
         // Skip the city when the venue already names it.
@@ -229,7 +238,11 @@ struct EventDescription: Decodable, Hashable {
 
     /// The text in the reader's language, else the original.
     func text(for reader: String) -> String {
-        reader == lang ? text : (i18n[reader] ?? text)
+        for l in AppLanguage.fallbacks(reader) {
+            if l == lang || (l == "nb" && lang == "no") { return text }
+            if let t = i18n[l] { return t }
+        }
+        return text
     }
 
     /// The original, when it differs from what `text(for:)` shows.
@@ -296,9 +309,9 @@ struct NewsletterIssue: Decodable, Identifiable, Hashable {
         video = try? c.decodeIfPresent(Newsreel.self, forKey: .video)
     }
 
-    func title(for lang: String) -> String { titleI18n[lang] ?? title }
-    func subtitle(for lang: String) -> String? { subtitleI18n[lang] ?? subtitle }
-    func text(for lang: String) -> String? { textI18n[lang] ?? text }
+    func title(for lang: String) -> String { titleI18n.localized(lang) ?? title }
+    func subtitle(for lang: String) -> String? { subtitleI18n.localized(lang) ?? subtitle }
+    func text(for lang: String) -> String? { textI18n.localized(lang) ?? text }
 }
 
 struct Newsreel: Decodable, Hashable {
@@ -322,11 +335,11 @@ enum Country: String, CaseIterable, Identifiable {
 
     var name: String {
         switch self {
-        case .no: String(localized: "Norway")
-        case .se: String(localized: "Sweden")
-        case .dk: String(localized: "Denmark")
-        case .fi: String(localized: "Finland")
-        case .is: String(localized: "Iceland")
+        case .no: String(localized: "Norway", bundle: AppLanguage.bundle)
+        case .se: String(localized: "Sweden", bundle: AppLanguage.bundle)
+        case .dk: String(localized: "Denmark", bundle: AppLanguage.bundle)
+        case .fi: String(localized: "Finland", bundle: AppLanguage.bundle)
+        case .is: String(localized: "Iceland", bundle: AppLanguage.bundle)
         }
     }
 
@@ -360,20 +373,38 @@ enum AppLanguage {
     static let interfaceOnly = ["zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr"]
 
     /// The best language for this device: a Nordic code, one of `interfaceOnly`, or en.
-    static var current: String { resolve(Locale.preferredLanguages) }
+    static var current: String { resolve(Locale.preferredLanguages, region: Locale.current.region?.identifier) }
 
-    static func resolve(_ preferred: [String]) -> String {
+    /// Norwegian (no, nb, nn) reads nynorsk, as does English in Norway.
+    static func resolve(_ preferred: [String], region: String? = nil) -> String {
+        var found = "en"
         for tag in preferred {
             let code = Locale(identifier: tag).language.languageCode?.identifier ?? tag
-            if code == "no" { return "nb" }
-            if supported.contains(code) || interfaceOnly.contains(code) || code == "en" { return code }
+            if ["no", "nb", "nn"].contains(code) { return "nn" }
+            if supported.contains(code) || interfaceOnly.contains(code) || code == "en" { found = code; break }
         }
-        return "en"
+        return found == "en" && region == "NO" ? "nn" : found
     }
+
+    /// Where to look for a translation, best first: nynorsk falls back to bokmål.
+    static func fallbacks(_ lang: String) -> [String] {
+        lang == "nn" ? ["nn", "nb"] : [lang]
+    }
+
+    /// The app's string catalogue in `current`, for `String(localized:bundle:)`
+    /// when that differs from the system's pick (nynorsk on a bokmål Apple TV).
+    static let bundle: Bundle = current == "nn" ? Bundle.main.path(forResource: "nn", ofType: "lproj").flatMap(Bundle.init(path:)) ?? .main : .main
 
     /// Norwegian sources are tagged "no"; treat nb and nn as the same family.
     static func sameFamily(_ a: String, _ b: String) -> Bool {
         let norsk: Set<String> = ["no", "nb", "nn"]
         return a == b || (norsk.contains(a) && norsk.contains(b))
+    }
+}
+
+extension Dictionary where Key == String, Value == String {
+    /// The translation for `lang`, following `AppLanguage.fallbacks`.
+    func localized(_ lang: String) -> String? {
+        AppLanguage.fallbacks(lang).lazy.compactMap { self[$0] }.first
     }
 }

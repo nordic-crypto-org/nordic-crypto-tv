@@ -87,7 +87,7 @@ final class NewsAlerts {
         } else {
             let content = UNMutableNotificationContent()
             content.title = "Nordic Crypto"
-            content.body = String(localized: "\(wanted.count) new stories") + ": " + wanted.prefix(2).map { $0.headline(for: lang) }.joined(separator: " · ")
+            content.body = String(localized: "\(wanted.count) new stories", bundle: AppLanguage.bundle) + ": " + wanted.prefix(2).map { $0.headline(for: lang) }.joined(separator: " · ")
             content.userInfo = ["story": wanted[0].id]
             content.sound = .default
             center.add(UNNotificationRequest(identifier: "batch-" + wanted[0].id, content: content, trigger: nil))
