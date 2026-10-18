@@ -65,13 +65,16 @@ final class SignageRemoteTests: XCTestCase {
         XCTAssertEqual(radio.value as? String, before, "a second press restores the radio")
     }
 
-    func testSelectChangesStation() {
+    func testSelectKeepsRadioNorgeUntilFiveQuickPresses() {
         let radio = app.descendants(matching: .any)["radio"]
         XCTAssertTrue(radio.waitForExistence(timeout: 10))
-        let before = radio.label
+        XCTAssertTrue(radio.label.hasPrefix("Radio Norge"))
         remote.press(.select)
+        sleep(2)
+        XCTAssertTrue(radio.label.hasPrefix("Radio Norge"))
+        for _ in 0..<5 { remote.press(.select) }
         sleep(1)
-        XCTAssertNotEqual(radio.label, before)
+        XCTAssertFalse(radio.label.hasPrefix("Radio Norge"))
         XCTAssertEqual(radio.value as? String, "On")
     }
 }

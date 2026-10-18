@@ -3,8 +3,7 @@ import SwiftUI
 
 /// Apple TV runs as an information screen ("Kveldsnytt" design): one page
 /// whose parts stay in place while each rotates its own content, so the
-/// viewer never loses context. Play/Pause switches the radio on and off and
-/// Select changes station. The page takes
+/// viewer never loses context. Play/Pause switches the radio on and off. The page takes
 /// focus at launch so the tab bar slides away; Menu or up brings it back.
 struct SignageView: View {
     @Environment(Radio.self) private var radio
@@ -25,7 +24,7 @@ struct SignageView: View {
                 focused = true
             }
             .onPlayPauseCommand { radio.toggle() }
-            .onTapGesture { radio.next() }
+            .onTapGesture { radio.select() }
     }
 }
 
