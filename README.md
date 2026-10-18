@@ -97,7 +97,11 @@ open NordicCrypto.xcodeproj
   [Build workflow](.github/workflows/build.yml), no secrets)
 - Icons and Top Shelf art: `python3 support/make_brand_assets.py`
 - Translations: `python3 support/translations.py` writes `NordicCrypto/Localizable.xcstrings`
-- App Store listing and screenshots: see `support/appstore/`
+- App Store listing for Apple TV: `fastlane/metadata/` (en-US and Norwegian `no`); the
+  [App Store metadata workflow](.github/workflows/appstore-metadata.yml) uploads it on changes to `main`
+  or by hand (no binary, no review submission). Screenshots: run the
+  [App Store screenshots workflow](.github/workflows/appstore-screenshots.yml), review the artifact and
+  commit it to `fastlane/screenshots/<locale>/`. Older scripts: `support/appstore/`
 
 ### Android (Kotlin, Jetpack Compose)
 ```sh
