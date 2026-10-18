@@ -29,7 +29,11 @@ data class NewsItem(
     @SerialName("title_i18n") val titleI18n: Map<String, String> = emptyMap(),
     val paywall: Boolean? = false,
 ) {
-    val publishedAt: OffsetDateTime? get() = published?.let { runCatching { OffsetDateTime.parse(it) }.getOrNull() }
+    /** A date without a time counts from the start of that day (UTC). */
+    val publishedAt: OffsetDateTime? get() = published?.let {
+        runCatching { OffsetDateTime.parse(it) }.getOrNull()
+            ?: runCatching { LocalDate.parse(it).atStartOfDay().atOffset(java.time.ZoneOffset.UTC) }.getOrNull()
+    }
 
     /** Headline in the reader's language (nynorsk, then bokmål), else English. */
     fun headline(lang: String): String =

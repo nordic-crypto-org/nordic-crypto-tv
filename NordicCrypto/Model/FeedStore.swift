@@ -129,7 +129,7 @@ final class FeedStore {
     }
 
     private func apply(_ feed: NewsFeed) {
-        news = feed.items.sorted { ($0.published ?? .distantPast) > ($1.published ?? .distantPast) }
+        news = NewsItem.recent(feed.items).sorted { ($0.published ?? .distantPast) > ($1.published ?? .distantPast) }
         updated = feed.updated ?? feed.generatedAt
     }
 

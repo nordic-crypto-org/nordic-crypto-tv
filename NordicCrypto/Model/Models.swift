@@ -76,6 +76,16 @@ struct NewsItem: Decodable, Identifiable, Hashable {
     }
 }
 
+extension NewsItem {
+    /// Google Play News policy, kept the same on every platform: no stories older than this, by published date.
+    static let maxAgeDays = 90
+
+    static func recent(_ items: [NewsItem], now: Date = .now) -> [NewsItem] {
+        let cutoff = now.addingTimeInterval(-Double(maxAgeDays) * 86_400)
+        return items.filter { ($0.published ?? .distantPast) > cutoff }
+    }
+}
+
 struct SourcesFeed: Decodable {
     var sources: [Source]
 

@@ -39,7 +39,7 @@ private sealed interface Route {
 
 private enum class Tab(val key: String, val icon: String) {
     TODAY("Today", "☀"), COUNTRIES("Countries", "◎"), EVENTS("Events", "▦"), NEWSLETTER("Newsletter", "✉"),
-    CONTACT("Contact us", "☎"),
+    CONTACT("Contact us", "ⓘ"),
 }
 
 @Composable

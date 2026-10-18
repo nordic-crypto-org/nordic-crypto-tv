@@ -118,7 +118,7 @@ class Store(private val context: Context) {
         val sources = parse("sources.json") { Api.json.decodeFromString<SourcesFeed>(it) }?.sources.orEmpty()
         val org = parse("orgchart.json") { Api.json.decodeFromString<OrgChartFeed>(it) }?.entities.orEmpty()
         return Feed(
-            news = news?.items.orEmpty().sortedByDescending { it.publishedAt },
+            news = News.recent(news?.items.orEmpty()).sortedByDescending { it.publishedAt },
             events = events,
             issues = issues,
             issueDetails = details,

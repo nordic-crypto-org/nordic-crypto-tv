@@ -25,6 +25,6 @@ PÅ ALLE SKJERMER
 PERSONVERN FRA STARTEN
 Ingen konto, ingen sporing, ingen reklame. Varsler slår du på selv: push-serveren vår lagrer bare push-tokenet til enheten, landene du velger og språket ditt, og sletter dem når du slår av varsler.
 
-Åpen kildekode: github.com/jQrgen/nordic-crypto-tv
+Åpen kildekode: github.com/nordic-crypto-org/nordic-crypto-tv
 
 Overskriftene tilhører utgiverne. Nordic Crypto er nyheter, ikke investeringsråd.
