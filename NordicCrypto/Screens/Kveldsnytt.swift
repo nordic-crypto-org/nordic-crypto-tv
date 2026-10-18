@@ -104,10 +104,21 @@ private struct KHeader: View {
 /// The five newest stories, one at a time, in large serif type.
 private struct KLead: View {
     @Environment(FeedStore.self) private var store
+    @Environment(Radio.self) private var radio
+
+    /// Seconds per story; faster with the techno stations.
+    private var dwell: Double {
+        guard radio.isOn else { return 90 }
+        switch radio.station.name {
+        case "Techno Underground | Fluxmusic": return 45
+        case "Berlin Beach House Radio": return 65
+        default: return 90
+        }
+    }
 
     var body: some View {
         let top = Array(store.news.prefix(5))
-        Rotating(items: top, interval: 15) { item, index in
+        Rotating(items: top, interval: dwell) { item, index in
             VStack(alignment: .leading, spacing: 22) {
                 HStack(spacing: 14) {
                     Kicker(item: item, lang: store.lang)
