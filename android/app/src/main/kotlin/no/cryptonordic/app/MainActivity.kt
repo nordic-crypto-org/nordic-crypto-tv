@@ -38,7 +38,6 @@ class MainActivity : ComponentActivity() {
             // An information screen: it never hands over to the screensaver.
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             val r = Radio(applicationContext).also { radio = it }
-            r.start()
             setContent { TvDashboard(store, r) }
         } else {
             enableEdgeToEdge()
