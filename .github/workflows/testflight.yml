@@ -204,12 +204,13 @@ jobs:
         # GIT_SSH_COMMAND, with github.com's host keys from the HTTPS API.
         env:
           MATCH_GIT_PRIVATE_KEY: ${{ secrets.MATCH_GIT_PRIVATE_KEY }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           umask 077
           dir="$RUNNER_TEMP/match-ssh"
           rm -rf "$dir"; mkdir -p "$dir"
           printf '%s\n' "$MATCH_GIT_PRIVATE_KEY" > "$dir/id"
-          curl -fsSL https://api.github.com/meta \
+          curl -fsSL --retry 3 -H "Authorization: Bearer $GH_TOKEN" https://api.github.com/meta \
             | python3 -I -c 'import json,sys; [print("github.com", k) for k in json.load(sys.stdin)["ssh_keys"]]' \
             > "$dir/known_hosts"
           test -s "$dir/known_hosts"
