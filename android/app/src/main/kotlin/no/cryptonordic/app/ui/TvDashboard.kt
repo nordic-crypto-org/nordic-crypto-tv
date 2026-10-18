@@ -1,7 +1,11 @@
 package no.cryptonordic.app.ui
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -224,6 +228,7 @@ private fun Cards(feed: Feed, lang: String, tick: Long, modifier: Modifier) {
 @Composable
 private fun Agenda(feed: Feed, tick: Long, modifier: Modifier) {
     val events = feed.upcoming
+    val pages = Agenda.pages(events)
     Column(modifier.clip(RoundedCornerShape(20.dp)).background(NL.aside).padding(18.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Row(verticalAlignment = Alignment.Bottom) {
             Text(Lang.tr("Coming up"), color = NL.textPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
@@ -231,35 +236,43 @@ private fun Agenda(feed: Feed, tick: Long, modifier: Modifier) {
             Text(Lang.tr("%lld events", events.size), color = NL.textTertiary, fontSize = 13.sp)
         }
         if (events.isEmpty()) { Text(Lang.tr("No upcoming events"), color = NL.textTertiary); return@Column }
-        val i = rotate(events.indices.toList(), tick, 15, 7)!!.first
-        val f = events[i]
-        Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(NL.raised).padding(12.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(56.dp)) {
-                Text(Lang.dayNumber(f.startAt), color = NL.textPrimary, fontSize = 34.sp, fontWeight = FontWeight.Bold)
-                Text(Lang.month(f.startAt), color = NL.country(f.country), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        val (page, index) = rotate(pages, tick, 20, 7)!!
+        AnimatedContent(page, Modifier.height(AGENDA_ROW * Agenda.ROWS), label = "agenda",
+            transitionSpec = { fadeIn(tween(450, delayMillis = 450)) togetherWith fadeOut(tween(450)) }) { shown ->
+            Column {
+                shown.forEachIndexed { k, e -> AgendaRow(e, showsDay = k == 0 || !Agenda.sameDay(shown[k - 1], e), first = k == 0) }
+            }
+        }
+        if (pages.size > 1) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Box(Modifier.weight(1f)) { RotationBar(tick, 20, 7) }
+                Text("${index + 1}/${pages.size}", color = NL.textTertiary, fontSize = 11.sp)
+            }
+        }
+    }
+}
+
+private val AGENDA_ROW = 62.dp
+
+/** Title, place and date on one line each; the day only on the first row of that day. */
+@Composable
+private fun AgendaRow(e: EventItem, showsDay: Boolean, first: Boolean) {
+    val start = e.startAt
+    Column(Modifier.height(AGENDA_ROW)) {
+        if (showsDay && !first) Box(Modifier.fillMaxWidth().height(1.dp).background(NL.raised))
+        Row(Modifier.padding(vertical = 5.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(44.dp)) {
+                if (showsDay && start != null) {
+                    Text(start.dayOfMonth.toString(), color = NL.textPrimary, fontSize = 20.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                    Text(start.format(java.time.format.DateTimeFormatter.ofPattern("MMM", Lang.locale)).uppercase(Lang.locale),
+                        color = NL.country(e.country), fontSize = 10.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                }
             }
             Column(Modifier.weight(1f)) {
-                Text(listOfNotNull(Lang.weekdayShort(f.startAt), Lang.time(f.startAt) + (f.endAt?.let { "–" + Lang.time(it) } ?: ""))
-                    .joinToString(" · ") + (f.going?.takeIf { it > 0 }?.let { " · " + Lang.tr("%lld going", it) } ?: ""),
-                    color = NL.accent, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
-                Text(f.title, color = NL.textPrimary, fontSize = 20.sp, fontFamily = NL.serif, fontWeight = FontWeight.Bold, maxLines = 2)
-                Text(listOfNotNull(f.city, f.organiser).joinToString(" · "), color = NL.textSecondary, fontSize = 12.sp, maxLines = 1)
-            }
-            f.url?.let { QrCode(it, 70.dp) }
-        }
-        (1 until minOf(7, events.size)).forEach { k ->
-            val e = events[(i + k) % events.size]
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.padding(vertical = 2.dp)) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(44.dp)) {
-                    Text(Lang.dayNumber(e.startAt), color = NL.textPrimary, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                    Text(Lang.month(e.startAt), color = NL.country(e.country), fontSize = 10.sp, fontWeight = FontWeight.Bold)
-                }
-                Column(Modifier.weight(1f)) {
-                    Text(e.title, color = NL.textPrimary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(listOfNotNull(e.city, Lang.time(e.startAt), e.organiser).joinToString(" · "), color = NL.textTertiary, fontSize = 11.sp, maxLines = 1)
-                }
+                Text(e.title(Lang.current), color = NL.textPrimary, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(Agenda.place(e, Lang.locale), color = NL.textSecondary, fontSize = 11.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(Agenda.dateLine(e, Lang.locale, android.text.format.DateFormat.getBestDateTimePattern(Lang.locale, "EEEdMMM")),
+                    color = NL.accent, fontSize = 11.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, overflow = TextOverflow.Ellipsis)
             }
         }
     }

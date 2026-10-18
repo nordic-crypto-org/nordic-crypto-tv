@@ -239,33 +239,38 @@ private struct NewsletterCardK: View {
 
 // MARK: - Agenda
 
-/// Coming up: one featured event, then the next four in a
-/// ruled list. The featured event moves on every 15 seconds.
+/// Coming up: pages of upcoming events in date order, the day shown once
+/// per group, each event on three lines (title, place, date).
 private struct KAgenda: View {
     @Environment(FeedStore.self) private var store
+    static let rowHeight: CGFloat = 94
 
     var body: some View {
         let events = store.upcomingEvents
+        let pages = Agenda.pages(events)
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .firstTextBaseline) {
-                Text("Coming up")
+                Text(String(localized: "Coming up", bundle: AppLanguage.bundle))
                     .font(.system(size: 26, weight: .bold))
                     .foregroundStyle(NL.textPrimary)
                 Spacer()
-                Text("\(events.count) events")
+                Text(String(localized: "\(events.count) events", bundle: AppLanguage.bundle))
                     .font(.system(size: 20))
                     .foregroundStyle(NL.textTertiary)
             }
             if events.isEmpty {
-                Text("No upcoming events").font(.system(size: 22)).foregroundStyle(NL.textTertiary)
+                Text(String(localized: "No upcoming events", bundle: AppLanguage.bundle))
+                    .font(.system(size: 22)).foregroundStyle(NL.textTertiary)
             } else {
-                Rotating(items: Array(events.indices), interval: 15, offset: 7) { i, _ in
-                    VStack(alignment: .leading, spacing: 6) {
-                        FeaturedEventK(event: events[i], isNext: i == 0)
-                        ForEach(1..<min(7, events.count), id: \.self) { k in
-                            EventRowK(event: events[(i + k) % events.count], last: k == min(7, events.count) - 1)
+                Rotating(items: pages, interval: 20, offset: 7, showsProgress: true) { page, index in
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(Array(page.enumerated()), id: \.element.id) { k, event in
+                            EventRowK(event: event, showsDay: k == 0 || !Agenda.sameDay(page[k - 1], event), first: k == 0)
                         }
+                        Spacer(minLength: 0)
+                        HStack { Spacer(); PageDots(count: pages.count, index: index) }
                     }
+                    .frame(height: Self.rowHeight * CGFloat(Agenda.rowsPerPage) + 16, alignment: .top)
                 }
             }
             Spacer(minLength: 0)
@@ -273,119 +278,55 @@ private struct KAgenda: View {
         .padding(30)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(K.aside, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-    }
-}
-
-private struct FeaturedEventK: View {
-    let event: EventItem
-    let isNext: Bool
-    @Environment(FeedStore.self) private var store
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 20) {
-            VStack(spacing: 0) {
-                Text(event.start.map { Formats.dayNumber($0, lang: store.lang) } ?? "–")
-                    .font(.system(size: 56, weight: .bold))
-                    .foregroundStyle(NL.textPrimary)
-                Text(event.start.map { $0.formatted(.dateTime.month(.abbreviated).locale(Formats.locale(store.lang))) } ?? "")
-                    .font(.system(size: 18, weight: .bold))
-                    .textCase(.uppercase)
-                    .foregroundStyle(NL.country(event.country))
-            }
-            .frame(width: 96)
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(spacing: 10) {
-                    Text(when)
-                        .font(.system(size: 18, weight: .bold))
-                        .foregroundStyle(NL.accent)
-                        .lineLimit(1)
-                    if isNext {
-                        Text("Next")
-                            .font(.system(size: 15, weight: .bold))
-                            .foregroundStyle(K.ground)
-                            .padding(.horizontal, 9)
-                            .padding(.vertical, 2)
-                            .background(NL.accent, in: Capsule())
-                    }
-                }
-                Text(event.title)
-                    .font(K.serif(30))
-                    .foregroundStyle(NL.textPrimary)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(verbatim: [event.online ? String(localized: "Online", bundle: AppLanguage.bundle) : event.city, event.organiser]
-                    .compactMap { $0 }.joined(separator: " · "))
-                    .font(.system(size: 18))
-                    .foregroundStyle(NL.textSecondary)
-                    .lineLimit(1)
-                if let going = event.going, going > 0 {
-                    Label("\(going) going", systemImage: "person.2.fill")
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(NL.accent)
-                }
-            }
-            Spacer(minLength: 0)
-        }
-        .padding(22)
-        .background(K.raised, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-    }
-
-    private var when: String {
-        guard let start = event.start else { return "" }
-        let day = start.formatted(.dateTime.weekday(.abbreviated).locale(Formats.locale(store.lang)))
-        let from = Formats.time(start, lang: store.lang)
-        if let end = event.end, Calendar.current.isDate(start, inSameDayAs: end) {
-            return "\(day) · \(from)–\(Formats.time(end, lang: store.lang))"
-        }
-        return "\(day) · \(from)"
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("agenda")
     }
 }
 
 private struct EventRowK: View {
     let event: EventItem
-    let last: Bool
+    let showsDay: Bool
+    let first: Bool
     @Environment(FeedStore.self) private var store
 
     var body: some View {
-        HStack(alignment: .center, spacing: 18) {
+        HStack(alignment: .top, spacing: 18) {
             VStack(spacing: 0) {
-                Text(event.start.map { Formats.dayNumber($0, lang: store.lang) } ?? "–")
-                    .font(.system(size: 30, weight: .bold))
-                    .foregroundStyle(NL.textPrimary)
-                Text(event.start.map { $0.formatted(.dateTime.month(.abbreviated).locale(Formats.locale(store.lang))) } ?? "")
-                    .font(.system(size: 13, weight: .bold))
-                    .textCase(.uppercase)
-                    .foregroundStyle(NL.country(event.country))
+                if showsDay, let start = event.start {
+                    Text(start.formatted(Agenda.style(event, store.lang).day()))
+                        .font(.system(size: 34, weight: .bold))
+                        .foregroundStyle(NL.textPrimary)
+                    Text(start.formatted(Agenda.style(event, store.lang).month(.abbreviated)))
+                        .font(.system(size: 14, weight: .bold))
+                        .textCase(.uppercase)
+                        .foregroundStyle(NL.country(event.country))
+                }
             }
-            .frame(width: 64)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(event.title)
+            .lineLimit(1)
+            .frame(width: 72)
+            VStack(alignment: .leading, spacing: 3) {
+                Text(event.title(for: store.lang))
                     .font(.system(size: 23, weight: .semibold))
                     .foregroundStyle(NL.textPrimary)
-                    .lineLimit(1)
-                Text(verbatim: [event.online ? String(localized: "Online", bundle: AppLanguage.bundle) : event.city,
-                                Formats.time(event.start, lang: store.lang), event.organiser]
-                    .compactMap { $0 }.joined(separator: " · "))
+                Text(Agenda.place(event, lang: store.lang))
                     .font(.system(size: 17))
-                    .foregroundStyle(NL.textTertiary)
-                    .lineLimit(1)
-            }
-            Spacer(minLength: 0)
-            if let going = event.going, going > 0 {
-                Label("\(going) going", systemImage: "person.2.fill")
-                    .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(NL.textSecondary)
-                    .lineLimit(1)
-                    .fixedSize()
+                Text(Agenda.when(event, lang: store.lang))
+                    .font(.system(size: 17, weight: .semibold))
+                    .monospacedDigit()
+                    .foregroundStyle(NL.accent)
             }
-            EntryBadge(event: event)
+            .lineLimit(1)
+            .truncationMode(.tail)
+            Spacer(minLength: 0)
         }
-        .padding(.vertical, 9)
-        .padding(.horizontal, 6)
-        .overlay(alignment: .bottom) {
-            if !last { Rectangle().fill(K.rule).frame(height: 1) }
+        .padding(.vertical, 8)
+        .frame(height: KAgenda.rowHeight, alignment: .top)
+        .overlay(alignment: .top) {
+            if showsDay && !first { Rectangle().fill(K.rule).frame(height: 1) }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("agenda-row")
     }
 }
 

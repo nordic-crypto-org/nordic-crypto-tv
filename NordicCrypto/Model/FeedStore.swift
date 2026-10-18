@@ -33,7 +33,7 @@ final class FeedStore {
     }
 
     var upcomingEvents: [EventItem] {
-        events.filter { !$0.past }.sorted { ($0.start ?? .distantFuture) < ($1.start ?? .distantFuture) }
+        Agenda.upcoming(events)
     }
 
     var pastEvents: [EventItem] {
