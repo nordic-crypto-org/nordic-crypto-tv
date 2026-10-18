@@ -25,6 +25,6 @@ ON EVERY SCREEN
 PRIVATE BY DESIGN
 No account, no tracking, no ads. Notifications are opt-in: our push server keeps only the device's push token, the countries you pick and your language, and deletes them when you turn notifications off.
 
-Open source: github.com/jQrgen/nordic-crypto-tv
+Open source: github.com/nordic-crypto-org/nordic-crypto-tv
 
 Headlines belong to their publishers. Nordic Crypto is news, not investment advice.
