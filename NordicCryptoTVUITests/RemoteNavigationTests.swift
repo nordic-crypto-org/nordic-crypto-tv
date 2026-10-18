@@ -57,6 +57,7 @@ final class SignageRemoteTests: XCTestCase {
         let radio = app.descendants(matching: .any)["radio"]
         XCTAssertTrue(radio.waitForExistence(timeout: 10))
         let before = radio.value as? String
+        XCTAssertEqual(before, "Off", "the radio never starts by itself")
         remote.press(.playPause)
         sleep(1)
         XCTAssertNotEqual(radio.value as? String, before)
@@ -75,6 +76,6 @@ final class SignageRemoteTests: XCTestCase {
         for _ in 0..<5 { remote.press(.select) }
         sleep(1)
         XCTAssertFalse(radio.label.hasPrefix("Radio Norge"))
-        XCTAssertEqual(radio.value as? String, "On")
+        XCTAssertEqual(radio.value as? String, "Off", "changing station never starts the radio")
     }
 }

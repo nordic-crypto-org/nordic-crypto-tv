@@ -2,8 +2,8 @@
 import AVFoundation
 import Observation
 
-/// Radio Norge in the background of the Apple TV app. On by default; on/off
-/// is remembered. The other stations are an easter egg (see `select`).
+/// Radio Norge in the background of the Apple TV app. Off at launch; it plays
+/// only after the viewer presses Play. The other stations are an easter egg (see `select`).
 @MainActor
 @Observable
 final class Radio {
@@ -24,9 +24,7 @@ final class Radio {
                 stream: URL(string: "https://streams.fluxfm.de/bbeachhouse/mp3-128")!,
                 homepage: URL(string: "https://www.fluxfm.de/")!),
     ]
-    private static let key = "radio.on"
-
-    private(set) var isOn: Bool
+    private(set) var isOn = false
     private(set) var station = Radio.stations[0]
     private(set) var isPlaying = false
     /// True while something else (the newsreel) has the sound.
@@ -35,26 +33,27 @@ final class Radio {
     private var watchdog: Task<Void, Never>?
     private var presses: [Date] = []
 
-    init() {
-        isOn = UserDefaults.standard.object(forKey: Self.key) as? Bool ?? true
-    }
-
     func start() {
-        if isOn && !yielded { play() }
         watchdog?.cancel()
-        // Live streams drop; reconnect whenever the radio should be playing but is not.
+        // Live streams drop; reconnect a failed stream, but never resume one paused
+        // by the system (interruption, Control Center, AirPlay).
         watchdog = Task { [weak self] in
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(15))
                 guard let self else { return }
-                if self.isOn && !self.yielded && self.player?.timeControlStatus != .playing { self.play() }
+                guard self.isOn, !self.yielded, let player = self.player else { continue }
+                if player.currentItem?.status == .failed || player.error != nil {
+                    self.play()
+                } else if player.timeControlStatus == .paused && player.rate == 0 {
+                    self.stop()
+                    self.isOn = false
+                }
             }
         }
     }
 
     func toggle() {
         isOn.toggle()
-        UserDefaults.standard.set(isOn, forKey: Self.key)
         if isOn && !yielded { play() } else { stop() }
     }
 
@@ -67,19 +66,17 @@ final class Radio {
         next()
     }
 
-    /// Switch to the next station and turn the radio on.
+    /// Switch to the next station; it plays only if the radio is on.
     private func next() {
         let index = Self.stations.firstIndex(of: station) ?? 0
         station = Self.stations[(index + 1) % Self.stations.count]
-        isOn = true
-        UserDefaults.standard.set(true, forKey: Self.key)
-        if !yielded { play() }
+        if isOn && !yielded { play() }
     }
 
     /// Pause for other audio, e.g. while the newsreel plays.
     func yield(_ value: Bool) {
         yielded = value
-        if value { stop() } else if isOn { play() }
+        if value { stop(); isOn = false }
     }
 
     private func play() {
