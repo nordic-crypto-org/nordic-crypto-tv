@@ -30,7 +30,7 @@ struct KveldsnyttLayout: View {
                         HStack(spacing: 8) {
                             Image(systemName: "chevron.left.forwardslash.chevron.right")
                             Text("Open source on GitHub")
-                            Text(verbatim: "github.com/jQrgen/nordic-crypto-tv")
+                            Text(verbatim: "github.com/nordic-crypto-org/nordic-crypto-tv")
                                 .foregroundStyle(NL.textSecondary)
                         }
                         .font(.system(size: 14))

@@ -41,4 +41,4 @@ Stories link to the original publishers, and the newsletter links to Substack. W
 
 ## Contact
 
-Questions: open an issue at https://github.com/jQrgen/nordic-crypto/issues.
+Questions: jqrgen@nordiccrypto.no or https://nordiccrypto.no/contact/.

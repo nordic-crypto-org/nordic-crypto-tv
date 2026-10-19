@@ -44,7 +44,7 @@ object Api {
     const val TELEGRAM = "https://t.me/nordiccryptochat"
     const val TELEGRAM_HANDLE = "@nordiccryptochat"
     const val SUBSCRIBE = "https://cryptonordic.substack.com/subscribe"
-    const val SOURCE_CODE = "https://github.com/jQrgen/nordic-crypto-tv"
+    const val SOURCE_CODE = "https://github.com/nordic-crypto-org/nordic-crypto-tv"
     /** News publisher shown on the Contact us screen and in the Play listing. */
     const val PUBLISHER = "Nordic Crypto"
     const val PUBLISHER_COMPANY = "jQrgenCorp"

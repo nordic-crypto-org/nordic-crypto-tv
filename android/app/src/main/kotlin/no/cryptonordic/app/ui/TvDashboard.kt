@@ -87,7 +87,7 @@ fun TvDashboard(store: Store, radio: Radio) {
                         Column(Modifier.width(440.dp).fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(14.dp)) {
                             Agenda(feed, tick, Modifier.weight(1f))
                             Spotlight(feed, tick, Modifier.fillMaxWidth().height(96.dp))
-                            Text("</> " + Lang.tr("Open source on GitHub") + "  github.com/jQrgen/nordic-crypto-tv",
+                            Text("</> " + Lang.tr("Open source on GitHub") + "  github.com/nordic-crypto-org/nordic-crypto-tv",
                                 color = NL.textTertiary, fontSize = 11.sp, modifier = Modifier.align(Alignment.End))
                         }
                     }
