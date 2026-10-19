@@ -7,9 +7,9 @@ Our own Norwegian text never says "AI" or "KI".
 import json
 import os
 
-SUPPORT_URL = "https://github.com/jQrgen/nordic-crypto/issues"
-PRIVACY_URL = "https://jqrgen.github.io/nordic-crypto/privacy/"  # must be live before submission
-MARKETING_URL = "https://jqrgen.github.io/nordic-crypto/"
+SUPPORT_URL = "https://nordiccrypto.no/contact/"
+PRIVACY_URL = "https://nordiccrypto.no/privacy/"
+MARKETING_URL = "https://nordiccrypto.no/"
 
 LISTING = {
     "en-GB": {
