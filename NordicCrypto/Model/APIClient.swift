@@ -18,7 +18,6 @@ enum APIConfig {
     /// News publisher shown on the Contact us screen.
     static let publisherName = "Nordic Crypto"
     static let publisherCompany = "jQrgenCorp"
-    static let publisherOrgNo = "org.nr. 919 057 343"
     static let contactEmail = "jqrgen@nordiccrypto.no"
     static let contactMailto = URL(string: "mailto:jqrgen@nordiccrypto.no")!
     static let website = URL(string: "https://nordiccrypto.no")!

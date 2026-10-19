@@ -69,8 +69,6 @@ fun ContactScreen(large: Boolean, onBack: (() -> Unit)? = null) {
             Text(Lang.tr("Publisher"), color = NL.textSecondary, fontSize = if (large) 16.sp else 13.sp, fontWeight = FontWeight.SemiBold)
             Text(Api.PUBLISHER, color = NL.textPrimary, fontSize = if (large) 32.sp else 24.sp, fontWeight = FontWeight.Bold, fontFamily = NL.serif)
             Text(Api.PUBLISHER_COMPANY, color = NL.textPrimary, fontSize = if (large) 22.sp else 17.sp, fontWeight = FontWeight.SemiBold)
-            Text(Lang.tr("Organization number"), color = NL.textTertiary, fontSize = if (large) 14.sp else 12.sp)
-            Text(Api.PUBLISHER_ORG_NO, color = NL.textPrimary, fontSize = if (large) 22.sp else 17.sp)
             Text(Lang.tr("Oslo, Norway"), color = NL.textSecondary, fontSize = if (large) 20.sp else 16.sp)
         }
         ContactLink(Lang.tr("Email"), Api.CONTACT_EMAIL, large, emailFocus) { open(ctx, Api.CONTACT_MAILTO) }

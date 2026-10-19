@@ -62,15 +62,6 @@ struct ContactView: View {
                 .font(NLFont.row)
                 .foregroundStyle(NL.textPrimary)
                 .accessibilityIdentifier("publisher-company")
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Organization number")
-                    .font(NLFont.caption)
-                    .foregroundStyle(NL.textTertiary)
-                Text(verbatim: APIConfig.publisherOrgNo)
-                    .font(NLFont.body)
-                    .foregroundStyle(NL.textPrimary)
-                    .accessibilityIdentifier("publisher-org")
-            }
             Text("Oslo, Norway")
                 .font(NLFont.body)
                 .foregroundStyle(NL.textSecondary)

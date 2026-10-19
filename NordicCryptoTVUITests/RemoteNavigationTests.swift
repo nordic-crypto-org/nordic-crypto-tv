@@ -33,7 +33,7 @@ final class SignageRemoteTests: XCTestCase {
         XCTAssertTrue(tabs.buttons["Contact us"].hasFocus)
         XCTAssertTrue(app.staticTexts["publisher-company"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["publisher-company"].label, "jQrgenCorp")
-        XCTAssertEqual(app.staticTexts["publisher-org"].label, "org.nr. 919 057 343")
+        XCTAssertEqual(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "919")).count, 0)
         shows("contact-email", "jqrgen@nordiccrypto.no")
         shows("contact-website", "https://nordiccrypto.no")
         shows("contact-page", "https://nordiccrypto.no/contact/")
