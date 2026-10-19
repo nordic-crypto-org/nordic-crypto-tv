@@ -48,7 +48,6 @@ object Api {
     /** News publisher shown on the Contact us screen and in the Play listing. */
     const val PUBLISHER = "Nordic Crypto"
     const val PUBLISHER_COMPANY = "jQrgenCorp"
-    const val PUBLISHER_ORG_NO = "org.nr. 919 057 343"
     const val CONTACT_EMAIL = "jqrgen@nordiccrypto.no"
     const val CONTACT_MAILTO = "mailto:jqrgen@nordiccrypto.no"
     const val WEBSITE = "https://nordiccrypto.no"
