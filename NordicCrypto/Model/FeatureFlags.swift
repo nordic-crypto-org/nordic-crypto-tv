@@ -1,10 +1,10 @@
 import Foundation
 
-/// Remote switches from api/v1/flags.json on the site. Missing or unreachable means off.
+/// Remote switches set on nordiccrypto.no/admin/ (tip Worker GET /api/flags). Missing or unreachable means off.
 @MainActor
 @Observable
 final class FeatureFlags {
-    static let url = URL(string: "https://nordiccrypto.no/api/v1/flags.json")!
+    static let url = URL(string: "https://nordic-crypto-tips.nordiccrypto.workers.dev/api/flags")!
 
     private(set) var nftIOS = false
 
