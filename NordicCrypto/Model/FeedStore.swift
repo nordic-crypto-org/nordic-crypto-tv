@@ -30,6 +30,9 @@ final class FeedStore {
     init(client: APIClient = APIClient()) {
         self.client = client
         loadOffline()
+        if SnapshotMode.isOn {
+            status = .live(SnapshotMode.frozenDate)
+        }
     }
 
     var upcomingEvents: [EventItem] {
@@ -92,7 +95,9 @@ final class FeedStore {
     }
 
     /// Refreshes everything, then repeats every `APIConfig.refreshInterval`.
+    /// `-NCSnapshot` stays on the bundled fixture so screenshots do not change.
     func run() async {
+        if SnapshotMode.isOn { return }
         while !Task.isCancelled {
             await refresh()
             try? await Task.sleep(for: APIConfig.refreshInterval)
@@ -138,6 +143,10 @@ final class FeedStore {
     private func rebuildSpotlight() {
         entities = Dictionary(orgChart.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         let fresh = orgChart.map(SpotlightItem.entity) + academia.map(SpotlightItem.academia)
+        if SnapshotMode.isOn {
+            spotlight = fresh.sorted { $0.id < $1.id }
+            return
+        }
         let known = Set(spotlight.map(\.id))
         let kept = spotlight.filter { item in fresh.contains { $0.id == item.id } }
         spotlight = kept + fresh.filter { !known.contains($0.id) }.shuffled()

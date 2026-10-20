@@ -70,7 +70,8 @@ private struct KHeader: View {
         HStack(alignment: .center, spacing: 28) {
             Wordmark(size: 44)
             TimelineView(.periodic(from: .now, by: 30)) { context in
-                Text(context.date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formats.locale(store.lang))))
+                let moment = SnapshotMode.isOn ? SnapshotMode.frozenDate : context.date
+                Text(moment.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(Formats.locale(store.lang))))
                     .font(.system(size: 20))
                     .foregroundStyle(NL.textSecondary)
             }
