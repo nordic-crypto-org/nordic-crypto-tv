@@ -11,7 +11,7 @@ const catalogue = join(here, "..", "..", "NordicCrypto", "Localizable.xcstrings"
 const out = join(here, "..", "src", "copy.js");
 
 // The app's language codes (AppLanguage in Models.swift, Lang.kt).
-export const LANGS = ["en", "nb", "nn", "sv", "da", "fi", "is", "zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr"];
+export const LANGS = ["en", "nb", "nn", "sv", "da", "fi", "is", "zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr", "fa", "uk", "tr"];
 const COUNTRIES = { NO: "Norway", SE: "Sweden", DK: "Denmark", FI: "Finland", IS: "Iceland" };
 
 export function render(strings) {
