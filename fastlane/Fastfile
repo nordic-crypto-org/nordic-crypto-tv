@@ -270,6 +270,17 @@ platform :ios do
         "MARKETING_VERSION" => version
       }.map { |k, v| "#{k}=#{v.shellescape}" }.join(" ")
 
+      # The Mac .pkg's installer certificate, by SHA-1 from this job's keychain.
+      # gym reads its name from `security`, which prints the "ø" in "Jørgen" as
+      # octal escapes, and Xcode then matches neither that name nor the
+      # "Mac Installer Distribution" selector.
+      installer_cert = {}
+      if key == "macos"
+        identities = sh("security find-identity -v -p basic #{KEYCHAIN.shellescape}", log: false).b
+        sha1 = identities[/\b(\h{40})\s+"3rd Party Mac Developer Installer: .*\(#{Regexp.escape(team_id)}\)"/, 1]
+        UI.user_error!("No Mac Installer Distribution identity for #{team_id} in #{KEYCHAIN}") unless sha1
+        installer_cert = { installer_cert_name: sha1 }
+      end
       build_app(
         project: XCODE_PROJECT,
         scheme: SCHEME,
@@ -279,6 +290,7 @@ platform :ios do
         export_method: "app-store",
         export_team_id: team_id,
         export_options: { provisioningProfiles: { app_id => profile_name } },
+        **installer_cert,
         xcargs: xcargs,
         output_directory: build_dir,
         derived_data_path: File.join(build_dir, "DerivedData"),
