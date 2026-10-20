@@ -11,7 +11,7 @@ final class BadgeStore {
     enum Phase: Equatable { case loading, ready, soldOut, notLaunched, sent(Int?), offline }
 
     var minted: Int?
-    var supply = 1000
+    var supply = 100
     var link: URL?
     var phase: Phase = .loading
 
@@ -195,7 +195,7 @@ struct BadgeView: View {
                 .foregroundStyle(NL.textPrimary)
                 .accessibilityAddTraits(.isHeader)
                 .accessibilityIdentifier("badge-screen")
-            Text("Edition of 1,000, while supply lasts.")
+            Text("Edition of 100, while supply lasts.")
                 .font(NLFont.row)
                 .foregroundStyle(NL.textPrimary)
             if let minted = store.minted {
@@ -217,7 +217,7 @@ struct BadgeView: View {
 
     @ViewBuilder private var status: some View {
         switch store.phase {
-        case .soldOut: note("All 1,000 badges have been minted.")
+        case .soldOut: note("All 100 badges have been minted.")
         case .notLaunched: note("Minting opens soon.")
         case .sent(let n?): note("Badge #\(n) sent.")
         case .sent(nil): note("Badge sent.")
