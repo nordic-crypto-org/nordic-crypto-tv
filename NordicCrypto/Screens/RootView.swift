@@ -31,6 +31,7 @@ final class Router {
 struct RootView: View {
     @State private var store = FeedStore()
     @State private var router = Router()
+    @State private var flags = FeatureFlags()
     #if os(tvOS)
     @State private var radio = Radio()
     #endif
@@ -67,8 +68,10 @@ struct RootView: View {
             Tab("Newsletter", systemImage: "envelope.open", value: AppTab.newsletter) {
                 stack(.newsletter) { NewsletterView() }
             }
-            Tab("Nordic Shield NFT", systemImage: "checkmark.shield", value: AppTab.badge) {
-                NavigationStack { BadgeView() }
+            if showNFT {
+                Tab("Nordic Shield NFT", systemImage: "checkmark.shield", value: AppTab.badge) {
+                    NavigationStack { BadgeView() }
+                }
             }
             Tab("Contact us", systemImage: "envelope", value: AppTab.contact) {
                 NavigationStack { ContactView() }
@@ -79,6 +82,10 @@ struct RootView: View {
         .environment(store)
         .environment(router)
         .task { await store.run() }
+        .task { await flags.load() }
+        .onChange(of: showNFT) { _, shown in
+            if !shown && router.tab == .badge { router.tab = .today }
+        }
         .onReceive(NotificationCenter.default.publisher(for: .openStory)) { note in
             guard let id = note.object as? String, let item = store.news.first(where: { $0.id == id }) else { return }
             router.tab = .today
@@ -86,6 +93,14 @@ struct RootView: View {
         }
         #if DEBUG
         .onAppear(perform: applyScreenshotArguments)
+        #endif
+    }
+
+    private var showNFT: Bool {
+        #if os(iOS)
+        flags.nftIOS
+        #else
+        true
         #endif
     }
     #endif
