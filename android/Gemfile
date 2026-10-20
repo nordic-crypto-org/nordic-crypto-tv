@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
-# Google Play store listing upload (fastlane supply), see .github/workflows/android-listing.yml.
+# Google Play open testing and production promotion (fastlane supply).
+# Lanes: android/fastlane/Fastfile
+# Workflows: .github/workflows/android.yml, .github/workflows/android-production.yml
 gem "fastlane", "2.240.1"
 # 3.0.9 fails to install on Ruby 3.3 (same pin as the Apple fastlane setup).
 gem "CFPropertyList", "3.0.8"
