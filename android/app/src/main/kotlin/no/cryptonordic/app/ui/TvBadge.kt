@@ -35,7 +35,7 @@ private suspend fun badgeGet(path: String): Pair<Int, String?> = withContext(Dis
 @Composable
 fun TvBadge() {
     var minted by remember { mutableStateOf<Int?>(null) }
-    var supply by remember { mutableStateOf(1000) }
+    var supply by remember { mutableStateOf(100) }
     var link by remember { mutableStateOf<String?>(null) }
     var note by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) {
@@ -57,7 +57,7 @@ fun TvBadge() {
                         if (c != cookie) issued = System.currentTimeMillis()
                         cookie = c; link = it["link"]?.jsonPrimitive?.contentOrNull; note = null
                     }
-                    410 -> { link = null; note = "All 1,000 badges have been minted." }
+                    410 -> { link = null; note = "All 100 badges have been minted." }
                     503 -> { link = null; note = "Minting opens soon." }
                 }
             }
@@ -67,7 +67,7 @@ fun TvBadge() {
     Row(Modifier.fillMaxSize().padding(48.dp), horizontalArrangement = Arrangement.spacedBy(64.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("Nordic Crypto Shield", color = NL.textPrimary, fontSize = 44.sp, fontFamily = NL.serif, fontWeight = FontWeight.Bold)
-            Text(Lang.tr("Edition of 1,000, while supply lasts."), color = NL.textPrimary, fontSize = 20.sp)
+            Text(Lang.tr("Edition of 100, while supply lasts."), color = NL.textPrimary, fontSize = 20.sp)
             minted?.let { Text(Lang.tr("%lld / %lld minted", it, supply), color = Color(0xFFD9A034), fontSize = 30.sp, fontWeight = FontWeight.Bold) }
             Text(Lang.tr("Free from Nordic Crypto, you pay a small Nexa network fee yourself."), color = NL.textSecondary, fontSize = 16.sp)
             Text(Lang.tr("Collectible badge, no economic rights."), color = NL.textTertiary, fontSize = 13.sp)

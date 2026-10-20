@@ -1117,126 +1117,126 @@
         }
       }
     },
-    "All 1,000 badges have been minted.": {
+    "All 100 badges have been minted.": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alle 1 000 merkene er preget."
+            "value": "Alle 100 merkene er preget."
           }
         },
         "nn": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alle 1 000 merka er prega."
+            "value": "Alle 100 merka er prega."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alla 1 000 märken är präglade."
+            "value": "Alla 100 märken är präglade."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alle 1.000 mærker er præget."
+            "value": "Alle 100 mærker er præget."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kaikki 1 000 merkkiä on lyöty."
+            "value": "Kaikki 100 merkkiä on lyöty."
           }
         },
         "is": {
           "stringUnit": {
             "state": "translated",
-            "value": "Öll 1.000 merkin hafa verið slegin."
+            "value": "Öll 100 merkin hafa verið slegin."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "全部 1,000 枚徽章已铸造完毕。"
+            "value": "全部 100 枚徽章已铸造完毕。"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "सभी 1,000 बैज मिंट हो चुके हैं।"
+            "value": "सभी 100 बैज मिंट हो चुके हैं।"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se han acuñado las 1.000 insignias."
+            "value": "Se han acuñado las 100 insignias."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les 1 000 badges ont tous été frappés."
+            "value": "Les 100 badges ont tous été frappés."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "تم سك جميع الشارات الـ 1000."
+            "value": "تم سك جميع الشارات الـ 100."
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "সব ১,০০০টি ব্যাজ মিন্ট হয়ে গেছে।"
+            "value": "সব ১০০টি ব্যাজ মিন্ট হয়ে গেছে।"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos os 1.000 emblemas foram cunhados."
+            "value": "Todos os 100 emblemas foram cunhados."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Все 1000 значков выпущены."
+            "value": "Все 100 значков выпущены."
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "تمام 1,000 بیج منٹ ہو چکے ہیں۔"
+            "value": "تمام 100 بیج منٹ ہو چکے ہیں۔"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Semua 1.000 lencana telah dicetak."
+            "value": "Semua 100 lencana telah dicetak."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alle 1.000 Abzeichen sind geprägt."
+            "value": "Alle 100 Abzeichen sind geprägt."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "1,000 個のバッジはすべて発行済みです。"
+            "value": "100 個のバッジはすべて発行済みです。"
           }
         },
         "sw": {
           "stringUnit": {
             "state": "translated",
-            "value": "Beji zote 1,000 zimetengenezwa."
+            "value": "Beji zote 100 zimetengenezwa."
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "सर्व १,००० बॅज मिंट झाले आहेत."
+            "value": "सर्व १०० बॅज मिंट झाले आहेत."
           }
         }
       }
@@ -3101,126 +3101,126 @@
         }
       }
     },
-    "Edition of 1,000, while supply lasts.": {
+    "Edition of 100, while supply lasts.": {
       "localizations": {
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Opplag på 1 000, så lenge lageret rekker."
+            "value": "Opplag på 100, så lenge lageret rekker."
           }
         },
         "nn": {
           "stringUnit": {
             "state": "translated",
-            "value": "Opplag på 1 000, så lenge lageret rekk."
+            "value": "Opplag på 100, så lenge lageret rekk."
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Upplaga om 1 000, så långt lagret räcker."
+            "value": "Upplaga om 100, så långt lagret räcker."
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Oplag på 1.000, så længe lager haves."
+            "value": "Oplag på 100, så længe lager haves."
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 000 kappaleen painos, niin kauan kuin riittää."
+            "value": "100 kappaleen painos, niin kauan kuin riittää."
           }
         },
         "is": {
           "stringUnit": {
             "state": "translated",
-            "value": "Upplag 1.000, meðan birgðir endast."
+            "value": "Upplag 100, meðan birgðir endast."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "限量 1,000 枚，送完即止。"
+            "value": "限量 100 枚，送完即止。"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "1,000 का संस्करण, स्टॉक रहने तक।"
+            "value": "100 का संस्करण, स्टॉक रहने तक।"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Edición de 1.000, hasta agotar existencias."
+            "value": "Edición de 100, hasta agotar existencias."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Édition de 1 000, dans la limite des stocks disponibles."
+            "value": "Édition de 100, dans la limite des stocks disponibles."
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "إصدار من 1000، حتى نفاد الكمية."
+            "value": "إصدار من 100، حتى نفاد الكمية."
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "১,০০০টির সংস্করণ, সরবরাহ থাকা পর্যন্ত।"
+            "value": "১০০টির সংস্করণ, সরবরাহ থাকা পর্যন্ত।"
           }
         },
         "pt": {
           "stringUnit": {
             "state": "translated",
-            "value": "Edição de 1.000, enquanto durarem os estoques."
+            "value": "Edição de 100, enquanto durarem os estoques."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Тираж 1000, пока не закончатся."
+            "value": "Тираж 100, пока не закончатся."
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "1,000 کا ایڈیشن، اسٹاک رہنے تک۔"
+            "value": "100 کا ایڈیشن، اسٹاک رہنے تک۔"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Edisi 1.000, selama persediaan masih ada."
+            "value": "Edisi 100, selama persediaan masih ada."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auflage von 1.000, solange der Vorrat reicht."
+            "value": "Auflage von 100, solange der Vorrat reicht."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "限定 1,000 個、なくなり次第終了。"
+            "value": "限定 100 個、なくなり次第終了。"
           }
         },
         "sw": {
           "stringUnit": {
             "state": "translated",
-            "value": "Toleo la 1,000, hadi zitakapoisha."
+            "value": "Toleo la 100, hadi zitakapoisha."
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "१,००० ची आवृत्ती, साठा असेपर्यंत."
+            "value": "१०० ची आवृत्ती, साठा असेपर्यंत."
           }
         }
       }
