@@ -135,7 +135,22 @@ private struct IssueHero: View {
         .frame(width: isTV ? 640 : nil)
         .frame(maxWidth: 640)
         .clipShape(RoundedRectangle(cornerRadius: NLMetrics.cardRadius, style: .continuous))
+        .contentShape(Rectangle())
+        .onTapGesture {
+            if player == nil, let reel = issue.video, let url = reel.playableURL { play(reel, url) }
+        }
         .accessibilityHidden(true)
+    }
+
+    private func play(_ reel: Newsreel, _ url: URL) {
+        #if os(tvOS)
+        router.newsreel = reel
+        #elseif os(visionOS)
+        openWindow(id: "newsreel", value: url)
+        #else
+        if player == nil { player = Newsreels.player(for: url) }
+        player?.play()
+        #endif
     }
 
     private var actions: some View {
@@ -152,16 +167,7 @@ private struct IssueHero: View {
 
     @ViewBuilder private var actionButtons: some View {
         if let reel = issue.video, let url = reel.playableURL {
-            Button {
-                #if os(tvOS)
-                router.newsreel = reel
-                #elseif os(visionOS)
-                openWindow(id: "newsreel", value: url)
-                #else
-                if player == nil { player = Newsreels.player(for: url) }
-                player?.play()
-                #endif
-            } label: {
+            Button { play(reel, url) } label: {
                 Label("Watch newsreel", systemImage: "play.fill")
             }
             .buttonStyle(.borderedProminent)
