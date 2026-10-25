@@ -1,0 +1,138 @@
+# App Store screenshots and product-page creatives for Nordic Crypto
+# (no.cryptonordic.tv). Version is MARKETING_VERSION in project.yml (1.1.0).
+#
+# Runs on jQrgen's Mac mini, the self-hosted macOS runner (labels
+# `self-hosted` and `macOS`). Xcode on that machine captures every required
+# display: iPhone 6.9", iPhone 6.5", iPad 13", Mac, Apple TV, Apple Vision Pro.
+# Demo content is the snapshot bundled with the app (`-NCSnapshot`), then
+# framed in teal #1E3A45 and gold #D9A034.
+#
+# Upload uses the App Store Connect Asset Library (fastlane lane
+# `ios appstore_media` → support/appstore/upload.py --media-only). It updates
+# the version that is already Prepare for Submission. It does not create a
+# review submission and it does not submit the version.
+#
+# Triggers: Actions → App Store media → Run workflow, and a push of a v* or
+# appstore-v* tag. A manual run can skip the upload or print the API plan.
+#
+# Secrets (repository, not in the repo):
+#   ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8
+# ASC_KEY_P8 is the .p8 file itself (PEM text, or base64 of that text).
+# The TestFlight secrets under other names are not read here.
+
+name: App Store media
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: Upload to the Prepare for Submission version
+        type: boolean
+        default: true
+      dry_run:
+        description: Print the API plan and do not upload
+        type: boolean
+        default: false
+  push:
+    tags:
+      - "v*"
+      - "appstore-v*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appstore-media
+  cancel-in-progress: false
+
+env:
+  FASTLANE_SKIP_UPDATE_CHECK: "1"
+  FASTLANE_HIDE_CHANGELOG: "1"
+  FASTLANE_OPT_OUT_USAGE: "1"
+  LANG: en_US.UTF-8
+  LC_ALL: en_US.UTF-8
+
+jobs:
+  media:
+    name: Screenshots and product page
+    runs-on: [self-hosted, macOS]
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Python tools
+        run: |
+          python3 -m venv "$RUNNER_TEMP/media-venv"
+          "$RUNNER_TEMP/media-venv/bin/pip" install --disable-pip-version-check -r support/appstore/requirements.txt
+          echo "$RUNNER_TEMP/media-venv/bin" >> "$GITHUB_PATH"
+
+      - name: Check framed sizes and the upload plan
+        working-directory: support/appstore
+        run: python3 -m unittest test_media.py
+
+      - name: Capture screenshots
+        id: capture
+        run: support/appstore/capture_screenshots.sh build/appstore/raw
+
+      - name: Frame screenshots and draw the product-page images
+        if: always() && !cancelled()
+        run: |
+          args=()
+          [ "${{ steps.capture.outcome }}" = success ] || args+=(--skip-verify)
+          python3 support/appstore/frame_media.py \
+            --raw build/appstore/raw \
+            --out build/appstore/framed \
+            --headers build/appstore/headers \
+            "${args[@]}"
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always() && !cancelled()
+        with:
+          name: appstore-media
+          path: |
+            build/appstore/raw
+            build/appstore/framed
+            build/appstore/headers
+            build/appstore/manifest.json
+            build/appstore/logs
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Check the App Store Connect key
+        id: asc
+        if: success()
+        env:
+          HAS_ASC_KEY_ID: ${{ secrets.ASC_KEY_ID != '' }}
+          HAS_ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID != '' }}
+          HAS_ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 != '' }}
+        run: |
+          missing=""
+          [ "$HAS_ASC_KEY_ID" = true ] || missing="$missing ASC_KEY_ID"
+          [ "$HAS_ASC_ISSUER_ID" = true ] || missing="$missing ASC_ISSUER_ID"
+          [ "$HAS_ASC_KEY_P8" = true ] || missing="$missing ASC_KEY_P8"
+          if [ -n "$missing" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=App Store upload skipped::Not set yet:$missing. The images are in the appstore-media artifact. Add the secrets, then run this workflow again."
+            echo "Upload skipped. Add these repository secrets:$missing" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        if: success() && steps.asc.outputs.ready == 'true' && (github.event_name == 'push' || inputs.upload || inputs.dry_run)
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Upload to the Prepare for Submission version
+        if: success() && steps.asc.outputs.ready == 'true' && (github.event_name == 'push' || inputs.upload || inputs.dry_run)
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: |
+          export PATH="$RUNNER_TEMP/media-venv/bin:$PATH"
+          bundle exec fastlane ios appstore_media
