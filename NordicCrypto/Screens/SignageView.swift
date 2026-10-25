@@ -223,14 +223,11 @@ struct SpotlightModule: View {
                                 .foregroundStyle(NL.textSecondary)
                                 .lineLimit(1)
                         }
-                        // A sentence about who or what is shown (who's-who description, course "about").
-                        if let text = detail(item) {
-                            Text(verbatim: text)
-                                .font(.system(size: 17))
-                                .foregroundStyle(NL.textSecondary)
-                                .lineLimit(2)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+                        Text(verbatim: detail(item))
+                            .font(.system(size: 17))
+                            .foregroundStyle(NL.textSecondary)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     Spacer(minLength: 0)
                 }
@@ -274,12 +271,10 @@ struct SpotlightModule: View {
                                 .foregroundStyle(NL.textSecondary)
                                 .lineLimit(2)
                         }
-                        if let text = detail(item) {
-                            Text(verbatim: text)
-                                .font(.system(size: 16))
-                                .foregroundStyle(NL.textTertiary)
-                                .lineLimit(3)
-                        }
+                        Text(verbatim: detail(item))
+                            .font(.system(size: 16))
+                            .foregroundStyle(NL.textTertiary)
+                            .lineLimit(3)
                     }
                     Spacer(minLength: 0)
                 }
@@ -384,10 +379,25 @@ struct SpotlightModule: View {
         }
     }
 
-    private func detail(_ item: SpotlightItem) -> String? {
+    /// One sentence about the subject in the app language, from the feed or made from its kind.
+    private func detail(_ item: SpotlightItem) -> String {
         switch item {
-        case .entity(let e): e.description
-        case .academia(let a): a.about(for: store.lang)
+        case .entity(let e):
+            if let text = e.description(for: store.lang) { return text.firstSentence }
+            if e.isPerson {
+                if let org = e.org.flatMap({ store.entities[$0]?.name }) { return String(localized: "A person affiliated with \(org).") }
+                return String(localized: "A person in the crypto community.")
+            }
+            return e.sector == "public" ? String(localized: "A public body with a role in crypto.") : String(localized: "A company in the crypto industry.")
+        case .academia(let a):
+            if let text = a.about(for: store.lang) { return text.firstSentence }
+            let at = a.institution
+            switch a.section {
+            case "courses": return at.map { String(localized: "A course at \($0).") } ?? String(localized: "A course on crypto and blockchain.")
+            case "groups": return at.map { String(localized: "A student group at \($0).") } ?? String(localized: "A student group focused on crypto.")
+            case "publications": return at.map { String(localized: "A research paper from \($0).") } ?? String(localized: "A research paper on crypto and blockchain.")
+            default: return at.map { String(localized: "A research group at \($0).") } ?? String(localized: "A research group working on crypto.")
+            }
         }
     }
 

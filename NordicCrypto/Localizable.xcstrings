@@ -122,6 +122,24 @@
             "state": "translated",
             "value": "%@, %lld बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@، %lld خبر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %lld новин"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %lld haber"
+          }
         }
       }
     },
@@ -245,6 +263,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld / %lld मिंट झाले"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld / %lld ضرب‌شده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld / %lld викарбувано"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld / %lld basıldı"
           }
         }
       }
@@ -370,6 +406,24 @@
             "state": "translated",
             "value": "%lld कार्यक्रम"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld رویداد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld подій"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld etkinlik"
+          }
         }
       }
     },
@@ -493,6 +547,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld जण येणार"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld نفر می‌آیند"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld учасників"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld katılıyor"
           }
         }
       }
@@ -618,6 +690,24 @@
             "state": "translated",
             "value": "%lld नवीन बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld خبر تازه"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld нових новин"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld yeni haber"
+          }
         }
       }
     },
@@ -741,6 +831,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld बातम्या"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld خبر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld новин"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld haber"
           }
         }
       }
@@ -866,6 +974,2012 @@
             "state": "translated",
             "value": "%lld बातम्या · %lld आगामी कार्यक्रम"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld خبر · %lld رویداد پیش رو"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld новин · %lld майбутніх подій"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld haber · %lld yaklaşan etkinlik"
+          }
+        }
+      }
+    },
+    "A company in the crypto industry.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et selskap i kryptobransjen."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eit selskap i kryptobransjen."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ett företag i kryptobranschen."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En virksomhed i kryptobranchen."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yritys kryptoalalla."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fyrirtæki í rafmyntageiranum."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "加密货币行业的公司。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो उद्योग की एक कंपनी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una empresa del sector cripto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une entreprise du secteur crypto."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شركة في قطاع العملات المشفرة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো শিল্পের একটি কোম্পানি।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma empresa do setor cripto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Компания из криптоотрасли."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو صنعت کی ایک کمپنی۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perusahaan di industri kripto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Unternehmen der Kryptobranche."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産業界の企業です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kampuni katika sekta ya kripto."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो उद्योगातील कंपनी."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شرکتی در صنعت رمزارز."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Компанія з криптоіндустрії."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto sektöründe bir şirket."
+          }
+        }
+      }
+    },
+    "A course at %@.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et emne ved %@."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eit emne ved %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En kurs vid %@."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et kursus på %@."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurssi, järjestäjä %@."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Námskeið við %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 开设的课程。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ में एक पाठ्यक्रम।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un curso en %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un cours à %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقرر دراسي في %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-এর একটি কোর্স।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um curso em %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курс в %@."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ میں ایک کورس۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mata kuliah di %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Kurs an der Hochschule %@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ の講座です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kozi katika %@."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ येथील अभ्यासक्रम."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "درسی در %@."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курс у %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bünyesinde bir ders."
+          }
+        }
+      }
+    },
+    "A course on crypto and blockchain.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et emne om krypto og blokkjede."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eit emne om krypto og blokkjede."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En kurs om krypto och blockkedjor."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et kursus om krypto og blockchain."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurssi kryptovaluutoista ja lohkoketjuista."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Námskeið um rafmyntir og bálkakeðjur."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于加密货币和区块链的课程。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो और ब्लॉकचेन पर एक पाठ्यक्रम।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un curso sobre cripto y blockchain."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un cours sur la crypto et la blockchain."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقرر عن العملات المشفرة والبلوك تشين."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো ও ব্লকচেইন বিষয়ে একটি কোর্স।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um curso sobre cripto e blockchain."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курс о криптовалютах и блокчейне."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو اور بلاک چین پر ایک کورس۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mata kuliah tentang kripto dan blockchain."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Kurs über Krypto und Blockchain."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産とブロックチェーンの講座です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kozi kuhusu kripto na blockchain."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो आणि ब्लॉकचेनवरील अभ्यासक्रम."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "درسی دربارهٔ رمزارز و بلاکچین."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курс про криптовалюти та блокчейн."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto ve blokzincir üzerine bir ders."
+          }
+        }
+      }
+    },
+    "A person affiliated with %@.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person tilknyttet %@."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein person knytt til %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person knuten till %@."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person tilknyttet %@."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Henkilö, jonka taustaorganisaatio on %@."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstaklingur tengdur %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "与 %@ 有关联的人物。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ से जुड़े एक व्यक्ति।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una persona vinculada a %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une personne liée à %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شخصية مرتبطة بـ %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-এর সঙ্গে যুক্ত একজন ব্যক্তি।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma pessoa ligada a %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Человек, связанный с %@."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ سے وابستہ ایک شخصیت۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokoh yang terkait dengan %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Person mit Verbindung zu %@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ に関わる人物です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mtu anayehusiana na %@."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ शी संबंधित व्यक्ती."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شخصی وابسته به %@."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особа, пов’язана з %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ ile bağlantılı bir kişi."
+          }
+        }
+      }
+    },
+    "A person in the crypto community.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person i kryptomiljøet."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein person i kryptomiljøet."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person i kryptovärlden."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En person i kryptomiljøet."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Henkilö kryptoyhteisöstä."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstaklingur í rafmyntasamfélaginu."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "加密货币圈的人物。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो समुदाय के एक व्यक्ति।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una persona de la comunidad cripto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une personne de la communauté crypto."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شخصية من مجتمع العملات المشفرة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো কমিউনিটির একজন ব্যক্তি।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma pessoa da comunidade cripto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Человек из криптосообщества."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو کمیونٹی کی ایک شخصیت۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokoh di komunitas kripto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Person aus der Krypto-Community."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産コミュニティの人物です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mtu katika jumuiya ya kripto."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो समुदायातील व्यक्ती."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شخصی از جامعهٔ رمزارز."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особа з криптоспільноти."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto topluluğundan bir kişi."
+          }
+        }
+      }
+    },
+    "A public body with a role in crypto.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Et offentlig organ med en rolle innen krypto."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eit offentleg organ med ei rolle innan krypto."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En myndighet med en roll inom krypto."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En offentlig myndighed med en rolle inden for krypto."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viranomainen, jolla on rooli kryptoasioissa."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opinber stofnun sem gegnir hlutverki í rafmyntamálum."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在加密货币领域发挥作用的公共机构。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो क्षेत्र में भूमिका निभाने वाली एक सरकारी संस्था।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un organismo público con un papel en el ámbito cripto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un organisme public qui joue un rôle dans la crypto."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جهة حكومية لها دور في مجال العملات المشفرة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো খাতে ভূমিকা রাখা একটি সরকারি সংস্থা।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um órgão público com um papel no setor cripto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Госорган, связанный с регулированием криптовалют."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو کے شعبے میں کردار رکھنے والا ایک سرکاری ادارہ۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lembaga publik yang berperan di bidang kripto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Behörde mit einer Rolle im Kryptobereich."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産に関わる公的機関です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taasisi ya umma yenye jukumu katika kripto."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो क्षेत्रात भूमिका असलेली सरकारी संस्था."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نهادی دولتی با نقشی در حوزهٔ رمزارز."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Державний орган, що має роль у сфері криптовалют."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto alanında rol oynayan bir kamu kurumu."
+          }
+        }
+      }
+    },
+    "A research group at %@.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsgruppe ved %@."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ei forskingsgruppe ved %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskargrupp vid %@."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsgruppe på %@."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutkimusryhmä, kotipaikka %@."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rannsóknarhópur við %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 的研究团队。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ का एक शोध समूह।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un grupo de investigación de %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une équipe de recherche de %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة بحثية في %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-এর একটি গবেষণা দল।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um grupo de pesquisa de %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исследовательская группа в %@."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ کا ایک تحقیقی گروپ۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kelompok riset di %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Forschungsgruppe an der Einrichtung %@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ の研究グループです。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kikundi cha utafiti katika %@."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ येथील संशोधन गट."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروهی پژوهشی در %@."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дослідницька група в %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bünyesinde bir araştırma grubu."
+          }
+        }
+      }
+    },
+    "A research group working on crypto.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsgruppe som arbeider med krypto."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ei forskingsgruppe som arbeider med krypto."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskargrupp som arbetar med krypto."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsgruppe, der arbejder med krypto."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kryptoa tutkiva tutkimusryhmä."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rannsóknarhópur sem fæst við rafmyntir."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "研究加密货币的团队。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो पर काम करने वाला एक शोध समूह।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un grupo de investigación que trabaja en cripto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une équipe de recherche qui travaille sur la crypto."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة بحثية تعمل على العملات المشفرة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো নিয়ে কাজ করা একটি গবেষণা দল।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um grupo de pesquisa que trabalha com cripto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исследовательская группа, изучающая криптовалюты."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو پر کام کرنے والا ایک تحقیقی گروپ۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kelompok riset yang meneliti kripto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Forschungsgruppe, die zu Krypto forscht."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産を研究するグループです。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kikundi cha utafiti kinachoshughulikia kripto."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टोवर काम करणारा संशोधन गट."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروهی پژوهشی که روی رمزارز کار می‌کند."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дослідницька група, що вивчає криптовалюти."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto üzerine çalışan bir araştırma grubu."
+          }
+        }
+      }
+    },
+    "A research paper from %@.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikkel fra %@."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein forskingsartikkel frå %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikel från %@."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikel fra %@."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutkimusartikkeli, julkaisija %@."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fræðigrein frá %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来自 %@ 的论文。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ का एक शोध-पत्र।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un artículo científico de %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un article scientifique de %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ورقة بحثية من %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-এর একটি গবেষণাপত্র।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um artigo científico de %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Научная работа из %@."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ کا ایک تحقیقی مقالہ۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makalah ilmiah dari %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine wissenschaftliche Arbeit der Einrichtung %@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ の論文です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makala ya utafiti kutoka %@."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ येथील शोधनिबंध."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقاله‌ای پژوهشی از %@."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наукова робота з %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ kaynaklı bir araştırma makalesi."
+          }
+        }
+      }
+    },
+    "A research paper on crypto and blockchain.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikkel om krypto og blokkjede."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein forskingsartikkel om krypto og blokkjede."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikel om krypto och blockkedjor."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En forskningsartikel om krypto og blockchain."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutkimusartikkeli kryptovaluutoista ja lohkoketjuista."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fræðigrein um rafmyntir og bálkakeðjur."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于加密货币和区块链的论文。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो और ब्लॉकचेन पर एक शोध-पत्र।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un artículo científico sobre cripto y blockchain."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un article scientifique sur la crypto et la blockchain."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ورقة بحثية عن العملات المشفرة والبلوك تشين."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো ও ব্লকচেইন বিষয়ে একটি গবেষণাপত্র।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um artigo científico sobre cripto e blockchain."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Научная работа о криптовалютах и блокчейне."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو اور بلاک چین پر ایک تحقیقی مقالہ۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makalah ilmiah tentang kripto dan blockchain."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine wissenschaftliche Arbeit über Krypto und Blockchain."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産とブロックチェーンに関する論文です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makala ya utafiti kuhusu kripto na blockchain."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो आणि ब्लॉकचेनवरील शोधनिबंध."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقاله‌ای پژوهشی دربارهٔ رمزارز و بلاکچین."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наукова робота про криптовалюти та блокчейн."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kripto ve blokzincir üzerine bir araştırma makalesi."
+          }
+        }
+      }
+    },
+    "A student group at %@.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studentforening ved %@."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ei studentforeining ved %@."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studentförening vid %@."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studenterforening på %@."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opiskelijajärjestö, kotipaikka %@."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nemendafélag við %@."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 的学生团体。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ का एक छात्र समूह।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una asociación estudiantil de %@."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une association étudiante de %@."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة طلابية في %@."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@-এর একটি শিক্ষার্থী সংগঠন।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um grupo estudantil de %@."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Студенческое объединение в %@."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ کی ایک طلبہ تنظیم۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kelompok mahasiswa di %@."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Hochschulgruppe an der Hochschule %@."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ の学生団体です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kikundi cha wanafunzi katika %@."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ येथील विद्यार्थी गट."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروهی دانشجویی در %@."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Студентське об’єднання в %@."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bünyesinde bir öğrenci topluluğu."
+          }
+        }
+      }
+    },
+    "A student group focused on crypto.": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studentforening med vekt på krypto."
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ei studentforeining med vekt på krypto."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studentförening med fokus på krypto."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En studenterforening med fokus på krypto."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kryptoon keskittyvä opiskelijajärjestö."
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nemendafélag sem einbeitir sér að rafmyntum."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "专注于加密货币的学生团体。"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टो पर केंद्रित एक छात्र समूह।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una asociación estudiantil centrada en cripto."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une association étudiante consacrée à la crypto."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مجموعة طلابية تهتم بالعملات المشفرة."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্রিপ্টো-কেন্দ্রিক একটি শিক্ষার্থী সংগঠন।"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um grupo estudantil focado em cripto."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Студенческое объединение, посвящённое криптовалютам."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کرپٹو پر مرکوز ایک طلبہ تنظیم۔"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kelompok mahasiswa yang berfokus pada kripto."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine Hochschulgruppe mit Fokus auf Krypto."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "暗号資産に取り組む学生団体です。"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kikundi cha wanafunzi kinachojikita katika kripto."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्रिप्टोवर लक्ष केंद्रित करणारा विद्यार्थी गट."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروهی دانشجویی با تمرکز بر رمزارز."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Студентське об’єднання, присвячене криптовалютам."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kriptoya odaklanan bir öğrenci topluluğu."
+          }
+        }
+      }
+    },
+    "About this event": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om arrangementet"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om arrangementet"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om evenemanget"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Om begivenheden"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tietoa tapahtumasta"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um viðburðinn"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "关于此活动"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस कार्यक्रम के बारे में"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobre este evento"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À propos de cet événement"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عن هذه الفعالية"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এই ইভেন্ট সম্পর্কে"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobre este evento"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Об этом событии"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اس تقریب کے بارے میں"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentang acara ini"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Über diese Veranstaltung"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このイベントについて"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kuhusu tukio hili"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "या कार्यक्रमाविषयी"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دربارهٔ این رویداد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Про цю подію"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinlik hakkında"
+          }
+        }
+      }
+    },
+    "Add to calendar": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legg til i kalenderen"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legg til i kalenderen"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lägg till i kalendern"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Føj til kalenderen"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lisää kalenteriin"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bæta við dagatal"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加到日历"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कैलेंडर में जोड़ें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añadir al calendario"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter au calendrier"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "إضافة إلى التقويم"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ক্যালেন্ডারে যোগ করুন"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar ao calendário"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в календарь"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کیلنڈر میں شامل کریں"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tambahkan ke kalender"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zum Kalender hinzufügen"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カレンダーに追加"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ongeza kwenye kalenda"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कॅलेंडरमध्ये जोडा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "افزودن به تقویم"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати до календаря"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Takvime ekle"
+          }
         }
       }
     },
@@ -989,6 +3103,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सर्व"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "همه"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Усі"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tümü"
           }
         }
       }
@@ -1114,6 +3246,24 @@
             "state": "translated",
             "value": "सर्व %lld कार्यक्रम"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "همهٔ %lld رویداد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Усі %lld подій"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld etkinliğin tümü"
+          }
         }
       }
     },
@@ -1237,6 +3387,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सर्व १०० बॅज मिंट झाले आहेत."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هر ۱٬۰۰۰ نشان ضرب شده‌اند."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Усі 1000 значків викарбувано."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1.000 rozetin tamamı basıldı."
           }
         }
       }
@@ -1362,6 +3530,24 @@
             "state": "translated",
             "value": "बॅज"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نشان"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значок"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozet"
+          }
         }
       }
     },
@@ -1485,6 +3671,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "बॅज #%lld पाठवला."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نشان شمارهٔ %lld ارسال شد."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значок № %lld надіслано."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld numaralı rozet gönderildi."
           }
         }
       }
@@ -1610,6 +3814,24 @@
             "state": "translated",
             "value": "बॅज पाठवला."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نشان ارسال شد."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Значок надіслано."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rozet gönderildi."
+          }
         }
       }
     },
@@ -1733,6 +3955,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "देशानुसार"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بر اساس کشور"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За країнами"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ülkeye göre"
           }
         }
       }
@@ -1858,6 +4098,24 @@
             "state": "translated",
             "value": "Telegram वर चॅट करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گفت‌وگو در تلگرام"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чат у Telegram"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telegram'da sohbet"
+          }
         }
       }
     },
@@ -1981,6 +4239,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "संग्रहणीय बॅज, कोणतेही आर्थिक हक्क नाहीत."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نشان کلکسیونی، بدون هیچ حق اقتصادی."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Колекційний значок без жодних економічних прав."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koleksiyon rozeti, ekonomik hak içermez."
           }
         }
       }
@@ -2106,6 +4382,24 @@
             "state": "translated",
             "value": "आगामी"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "به‌زودی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Незабаром"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yakında"
+          }
         }
       }
     },
@@ -2229,6 +4523,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "कंपनी"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شرکت"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Компанія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şirket"
           }
         }
       }
@@ -2354,6 +4666,24 @@
             "state": "translated",
             "value": "संपर्क पृष्ठ"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "صفحهٔ تماس"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сторінка контактів"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İletişim sayfası"
+          }
         }
       }
     },
@@ -2477,6 +4807,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "आमच्याशी संपर्क साधा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تماس با ما"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зв’язатися з нами"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bize ulaşın"
           }
         }
       }
@@ -2602,6 +4950,24 @@
             "state": "translated",
             "value": "देश"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کشورها"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Країни"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ülkeler"
+          }
         }
       }
     },
@@ -2725,6 +5091,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "देश"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کشور"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Країна"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ülke"
           }
         }
       }
@@ -2850,6 +5234,24 @@
             "state": "translated",
             "value": "अभ्यासक्रम"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "درس"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Курс"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ders"
+          }
         }
       }
     },
@@ -2973,6 +5375,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "डेन्मार्क"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دانمارک"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Danimarka"
           }
         }
       }
@@ -3098,6 +5518,24 @@
             "state": "translated",
             "value": "पूर्ण झाले"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تمام"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bitti"
+          }
         }
       }
     },
@@ -3221,6 +5659,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "१०० ची आवृत्ती, साठा असेपर्यंत."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نسخهٔ محدود ۱٬۰۰۰ عددی، تا پایان موجودی."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тираж 1000, поки є в наявності."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1.000 adetlik seri, stoklar tükenene kadar."
           }
         }
       }
@@ -3346,6 +5802,24 @@
             "state": "translated",
             "value": "ईमेल"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایمیل"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Електронна пошта"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "E-posta"
+          }
         }
       }
     },
@@ -3469,6 +5943,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "कार्यक्रम"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رویدادها"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Події"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinlikler"
           }
         }
       }
@@ -3594,6 +6086,24 @@
             "state": "translated",
             "value": "फिनलंड"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "فنلاند"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фінляндія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finlandiya"
+          }
         }
       }
     },
@@ -3717,6 +6227,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "विनामूल्य"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رایگان"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Безкоштовно"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ücretsiz"
           }
         }
       }
@@ -3842,6 +6370,24 @@
             "state": "translated",
             "value": "Nordic Crypto कडून मोफत, Nexa नेटवर्कचे छोटे शुल्क तुम्ही स्वतः भरता."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رایگان از طرف Nordic Crypto؛ کارمزد کوچک شبکهٔ Nexa را خودتان می‌پردازید."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Безкоштовно від Nordic Crypto, невелику комісію мережі Nexa ви сплачуєте самі."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto'dan ücretsiz; küçük Nexa ağ ücretini siz ödersiniz."
+          }
         }
       }
     },
@@ -3965,6 +6511,166 @@
           "stringUnit": {
             "state": "translated",
             "value": "App Store किंवा Google Play वरून Wally Wallet मिळवा."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wally Wallet را از App Store یا Google Play دریافت کنید."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завантажте Wally Wallet з App Store або Google Play."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wally Wallet'ı App Store'dan veya Google Play'den indirin."
+          }
+        }
+      }
+    },
+    "Happening now": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pågår nå"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Går føre seg no"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pågår nu"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I gang nu"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Käynnissä nyt"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Í gangi núna"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在进行"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी जारी"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En curso"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En cours"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جارية الآن"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "এখন চলছে"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acontecendo agora"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идёт сейчас"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ابھی جاری"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sedang berlangsung"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Läuft gerade"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開催中"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inaendelea sasa"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सध्या सुरू"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "در حال برگزاری"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Триває зараз"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Şu anda sürüyor"
           }
         }
       }
@@ -4090,6 +6796,24 @@
             "state": "translated",
             "value": "मथळा © %@. सारांश: Nordic Crypto टीम. हा गुंतवणूक सल्ला नाही."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تیتر © %@. خلاصه از تیم Nordic Crypto. توصیهٔ سرمایه‌گذاری نیست."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заголовок © %@. Підсумок від команди Nordic Crypto. Не є інвестиційною порадою."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Başlık © %@. Özet: Nordic Crypto ekibi. Yatırım tavsiyesi değildir."
+          }
         }
       }
     },
@@ -4213,6 +6937,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "मागील कार्यक्रम लपवा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پنهان کردن رویدادهای گذشته"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сховати минулі події"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmiş etkinlikleri gizle"
           }
         }
       }
@@ -4338,6 +7080,24 @@
             "state": "translated",
             "value": "आइसलँड"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ایسلند"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ісландія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İzlanda"
+          }
         }
       }
     },
@@ -4461,6 +7221,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Telegram वरील Nordic Crypto चॅटमध्ये सामील व्हा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "به گفت‌وگوی Nordic Crypto در تلگرام بپیوندید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приєднуйтесь до чату Nordic Crypto у Telegram"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telegram'daki Nordic Crypto sohbetine katılın"
           }
         }
       }
@@ -4586,6 +7364,24 @@
             "state": "translated",
             "value": "ताज्या बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تازه‌ترین"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найновіше"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En yeni"
+          }
         }
       }
     },
@@ -4709,6 +7505,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "लोगो: %@"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "لوگو: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логотип: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logo: %@"
           }
         }
       }
@@ -4834,6 +7648,24 @@
             "state": "translated",
             "value": "Wally Wallet मध्ये मिंट करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضرب در Wally Wallet"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Викарбувати у Wally Wallet"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wally Wallet'ta bas"
+          }
         }
       }
     },
@@ -4957,6 +7789,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "मिंटिंग लवकरच सुरू होईल."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ضرب به‌زودی آغاز می‌شود."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карбування скоро відкриється."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basım yakında açılıyor."
           }
         }
       }
@@ -5082,6 +7932,24 @@
             "state": "translated",
             "value": "आणखी बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرهای بیشتر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Більше новин"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daha fazla haber"
+          }
         }
       }
     },
@@ -5205,6 +8073,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "नवीन बातम्या पुश सूचनांच्या रूपात येतात, ज्या Apple किंवा Google पोहोचवतात. आमचा पुश सर्व्हर फक्त या डिव्हाइसचा पुश टोकन, तुम्ही निवडलेले देश आणि तुमची भाषा ठेवतो. सूचना बंद केल्यावर हे हटवले जाते."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرهای تازه به‌صورت اعلان از طریق Apple یا Google می‌رسند. سرور اعلان ما فقط توکن اعلان این دستگاه، کشورهای انتخابی و زبان شما را نگه می‌دارد. با خاموش کردن اعلان‌ها این داده‌ها حذف می‌شوند."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нові новини надходять як push-сповіщення через Apple або Google. Наш push-сервер зберігає лише push-токен цього пристрою, вибрані вами країни та вашу мову. Вимкнення сповіщень видаляє ці дані."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni haberler Apple veya Google aracılığıyla anlık bildirim olarak gelir. Bildirim sunucumuz yalnızca bu cihazın bildirim belirtecini, seçtiğiniz ülkeleri ve dilinizi saklar. Bildirimleri kapatmak bunları siler."
           }
         }
       }
@@ -5330,6 +8216,24 @@
             "state": "translated",
             "value": "न्यूजलेटर"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرنامه"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Розсилка"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bülten"
+          }
         }
       }
     },
@@ -5453,6 +8357,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "बातम्यांचा व्हिडिओ"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ویدئوی خبری"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відеоновини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haber videosu"
           }
         }
       }
@@ -5578,6 +8500,24 @@
             "state": "translated",
             "value": "पुढील"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بعدی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Далі"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sıradaki"
+          }
         }
       }
     },
@@ -5701,6 +8641,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "अद्याप एकही अंक नाही"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هنوز شماره‌ای منتشر نشده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Випусків ще немає"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Henüz sayı yok"
           }
         }
       }
@@ -5826,6 +8784,24 @@
             "state": "translated",
             "value": "अद्याप बातम्या नाहीत"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هنوز خبری نیست"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новин ще немає"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Henüz haber yok"
+          }
         }
       }
     },
@@ -5949,6 +8925,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "कोणतेही आगामी कार्यक्रम नाहीत"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رویداد پیش رویی نیست"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Немає майбутніх подій"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaklaşan etkinlik yok"
           }
         }
       }
@@ -6077,6 +9071,24 @@
             "state": "translated",
             "value": "Nordic Crypto चालू असताना दर 15 मिनिटांनी नवीन बातम्या तपासते, मेनू बारमधूनही. तुमच्याबद्दलची कोणतीही माहिती या Mac बाहेर जात नाही."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto تا زمانی که باز است، هر ۱۵ دقیقه خبرهای تازه را بررسی می‌کند، از نوار منو هم. هیچ اطلاعاتی دربارهٔ شما از این Mac خارج نمی‌شود."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto перевіряє нові новини кожні 15 хвилин, поки працює, також із рядка меню. Жодні дані про вас не залишають цей Mac."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto çalıştığı sürece, menü çubuğundan da, her 15 dakikada yeni haberleri denetler. Sizinle ilgili hiçbir şey bu Mac'ten çıkmaz."
+          }
         }
       }
     },
@@ -6201,8 +9213,29 @@
             "state": "translated",
             "value": "Nordic Crypto सारांश"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خلاصهٔ Nordic Crypto"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підсумок від Nordic Crypto"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto özeti"
+          }
         }
       }
+    },
+    "Nordic Shield NFT": {
+      "shouldTranslate": false
     },
     "Norway": {
       "localizations": {
@@ -6324,6 +9357,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "नॉर्वे"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نروژ"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Норвегія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Norveç"
           }
         }
       }
@@ -6449,6 +9500,24 @@
             "state": "translated",
             "value": "गुंतवणूक सल्ला नाही"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توصیهٔ سرمایه‌گذاری نیست"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не є інвестиційною порадою"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yatırım tavsiyesi değildir"
+          }
         }
       }
     },
@@ -6572,6 +9641,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "गुंतवणूक सल्ला नाही · मथळे © संबंधित प्रकाशक · सारांश: Nordic Crypto"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توصیهٔ سرمایه‌گذاری نیست · تیترها © ناشران آن‌ها · خلاصه‌ها از Nordic Crypto"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не є інвестиційною порадою · Заголовки © їхні видавці · Підсумки від Nordic Crypto"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yatırım tavsiyesi değildir · Başlıklar © yayıncılarına aittir · Özetler: Nordic Crypto"
           }
         }
       }
@@ -6697,6 +9784,24 @@
             "state": "translated",
             "value": "टीप"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "یادداشت"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Примітка"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not"
+          }
         }
       }
     },
@@ -6820,6 +9925,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सूचना"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعلان‌ها"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сповіщення"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bildirimler"
           }
         }
       }
@@ -6945,6 +10068,24 @@
             "state": "translated",
             "value": "सेटिंग्जमध्ये Nordic Crypto च्या सूचना बंद आहेत."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعلان‌های Nordic Crypto در تنظیمات خاموش است."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сповіщення для Nordic Crypto вимкнено в Параметрах."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto için bildirimler Ayarlar'da kapalı."
+          }
         }
       }
     },
@@ -7068,6 +10209,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सूचना…"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اعلان‌ها…"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сповіщення…"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bildirimler…"
           }
         }
       }
@@ -7193,6 +10352,24 @@
             "state": "translated",
             "value": "नवीन बातम्यांची सूचना द्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرهای تازه را به من اطلاع بده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сповіщати про нові новини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yeni haberleri bana bildir"
+          }
         }
       }
     },
@@ -7316,6 +10493,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "बंद"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خاموش"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вимк."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapalı"
           }
         }
       }
@@ -7441,6 +10636,24 @@
             "state": "translated",
             "value": "ऑफलाइन · जतन केलेल्या बातम्या दाखवत आहे"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آفلاین · نمایش خبرهای ذخیره‌شده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Офлайн · показано збережені новини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çevrimdışı · kaydedilen haberler gösteriliyor"
+          }
         }
       }
     },
@@ -7564,6 +10777,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "चालू"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "روشن"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Увімк."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açık"
           }
         }
       }
@@ -7689,6 +10920,24 @@
             "state": "translated",
             "value": "ऑनलाइन"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آنلاین"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Онлайн"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Çevrimiçi"
+          }
         }
       }
     },
@@ -7812,6 +11061,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सेटिंग्ज उघडा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "باز کردن تنظیمات"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкрити Параметри"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ayarlar'ı aç"
           }
         }
       }
@@ -7937,6 +11204,24 @@
             "state": "translated",
             "value": "कार्यक्रमाचे पान उघडा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "باز کردن صفحهٔ رویداد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкрити сторінку події"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinlik sayfasını aç"
+          }
         }
       }
     },
@@ -8060,6 +11345,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "GitHub वर ओपन सोर्स"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متن‌باز در GitHub"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкритий код на GitHub"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "GitHub'da açık kaynak"
           }
         }
       }
@@ -8185,6 +11488,24 @@
             "state": "translated",
             "value": "वेब पेज उघडा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "باز کردن صفحهٔ وب"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відкрити вебсторінку"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Web sayfasını aç"
+          }
         }
       }
     },
@@ -8308,6 +11629,166 @@
           "stringUnit": {
             "state": "translated",
             "value": "आयोजक"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برگزارکننده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Організатор"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenleyen"
+          }
+        }
+      }
+    },
+    "Organiser: %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrangør: %@"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrangør: %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrangör: %@"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrangør: %@"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Järjestäjä: %@"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Skipuleggjandi: %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主办方：%@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयोजक: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizador: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organisateur : %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "المنظِّم: %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আয়োজক: %@"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizador: %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Организатор: %@"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "منتظم: %@"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Penyelenggara: %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veranstalter: %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "主催者：%@"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mratibu: %@"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आयोजक: %@"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برگزارکننده: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Організатор: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Düzenleyen: %@"
           }
         }
       }
@@ -8433,6 +11914,166 @@
             "state": "translated",
             "value": "संस्था क्रमांक"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شمارهٔ ثبت سازمان"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Реєстраційний номер організації"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kuruluş numarası"
+          }
+        }
+      }
+    },
+    "Original text": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originaltekst"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originaltekst"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originaltext"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originaltekst"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alkuperäinen teksti"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Upprunalegur texti"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原文"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मूल पाठ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texto original"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texte original"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "النص الأصلي"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "মূল লেখা"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texto original"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исходный текст"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اصل متن"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teks asli"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originaltext"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "原文"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maandishi asilia"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मूळ मजकूर"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "متن اصلی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оригінальний текст"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orijinal metin"
+          }
         }
       }
     },
@@ -8556,6 +12197,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "ऑस्लो, नॉर्वे"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اسلو، نروژ"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осло, Норвегія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oslo, Norveç"
           }
         }
       }
@@ -8681,6 +12340,24 @@
             "state": "translated",
             "value": "सशुल्क"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پولی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Платно"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ücretli"
+          }
         }
       }
     },
@@ -8804,6 +12481,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "शोधनिबंध"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مقالهٔ پژوهشی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Наукова стаття"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makale"
           }
         }
       }
@@ -8929,6 +12624,24 @@
             "state": "translated",
             "value": "परिच्छेद %lld/%lld"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بند %lld از %lld"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Абзац %lld з %lld"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paragraf %lld / %lld"
+          }
         }
       }
     },
@@ -9052,6 +12765,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "मागील कार्यक्रम"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "رویداد گذشته"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минула подія"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmiş etkinlik"
           }
         }
       }
@@ -9177,6 +12908,24 @@
             "state": "translated",
             "value": "मागील अंक"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شماره‌های گذشته"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попередні випуски"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmiş sayılar"
+          }
         }
       }
     },
@@ -9300,6 +13049,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "पेवॉल"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دیوار پرداخت"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Платний доступ"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ödeme duvarı"
           }
         }
       }
@@ -9425,6 +13192,24 @@
             "state": "translated",
             "value": "व्यक्ती"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شخص"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особа"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kişi"
+          }
         }
       }
     },
@@ -9548,6 +13333,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "छायाचित्र: %@"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "عکس: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fotoğraf: %@"
           }
         }
       }
@@ -9673,6 +13476,24 @@
             "state": "translated",
             "value": "बंद करण्यासाठी ⏯ दाबा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برای خاموش کردن ⏯ را بزنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Натисніть ⏯, щоб вимкнути"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kapatmak için ⏯ tuşuna basın"
+          }
         }
       }
     },
@@ -9796,6 +13617,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "चालू करण्यासाठी ⏯ दाबा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برای روشن کردن ⏯ را بزنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Натисніть ⏯, щоб увімкнути"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Açmak için ⏯ tuşuna basın"
           }
         }
       }
@@ -9921,6 +13760,24 @@
             "state": "translated",
             "value": "गोपनीयता"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حریم خصوصی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конфіденційність"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gizlilik"
+          }
         }
       }
     },
@@ -10044,6 +13901,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "सरकारी संस्था"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نهاد دولتی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Державний орган"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamu kurumu"
           }
         }
       }
@@ -10169,6 +14044,24 @@
             "state": "translated",
             "value": "प्रकाशक"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ناشر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видавець"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yayıncı"
+          }
         }
       }
     },
@@ -10292,6 +14185,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ ची लिंक असलेला QR कोड"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کد QR با پیوند به %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QR-код із посиланням на %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ bağlantılı QR kodu"
           }
         }
       }
@@ -10417,6 +14328,24 @@
             "state": "translated",
             "value": "%@ मध्ये शांतता — या आठवड्यात बातम्या नाहीत"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ آرام است — این هفته خبری نیست"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: тихо — цього тижня новин немає"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sakin — bu hafta haber yok"
+          }
         }
       }
     },
@@ -10540,6 +14469,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nordic Crypto मधून बाहेर पडा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خروج از Nordic Crypto"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вийти з Nordic Crypto"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nordic Crypto'dan çık"
           }
         }
       }
@@ -10665,6 +14612,24 @@
             "state": "translated",
             "value": "%@ वर वाचा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خواندن در %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Читати на %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ üzerinde oku"
+          }
         }
       }
     },
@@ -10788,6 +14753,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "अंक वाचा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خواندن شماره"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Читати випуск"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sayıyı oku"
           }
         }
       }
@@ -10913,6 +14896,24 @@
             "state": "translated",
             "value": "रिफ्रेश करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "بازخوانی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновити"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenile"
+          }
         }
       }
     },
@@ -11036,6 +15037,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "संशोधन गट"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروه پژوهشی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дослідницька група"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Araştırma grubu"
           }
         }
       }
@@ -11161,6 +15180,24 @@
             "state": "translated",
             "value": "कार्यक्रमाचे पान उघडण्यासाठी स्कॅन करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برای باز کردن صفحهٔ رویداد اسکن کنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скануйте, щоб відкрити сторінку події"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Etkinlik sayfasını açmak için tarayın"
+          }
         }
       }
     },
@@ -11284,6 +15321,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "संपूर्ण बातमी वाचण्यासाठी स्कॅन करा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برای خواندن کامل خبر اسکن کنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скануйте, щоб прочитати новину повністю"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haberin tamamını okumak için tarayın"
           }
         }
       }
@@ -11409,6 +15464,24 @@
             "state": "translated",
             "value": "सदस्यता घेण्यासाठी स्कॅन करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "برای اشتراک اسکن کنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скануйте, щоб підписатися"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abone olmak için tarayın"
+          }
         }
       }
     },
@@ -11532,6 +15605,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "तुमच्या फोनवरील Wally Wallet ने स्कॅन करा, मग पुष्टी करा."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "با Wally Wallet روی تلفن خود اسکن کنید و سپس تأیید کنید."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відскануйте за допомогою Wally Wallet на телефоні й підтвердьте."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonunuzdaki Wally Wallet ile tarayın, ardından onaylayın."
           }
         }
       }
@@ -11657,6 +15748,24 @@
             "state": "translated",
             "value": "तुमच्या फोनने स्कॅन करा"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "با تلفن خود اسکن کنید"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скануйте телефоном"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telefonunuzla tarayın"
+          }
         }
       }
     },
@@ -11780,6 +15889,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "शेअर करा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "هم‌رسانی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поширити"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paylaş"
           }
         }
       }
@@ -11905,6 +16032,24 @@
             "state": "translated",
             "value": "मागील कार्यक्रम दाखवा (%lld)"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "نمایش رویدادهای گذشته (%lld)"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показати минулі події (%lld)"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmiş etkinlikleri göster (%lld)"
+          }
         }
       }
     },
@@ -12028,6 +16173,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रायोजक"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حامی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спонсор"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sponsor"
           }
         }
       }
@@ -12153,6 +16316,24 @@
             "state": "translated",
             "value": "प्रायोजित"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "حمایت‌شده"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спонсоровано"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sponsorlu"
+          }
         }
       }
     },
@@ -12276,6 +16457,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रकाशझोतात"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "در کانون توجه"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У центрі уваги"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öne çıkan"
           }
         }
       }
@@ -12401,6 +16600,24 @@
             "state": "translated",
             "value": "बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرها"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haberler"
+          }
         }
       }
     },
@@ -12524,6 +16741,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "विद्यार्थी गट"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "گروه دانشجویی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Студентське об’єднання"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öğrenci topluluğu"
           }
         }
       }
@@ -12649,6 +16884,24 @@
             "state": "translated",
             "value": "सदस्यता घ्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "اشتراک"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Підписатися"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abone ol"
+          }
         }
       }
     },
@@ -12772,6 +17025,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "स्वीडन"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سوئد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Швеція"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İsveç"
           }
         }
       }
@@ -12897,6 +17168,24 @@
             "state": "translated",
             "value": "अटी"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شرایط"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умови"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koşullar"
+          }
         }
       }
     },
@@ -13020,6 +17309,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "अटी आणि गोपनीयता: %@"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "شرایط و حریم خصوصی: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умови та конфіденційність: %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Koşullar ve gizlilik: %@"
           }
         }
       }
@@ -13145,6 +17452,24 @@
             "state": "translated",
             "value": "स्रोतावर सदस्यता आवश्यक असू शकते"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ممکن است منبع به اشتراک نیاز داشته باشد"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Джерело може вимагати передплати"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaynak abonelik gerektirebilir"
+          }
         }
       }
     },
@@ -13268,6 +17593,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "आज"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "امروز"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сьогодні"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugün"
           }
         }
       }
@@ -13393,6 +17736,24 @@
             "state": "translated",
             "value": "ठळक बातम्या"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "خبرهای برتر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Головні новини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öne çıkan haberler"
+          }
         }
       }
     },
@@ -13516,6 +17877,166 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रमुख विषय"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "موضوعات داغ"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Головні теми"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öne çıkan konular"
+          }
+        }
+      }
+    },
+    "Upcoming": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kommende"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Komande"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kommande"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kommende"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tulossa"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Væntanlegt"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "即将举行"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आगामी"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À venir"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قادمة"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আসন্ন"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предстоящее"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آئندہ"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mendatang"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bevorstehend"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開催予定"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Linakuja"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आगामी"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "پیش رو"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Незабаром"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yaklaşan"
           }
         }
       }
@@ -13641,6 +18162,24 @@
             "state": "translated",
             "value": "अद्यतनित: %@"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "به‌روزرسانی: %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оновлено %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Güncellendi: %@"
+          }
         }
       }
     },
@@ -13764,6 +18303,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "बातम्यांचा व्हिडिओ पहा"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تماشای ویدئوی خبری"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дивитися відеоновини"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haber videosunu izle"
           }
         }
       }
@@ -13889,6 +18446,24 @@
             "state": "translated",
             "value": "वेबसाइट"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "وب‌سایت"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вебсайт"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Web sitesi"
+          }
         }
       }
     },
@@ -14012,6 +18587,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "वेळ"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "چه زمانی"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Коли"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne zaman"
           }
         }
       }
@@ -14137,6 +18730,24 @@
             "state": "translated",
             "value": "ठिकाण"
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "کجا"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Де"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nerede"
+          }
         }
       }
     },
@@ -14260,6 +18871,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "काल"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دیروز"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учора"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dün"
           }
         }
       }
@@ -14385,6 +19014,166 @@
             "state": "translated",
             "value": "तुमचा iPhone किंवा iPad पार्श्वभूमीत नवीन बातम्या तपासतो; केव्हा ते iOS ठरवते, त्यामुळे बातमी प्रकाशित झाल्यानंतर काही वेळाने सूचना येऊ शकते. तुमच्याबद्दलची कोणतीही माहिती डिव्हाइसबाहेर जात नाही."
           }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آیفون یا آیپد شما در پس‌زمینه خبرهای تازه را بررسی می‌کند؛ زمان آن را iOS تعیین می‌کند، پس ممکن است اعلان مدتی پس از انتشار خبر برسد. هیچ اطلاعاتی دربارهٔ شما از دستگاه خارج نمی‌شود."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваш iPhone або iPad перевіряє нові новини у фоновому режимі; коли саме — вирішує iOS, тож сповіщення може надійти через деякий час після публікації. Жодні дані про вас не залишають пристрій."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone veya iPad'iniz yeni haberleri arka planda denetler; ne zaman olacağına iOS karar verir, bu yüzden bildirim haber yayımlandıktan bir süre sonra gelebilir. Sizinle ilgili hiçbir şey cihazdan çıkmaz."
+          }
+        }
+      }
+    },
+    "retrieved %@": {
+      "localizations": {
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hentet %@"
+          }
+        },
+        "nn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "henta %@"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hämtad %@"
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hentet %@"
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "haettu %@"
+          }
+        },
+        "is": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "sótt %@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "获取于 %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ को प्राप्त"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "consultado el %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "consulté le %@"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "تم الاسترجاع في %@"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ তারিখে সংগৃহীত"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "consultado em %@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "получено %@"
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ کو حاصل کیا گیا"
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "diambil %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "abgerufen am %@"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ 取得"
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ilipatikana %@"
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ रोजी मिळवले"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "دریافت‌شده در %@"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "отримано %@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ tarihinde alındı"
+          }
         }
       }
     },
@@ -14508,6 +19297,24 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रकाशक"
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ناشر"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "видавець"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "yayıncı"
           }
         }
       }
