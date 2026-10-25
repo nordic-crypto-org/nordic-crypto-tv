@@ -403,4 +403,29 @@ platform :ios do
       )
     end
   end
+
+  desc "Upload the Apple TV App Store metadata in fastlane/metadata (and fastlane/screenshots, if any). No binary, no review submission, no release."
+  lane :metadata do
+    require_env("APP_STORE_CONNECT_API_KEY_ID", "APP_STORE_CONNECT_API_KEY_ISSUER_ID", "APP_STORE_CONNECT_API_KEY")
+    screenshots = File.join(FASTLANE_DIR, "screenshots")
+    has_screenshots = !Dir.glob(File.join(screenshots, "*", "*.{png,jpg,jpeg}")).empty?
+    options = {
+      api_key: asc_api_key,
+      app_identifier: app_bundle_id,
+      platform: "appletvos",
+      app_version: marketing_version,
+      metadata_path: File.join(FASTLANE_DIR, "metadata"),
+      screenshots_path: screenshots,
+      skip_binary_upload: true,
+      skip_screenshots: !has_screenshots,
+      overwrite_screenshots: has_screenshots,
+      submit_for_review: false,
+      automatic_release: false,
+      run_precheck_before_submit: false,
+      force: true
+    }
+    # Age rating is an owner declaration: uploaded only when asked for.
+    options[:app_rating_config_path] = File.join(FASTLANE_DIR, "app_rating_config.json") if ENV["UPLOAD_AGE_RATING"] == "true"
+    deliver(**options)
+  end
 end
