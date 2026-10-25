@@ -1,6 +1,6 @@
 # Nordic Crypto
 
-[![TestFlight deploy](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/testflight.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/testflight.yml) [![TestFlight release](https://img.shields.io/github/v/release/jQrgen/nordic-crypto-tv?filter=testflight-*&label=TestFlight%20release)](https://github.com/jQrgen/nordic-crypto-tv/releases) [![Apple build check](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/build.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/build.yml) [![Push server deploy](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/push.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/push.yml) [![Android build](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android.yml) [![Google Play release](https://img.shields.io/github/v/release/jQrgen/nordic-crypto-tv?filter=play-*&label=Google%20Play%20release)](https://github.com/jQrgen/nordic-crypto-tv/releases) [![Play listing](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android-listing.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android-listing.yml) [![Last commit](https://img.shields.io/github/last-commit/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/commits/main) [![Commit activity](https://img.shields.io/github/commit-activity/m/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/graphs/commit-activity) [![Open issues](https://img.shields.io/github/issues/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/issues) [![Open pull requests](https://img.shields.io/github/issues-pr/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/pulls) [![Contributors](https://img.shields.io/github/contributors/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/graphs/contributors) [![Top language](https://img.shields.io/github/languages/top/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Languages](https://img.shields.io/github/languages/count/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Code size](https://img.shields.io/github/languages/code-size/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Repo size](https://img.shields.io/github/repo-size/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv)
+[![TestFlight deploy](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/testflight.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/testflight.yml) [![TestFlight release](https://img.shields.io/github/v/release/jQrgen/nordic-crypto-tv?filter=testflight-*&label=TestFlight%20release)](https://github.com/jQrgen/nordic-crypto-tv/releases) [![Apple build check](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/build.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/build.yml) [![Push server deploy](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/push.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/push.yml) [![Android build](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android.yml) [![Google Play release](https://img.shields.io/github/v/release/jQrgen/nordic-crypto-tv?filter=play-*&label=Google%20Play%20release)](https://github.com/jQrgen/nordic-crypto-tv/releases) [![Play production](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android-production.yml/badge.svg)](https://github.com/jQrgen/nordic-crypto-tv/actions/workflows/android-production.yml) [![Last commit](https://img.shields.io/github/last-commit/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/commits/main) [![Commit activity](https://img.shields.io/github/commit-activity/m/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/graphs/commit-activity) [![Open issues](https://img.shields.io/github/issues/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/issues) [![Open pull requests](https://img.shields.io/github/issues-pr/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/pulls) [![Contributors](https://img.shields.io/github/contributors/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/graphs/contributors) [![Top language](https://img.shields.io/github/languages/top/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Languages](https://img.shields.io/github/languages/count/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Code size](https://img.shields.io/github/languages/code-size/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv) [![Repo size](https://img.shields.io/github/repo-size/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv)
 [![Licence: MIT](https://img.shields.io/github/license/jQrgen/nordic-crypto-tv)](https://github.com/jQrgen/nordic-crypto-tv/blob/main/LICENSE) [![Android release](https://img.shields.io/github/v/release/jQrgen/nordic-crypto-tv?include_prereleases&label=android)](https://github.com/jQrgen/nordic-crypto-tv/releases/tag/android-latest) [![Release downloads](https://img.shields.io/github/downloads/jQrgen/nordic-crypto-tv/total)](https://github.com/jQrgen/nordic-crypto-tv/releases) [![Stars](https://img.shields.io/github/stars/jQrgen/nordic-crypto-tv?style=flat)](https://github.com/jQrgen/nordic-crypto-tv/stargazers) [![Forks](https://img.shields.io/github/forks/jQrgen/nordic-crypto-tv?style=flat)](https://github.com/jQrgen/nordic-crypto-tv/forks) [![Watchers](https://img.shields.io/github/watchers/jQrgen/nordic-crypto-tv?style=flat)](https://github.com/jQrgen/nordic-crypto-tv/watchers)
 ![iOS](https://img.shields.io/badge/iOS-000000?logo=apple&logoColor=white) ![iPadOS](https://img.shields.io/badge/iPadOS-000000?logo=apple&logoColor=white) ![macOS](https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white) ![visionOS](https://img.shields.io/badge/visionOS-000000?logo=apple&logoColor=white) ![tvOS](https://img.shields.io/badge/tvOS-000000?logo=appletv&logoColor=white) ![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white) ![Android TV](https://img.shields.io/badge/Android%20TV-3DDC84?logo=androidtv&logoColor=white)
 [![Swift](https://img.shields.io/badge/Swift-F05138?logo=swift&logoColor=white)](https://www.swift.org) [![SwiftUI](https://img.shields.io/badge/SwiftUI-0A84FF?logo=swift&logoColor=white)](https://developer.apple.com/xcode/swiftui/) [![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)](https://kotlinlang.org) [![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)](https://developer.android.com/compose) [![XcodeGen](https://img.shields.io/badge/XcodeGen-project.yml-1575F9?logo=xcode&logoColor=white)](https://github.com/yonaskolb/XcodeGen)
@@ -106,25 +106,7 @@ cd android
 ```
 The Android app reads the same `Localizable.xcstrings`, so every platform says the same thing.
 Release builds are signed with the key named in `android/keystore.properties` (not in the repo).
-The [Android workflow](.github/workflows/android.yml) builds a signed APK and app bundle (AAB) on
-every push to `main` and publishes both to the `android-latest` release. When the repository secret
-`PLAY_SERVICE_ACCOUNT_JSON` holds a Google Play service-account key with release permission for
-`no.cryptonordic.app`, it also uploads the AAB to Google Play internal testing (as a draft while the
-app is still a draft in Play Console). Version codes start above `ANDROID_VERSION_CODE_OFFSET`
-(default 100), because version code 1 was uploaded by hand. When the repository variable
-`PLAY_OPEN_TESTING` is `true`, each build that reached internal testing is also promoted to open
-testing (Play's `beta` track) with fastlane; turn it on once the Play Console setup tasks are done:
-`gh variable set PLAY_OPEN_TESTING --repo jQrgen/nordic-crypto-tv --body true`. One-time setup:
-`gh secret set PLAY_SERVICE_ACCOUNT_JSON --repo jQrgen/nordic-crypto-tv < service-account.json`.
-
-The Google Play store listing lives in `android/fastlane/metadata/android/` (English and Norwegian
-Bokmål texts; icon, feature graphic, TV banner and screenshots for phone, 7-inch and 10-inch tablet
-and Android TV). The [store listing workflow](.github/workflows/android-listing.yml) uploads it with
-fastlane `supply` whenever it changes on `main`, using the same secret. `contact_email.txt` and
-`contact_website.txt` in that folder are the listing contact email and website. supply does not
-upload those two files; enter them under Store listing contact details in Play Console. Category,
-privacy policy (https://nordiccrypto.no/privacy/), Data safety, content rating and ads are set once
-in Play Console.
+See [Deploying to Google Play](#deploying-to-google-play) for the open-testing and production workflows.
 
 ### Push notifications
 [`push/`](push/) is the push server, a Cloudflare Worker that polls the API every five minutes and
@@ -140,6 +122,59 @@ repository secrets (it never deploys or prints anything itself).
 The apps try `https://nordiccrypto.no/api/v1/` first, then the older addresses. The last good
 response is cached, and a snapshot of the API ships with the apps, so the first launch and offline
 use always show content. `support/refresh_snapshot.sh` refreshes it.
+
+## Deploying to Google Play
+Every push to `main` runs the [Android workflow](.github/workflows/android.yml), including commits that
+do not change the Android app. Debug unit tests run first. After they pass, it builds a signed APK and
+app bundle (AAB) and publishes both to the `android-latest` GitHub release (the same APK download as
+before). The version code is that workflow's run number plus `ANDROID_VERSION_CODE_OFFSET` (default
+100, because version code 1 was uploaded by hand), raised above the highest version code already on
+any Play track. New builds go to open testing, not to the internal track.
+
+When the repository secret `PLAY_SERVICE_ACCOUNT_JSON` holds a Google Play service-account key with
+release permission for `no.cryptonordic.app`, the same run uploads the signed AAB and the store listing
+to **open testing** (Play's `beta` track). The listing is `android/fastlane/metadata/android/` (English
+and Norwegian Bokmål texts; icon, feature graphic, TV banner and screenshots for phone, 7-inch and
+10-inch tablet and Android TV). Images that have not changed are skipped by checksum. A successful
+upload also creates the GitHub release `play-v<version>-<versionCode>`. This workflow never publishes
+to production. Play still refuses to send an edit for review from the API, so the upload commits with
+`changesNotSentForReview` (the same way `play-v1.1.0-106` was published). If the release or the listing
+is waiting in Play Console, send that edit for review there. Without the Play secret, the APK is still
+published and Play is skipped. The repository variable `PLAY_OPEN_TESTING` is no longer used.
+
+`contact_email.txt` and `contact_website.txt` in the listing folder are the listing contact email and
+website. supply does not upload those two files; enter them under Store listing contact details in Play
+Console.
+
+No new secrets. Signing uses `ANDROID_KEYSTORE_B64` and `ANDROID_KEYSTORE_PASSWORD`. The Play upload
+uses `PLAY_SERVICE_ACCOUNT_JSON`. One-time setup, if it is not set already:
+```sh
+gh secret set PLAY_SERVICE_ACCOUNT_JSON < service-account.json
+```
+Category, privacy policy (https://nordiccrypto.no/privacy/), Data safety, content rating and ads are
+set once in Play Console.
+
+### Production
+Production is only the manual [Google Play production workflow](.github/workflows/android-production.yml).
+It promotes the current open-testing release (the highest version code on that track) to production.
+It does not build a new app bundle. Nothing in the push workflows publishes to production.
+
+Before the first run, create a GitHub Environment named `production` with required reviewers
+(Settings → Environments → New environment). Limit its deployment branches to `main`. Do not add a
+new secret: the environment uses the repository secret `PLAY_SERVICE_ACCOUNT_JSON`. Until required
+reviewers are set, a manual run publishes as soon as the check job passes.
+
+Run it from `main`. In Actions, open **Google Play production**, choose **Run workflow**, leave the
+branch on `main`, set the rollout percentage (1–100; 100 releases to everyone) and whether to upload
+the store listing again, then run it. A reviewer approves the `production` deployment on that run.
+From the command line:
+```sh
+gh workflow run android-production.yml --ref main -f rollout_percentage=100 -f sync_metadata=true
+```
+Approve the waiting deployment under Actions. Only one Play deploy runs at a time: an open-testing
+upload and a production promotion share a queue. A production run that is waiting for approval holds
+that queue, so the open-testing release cannot change between approval and promotion. Cancel the run
+to let the queue continue.
 
 ## Deploying to TestFlight
 Every push to `main` builds the one multiplatform target for **iPhone and iPad, Apple TV, Apple Vision
