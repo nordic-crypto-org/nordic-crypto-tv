@@ -51,22 +51,25 @@ const publishedMs = (s) => {
  * Remembers stories as seen and queues the ones in `announce`. A device gets at
  * most one notification per run (one run = one publish): the newest announced
  * story in one of its countries. The other new stories are only remembered.
+ * `platforms` (optional) limits the queue to devices this server can deliver to,
+ * so devices on a platform without credentials don't use up the send budget.
  */
-export async function recordStories(db, unseen, announce, nowMs) {
+export async function recordStories(db, unseen, announce, nowMs, platforms = null) {
   const queue = new Set(announce.map((s) => s.id));
   const stmts = [];
   for (const s of unseen) {
     stmts.push(db.prepare("INSERT OR IGNORE INTO stories (id, seen_at, item) VALUES (?, ?, ?)")
       .bind(s.id, nowMs, queue.has(s.id) ? JSON.stringify(s) : null));
   }
-  const newestFirst = [...announce].sort((a, b) => publishedMs(b) - publishedMs(a));
+  const newestFirst = platforms && !platforms.length ? [] : [...announce].sort((a, b) => publishedMs(b) - publishedMs(a));
+  const only = platforms ? ` AND platform IN (${platforms.map(() => "?").join(",")})` : "";
   for (const s of newestFirst) {
     if (!s.country) continue;
     stmts.push(db.prepare(
       "INSERT OR IGNORE INTO deliveries (story_id, token, queued_at) "
-      + "SELECT ?, token, ? FROM devices WHERE instr(countries, ?) > 0 "
+      + "SELECT ?, token, ? FROM devices WHERE instr(countries, ?) > 0" + only + " "
       + "AND token NOT IN (SELECT token FROM deliveries WHERE queued_at = ?)",
-    ).bind(s.id, nowMs, "," + s.country + ",", nowMs));
+    ).bind(s.id, nowMs, "," + s.country + ",", ...(platforms || []), nowMs));
   }
   if (stmts.length) await db.batch(stmts);
 }
