@@ -1,24 +1,89 @@
+# Android: tests, signed APK/AAB, Google Play open testing
+# ---------------------------------------------------------
+# test     ubuntu-latest: debug unit tests. No secrets. A failing test does
+#          not build or upload.
+# release  ubuntu-latest, after the tests: version code, signed APK and AAB,
+#          the android-latest GitHub release (APK and AAB, as before), then
+#          the AAB and the store listing (android/fastlane/metadata/android:
+#          texts, icon, feature graphic, TV banner, screenshots) to Google
+#          Play open testing. Play's API name for that track is beta.
+#          A Play upload that succeeds also creates the GitHub release
+#          play-v<version>-<versionCode>. This workflow never publishes to
+#          the production track.
+#
+# Version code: this workflow's run number + ANDROID_VERSION_CODE_OFFSET
+# (default 100; version code 1 was uploaded by hand), then raised above the
+# highest version code already on any Play track.
+#
+# Runs on every push to main and by hand (Actions > Android APK and Play >
+# Run workflow). A manual run also goes to open testing, not production.
+# Production is .github/workflows/android-production.yml.
+#
+# One Play deploy at a time, shared with the production workflow (concurrency
+# group google-play). A newer run waits. It does not cancel an upload that is
+# already in progress, and a production run waiting for approval holds the
+# queue so the release that was approved is still current when it promotes.
+#
+# Secrets, all existing (no new ones):
+#   ANDROID_KEYSTORE_B64, ANDROID_KEYSTORE_PASSWORD
+#   PLAY_SERVICE_ACCOUNT_JSON
+#   FIREBASE_APP_ID, FIREBASE_API_KEY, FIREBASE_PROJECT_ID, FIREBASE_SENDER_ID
+# Without PLAY_SERVICE_ACCOUNT_JSON the APK is still published and Play is
+# skipped. PLAY_OPEN_TESTING is no longer read.
+
 name: Android APK and Play
 
 on:
   push:
     branches: [main]
-    paths: ["android/**", "NordicCrypto/Localizable.xcstrings", ".github/workflows/android.yml"]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
-  group: android-apk
-  cancel-in-progress: true
+  group: google-play
+  cancel-in-progress: false
 
 jobs:
-  apk:
+  test:
+    name: Unit tests
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     defaults:
       run:
         working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Debug unit tests
+        run: ./gradlew --no-daemon :app:testDebugUnitTest
+
+  release:
+    name: Signed build and open testing
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: android
+    env:
+      FASTLANE_SKIP_UPDATE_CHECK: "1"
+      FASTLANE_HIDE_CHANGELOG: "1"
+      FASTLANE_OPT_OUT_USAGE: "1"
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
     steps:
       - uses: actions/checkout@v4
 
@@ -28,6 +93,50 @@ jobs:
           java-version: 21
 
       - uses: gradle/actions/setup-gradle@v4
+
+      - name: Version code from the run number
+        id: base
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
+          VERSION_CODE_OFFSET: ${{ vars.ANDROID_VERSION_CODE_OFFSET || '100' }}
+        run: |
+          code=$(( RUN_NUMBER + VERSION_CODE_OFFSET ))
+          echo "version_code=$code" >> "$GITHUB_OUTPUT"
+          echo "Version code floor $code (run $RUN_NUMBER + offset $VERSION_CODE_OFFSET)"
+
+      - name: Check for the Google Play key
+        id: play
+        env:
+          HAS_PLAY: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        run: |
+          if [ "$HAS_PLAY" = true ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::PLAY_SERVICE_ACCOUNT_JSON is not set; skipping the Google Play upload (see README)."
+          fi
+
+      # continue-on-error: a Ruby or Play failure must not skip the APK publish
+      # below. A later step fails the job before any Play upload. Custom `if`
+      # conditions include success() so a failed build cannot reach Play.
+      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
+        id: ruby
+        if: success() && steps.play.outputs.enabled == 'true'
+        continue-on-error: true
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+          working-directory: android
+
+      - name: Raise the version code above Google Play
+        id: play_code
+        if: success() && steps.play.outputs.enabled == 'true' && steps.ruby.outcome == 'success'
+        continue-on-error: true
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          VERSION_CODE: ${{ steps.base.outputs.version_code }}
+        run: |
+          bundle exec fastlane lanes
+          bundle exec fastlane android next_version_code
 
       - name: Signing key
         env:
@@ -40,21 +149,17 @@ jobs:
 
       - name: Build APK and app bundle
         env:
-          # Version code 1 was uploaded to Google Play by hand; CI codes start above
-          # ANDROID_VERSION_CODE_OFFSET (default 100) so every upload is higher.
-          RUN_NUMBER: ${{ github.run_number }}
-          VERSION_CODE_OFFSET: ${{ vars.ANDROID_VERSION_CODE_OFFSET || '100' }}
-          # Firebase client settings for push notifications (docs/push.md), set by
-          # scripts/setup-push-secrets.sh. Empty: the app keeps the on-device check only.
+          VERSION_CODE: ${{ steps.play_code.outputs.version_code || steps.base.outputs.version_code }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
           FIREBASE_PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
           FIREBASE_SENDER_ID: ${{ secrets.FIREBASE_SENDER_ID }}
         run: |
-          export VERSION_CODE=$(( RUN_NUMBER + VERSION_CODE_OFFSET ))
+          [ -n "$VERSION_CODE" ] || { echo "::error::VERSION_CODE is empty"; exit 1; }
           echo "versionCode $VERSION_CODE"
           echo "VERSION_CODE=$VERSION_CODE" >> "$GITHUB_ENV"
           echo "VERSION_NAME=$(sed -n 's/.*versionName = "\(.*\)".*/\1/p' app/build.gradle.kts | head -n 1)" >> "$GITHUB_ENV"
+          echo "AAB_PATH=$RUNNER_TEMP/nordic-crypto.aab" >> "$GITHUB_ENV"
           cp ../NordicCrypto/Localizable.xcstrings app/src/main/assets/Localizable.xcstrings
           ./gradlew --no-daemon :app:assembleRelease :app:bundleRelease
           cp app/build/outputs/apk/release/app-release.apk "$RUNNER_TEMP/nordic-crypto.apk"
@@ -79,104 +184,48 @@ jobs:
           gh release edit android-latest --notes "$notes"
           gh release upload android-latest "$RUNNER_TEMP/nordic-crypto.apk" "$RUNNER_TEMP/nordic-crypto.aab" --clobber
 
-      - name: Check for the Google Play key
-        id: play
-        env:
-          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+      - name: Google Play version lookup failed
+        if: success() && steps.play.outputs.enabled == 'true' && (steps.ruby.outcome == 'failure' || steps.play_code.outcome == 'failure')
         run: |
-          if [ -n "$PLAY_JSON" ]; then
-            echo "enabled=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::PLAY_SERVICE_ACCOUNT_JSON is not set; skipping the Google Play upload (see README)."
-          fi
+          echo "::error::Could not prepare the Google Play upload, so this build was not uploaded. The APK is on the android-latest release."
+          exit 1
 
-      # Internal testing. While the app is still a draft in Play Console, Google only accepts
-      # draft releases, so a failed completed release is retried as a draft.
-      - name: Upload to Google Play internal testing
-        id: upload
-        if: steps.play.outputs.enabled == 'true'
-        continue-on-error: true
-        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: no.cryptonordic.app
-          releaseFiles: ${{ runner.temp }}/nordic-crypto.aab
-          track: internal
-          status: completed
-          changesNotSentForReview: true
-
-      - name: Upload to Google Play internal testing (draft app)
-        id: upload_draft
-        if: steps.play.outputs.enabled == 'true' && steps.upload.outcome == 'failure'
-        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: no.cryptonordic.app
-          releaseFiles: ${{ runner.temp }}/nordic-crypto.aab
-          track: internal
-          status: draft
-          changesNotSentForReview: true
-
-      # Open testing (public, Play's "beta" track): promotes the build that just reached internal
-      # testing. Off until the repository variable PLAY_OPEN_TESTING is "true", because Play only
-      # accepts it once the app's setup tasks are done and open testing is unlocked for the app.
-      - name: Open testing is off
-        if: steps.upload.outcome == 'success' && vars.PLAY_OPEN_TESTING != 'true'
-        run: echo "::notice::Google Play open testing is off; set the repository variable PLAY_OPEN_TESTING to true to promote each build (see README)."
-
-      - uses: ruby/setup-ruby@e81a8fa391b11a595c1b7ed84177cc0fe02faf83 # v1.328.0
-        if: steps.upload.outcome == 'success' && vars.PLAY_OPEN_TESTING == 'true'
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-          working-directory: android
-
-      - name: Promote to Google Play open testing
+      - name: Upload to Google Play open testing
         id: open_testing
-        if: steps.upload.outcome == 'success' && vars.PLAY_OPEN_TESTING == 'true'
-        continue-on-error: true
+        if: success() && steps.play.outputs.enabled == 'true' && steps.play_code.outcome == 'success'
         env:
           SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-        run: |
-          bundle exec fastlane supply \
-            --package_name no.cryptonordic.app \
-            --track internal \
-            --track_promote_to beta \
-            --track_promote_release_status completed \
-            --version_code "$VERSION_CODE" \
-            --skip_upload_apk true \
-            --skip_upload_aab true \
-            --skip_upload_metadata true \
-            --skip_upload_changelogs true \
-            --skip_upload_images true \
-            --skip_upload_screenshots true \
-            --changes_not_sent_for_review true
+        run: bundle exec fastlane android open_testing
 
-      - name: Open testing failed
-        if: steps.open_testing.outcome == 'failure'
-        run: echo "::warning::Promoting ${VERSION_NAME} (${VERSION_CODE}) to Google Play open testing failed (see the step above). The build stays in internal testing."
-
-      # One GitHub release per build that reached Google Play: play-v<version>-<code>, with the
-      # APK and the app bundle attached and the commit message as notes.
+      # One GitHub release per build that reached Google Play: play-v<version>-<code>,
+      # with the APK and the app bundle attached and the commit message as notes.
       - name: Create the GitHub release for this Google Play build
-        if: steps.upload.outcome == 'success' || steps.upload_draft.outcome == 'success'
+        if: success() && steps.open_testing.outcome == 'success'
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_STATUS: ${{ steps.open_testing.outcome == 'success' && 'released to internal and open testing' || steps.upload.outcome == 'success' && 'released to internal testing' || 'uploaded as a draft release (the app is still a draft in Play Console)' }}
+          RELEASE_STATUS: ${{ steps.open_testing.outputs.play_status }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           message=${COMMIT_MESSAGE:-$(git log -1 --format=%B)}
+          status=${RELEASE_STATUS:-released to open testing}
           tag="play-v${VERSION_NAME}-${VERSION_CODE}"
           {
-            echo "Android ${VERSION_NAME} (version code ${VERSION_CODE}) was ${RELEASE_STATUS} on Google Play."
+            echo "Android ${VERSION_NAME} (version code ${VERSION_CODE}) was ${status} on Google Play."
             echo
             echo "Phone, tablet and Android TV. The APK can also be installed directly."
+            echo "Open testing: https://play.google.com/apps/testing/no.cryptonordic.app"
             echo
             echo "Commit ${GITHUB_SHA::7}:"
             echo
             printf '%s\n' "$message"
           } > "$RUNNER_TEMP/notes.md"
-          gh release create "$tag" --target "$GITHUB_SHA" \
-            --title "Google Play ${VERSION_NAME} (${VERSION_CODE})" --notes-file "$RUNNER_TEMP/notes.md" \
-            "$RUNNER_TEMP/nordic-crypto.apk#nordic-crypto-${VERSION_NAME}-${VERSION_CODE}.apk" \
-            "$RUNNER_TEMP/nordic-crypto.aab#nordic-crypto-${VERSION_NAME}-${VERSION_CODE}.aab"
+          asset_apk="$RUNNER_TEMP/nordic-crypto.apk#nordic-crypto-${VERSION_NAME}-${VERSION_CODE}.apk"
+          asset_aab="$RUNNER_TEMP/nordic-crypto.aab#nordic-crypto-${VERSION_NAME}-${VERSION_CODE}.aab"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release edit "$tag" --notes-file "$RUNNER_TEMP/notes.md"
+            gh release upload "$tag" "$asset_apk" "$asset_aab" --clobber
+          else
+            gh release create "$tag" --target "$GITHUB_SHA" \
+              --title "Google Play ${VERSION_NAME} (${VERSION_CODE})" --notes-file "$RUNNER_TEMP/notes.md" \
+              "$asset_apk" "$asset_aab"
+          fi

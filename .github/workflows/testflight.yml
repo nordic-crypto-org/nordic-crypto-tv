@@ -49,9 +49,9 @@ name: TestFlight
 on:
   push:
     branches: [main]
-    # The Android app has its own workflow; changes only there do not need a
+    # The Android app has its own workflows; changes only there do not need a
     # new Apple build.
-    paths-ignore: ["android/**", ".github/workflows/android.yml"]
+    paths-ignore: ["android/**", ".github/workflows/android.yml", ".github/workflows/android-production.yml"]
   workflow_dispatch:
     inputs:
       platform:

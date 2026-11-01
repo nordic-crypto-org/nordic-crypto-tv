@@ -1,0 +1,180 @@
+# Google Play lanes for Nordic Crypto (package no.cryptonordic.app).
+#
+#   bundle exec fastlane android next_version_code
+#   bundle exec fastlane android open_testing
+#   bundle exec fastlane android promote_to_production
+#
+# .github/workflows/android.yml uploads every main build to open testing.
+# .github/workflows/android-production.yml promotes that release to production
+# when someone runs it by hand. Credentials come from SUPPLY_JSON_KEY_DATA
+# (the PLAY_SERVICE_ACCOUNT_JSON secret). Nothing secret is stored here.
+
+FASTLANE_DIR = File.expand_path(FastlaneCore::FastlaneFolder.path).freeze
+METADATA_PATH = File.join(FASTLANE_DIR, "metadata", "android").freeze
+
+# Play Console's "Open testing" is the beta track. Production is production.
+OPEN_TESTING_TRACK = "beta".freeze
+PACKAGE_NAME = "no.cryptonordic.app".freeze
+# Version codes are global. The previous build (play-v1.1.0-106) is on internal,
+# so the next code has to clear every track, not only open testing.
+VERSION_CODE_TRACKS = %w[internal alpha beta production].freeze
+
+opt_out_usage
+
+default_platform(:android)
+
+def require_env(*names)
+  missing = names.select { |name| ENV[name].to_s.strip.empty? }
+  UI.user_error!("Missing environment variables: #{missing.join(', ')}") unless missing.empty?
+end
+
+def github_output(name, value)
+  path = ENV["GITHUB_OUTPUT"].to_s
+  File.open(path, "a") { |f| f.puts("#{name}=#{value}") } unless path.empty?
+end
+
+def github_summary(markdown)
+  path = ENV["GITHUB_STEP_SUMMARY"].to_s
+  File.open(path, "a") { |f| f.puts(markdown) } unless path.empty?
+end
+
+# Whole number 1..100. Empty means a full release. "100.0" is accepted.
+def rollout_percent(raw)
+  text = raw.to_s.strip
+  text = "100" if text.empty?
+  unless text.match?(/\A\d+(\.0+)?\z/)
+    UI.user_error!("rollout_percentage must be a whole number from 1 to 100 (got '#{raw}')")
+  end
+  percent = text.to_f.round
+  unless (1..100).cover?(percent)
+    UI.user_error!("rollout_percentage must be from 1 to 100 (got #{percent})")
+  end
+  percent
+end
+
+def env_flag(name, default:)
+  value = ENV[name]
+  return default if value.nil? || value.strip.empty?
+  case value.strip.downcase
+  when "true", "1", "yes" then true
+  when "false", "0", "no" then false
+  else UI.user_error!("#{name} must be true or false (got '#{value}')")
+  end
+end
+
+# Play rejects an API commit that sends the edit for review until the app's
+# first review is allowed (the error that blocked the upload before
+# play-v1.1.0-106). Commit with changesNotSentForReview, and let supply retry
+# without that flag if Play says the parameter must not be set.
+def supply_base
+  {
+    package_name: PACKAGE_NAME,
+    metadata_path: METADATA_PATH,
+    skip_upload_apk: true,
+    skip_upload_changelogs: true,
+    changes_not_sent_for_review: true,
+    rescue_changes_not_sent_for_review: true,
+    timeout: 900
+  }
+end
+
+def draft_only_release?(error)
+  text = error.message.to_s
+  text.match?(/only releases with status draft/i) ||
+    text.match?(/draft app/i) ||
+    text.match?(/release status to draft/i)
+end
+
+platform :android do
+  desc "Next versionCode: max(VERSION_CODE, highest version code on any Play track + 1). Writes version_code to GITHUB_OUTPUT."
+  lane :next_version_code do
+    require_env("SUPPLY_JSON_KEY_DATA", "VERSION_CODE")
+    requested = ENV["VERSION_CODE"].to_i
+    UI.user_error!("VERSION_CODE must be a positive integer (got '#{ENV['VERSION_CODE']}')") unless requested.positive?
+    codes = VERSION_CODE_TRACKS.flat_map do |track|
+      begin
+        Array(google_play_track_version_codes(package_name: PACKAGE_NAME, track: track))
+      rescue StandardError => e
+        UI.user_error!("Could not read version codes on the #{track} track: #{e.message}")
+      end
+    end
+    codes = codes.map(&:to_i).select(&:positive?)
+    highest = codes.max || 0
+    number = [requested, highest + 1].max
+    if number == requested
+      UI.success("Version code #{number} (highest already on Play: #{highest})")
+    else
+      UI.important("Version code #{requested} is not above Google Play (highest #{highest}); using #{number}")
+    end
+    github_output("version_code", number)
+    github_summary("Play version code **#{number}** (floor #{requested}, highest already on Play #{highest}).\n")
+    number
+  end
+
+  desc "Upload AAB_PATH and the store listing to Google Play open testing (beta). Writes play_status."
+  lane :open_testing do
+    require_env("SUPPLY_JSON_KEY_DATA", "AAB_PATH")
+    aab = ENV["AAB_PATH"]
+    UI.user_error!("AAB not found at #{aab}") unless File.file?(aab)
+    UI.user_error!("Store listing not found at #{METADATA_PATH}") unless File.directory?(METADATA_PATH)
+    options = supply_base.merge(
+      track: OPEN_TESTING_TRACK,
+      aab: aab,
+      release_status: "completed",
+      skip_upload_aab: false,
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false,
+      sync_image_upload: true
+    )
+    status = "released to open testing"
+    begin
+      upload_to_play_store(options)
+    rescue StandardError => e
+      raise unless draft_only_release?(e)
+      UI.important("Google Play refused a completed open-testing release (#{e.message}). Retrying as a draft.")
+      upload_to_play_store(options.merge(release_status: "draft"))
+      status = "uploaded to open testing as a draft"
+    end
+    UI.success("#{PACKAGE_NAME} #{status}")
+    github_output("play_status", status)
+    github_summary("Google Play open testing: **#{status}** for `#{PACKAGE_NAME}`.\n")
+  end
+
+  desc "Promote the current open-testing release to production. ROLLOUT_PERCENTAGE is 1-100 (default 100). SYNC_METADATA uploads the listing (default true)."
+  lane :promote_to_production do
+    require_env("SUPPLY_JSON_KEY_DATA")
+    percent = rollout_percent(ENV["ROLLOUT_PERCENTAGE"])
+    sync = env_flag("SYNC_METADATA", default: true)
+    UI.user_error!("Store listing not found at #{METADATA_PATH}") if sync && !File.directory?(METADATA_PATH)
+    codes = Array(google_play_track_version_codes(package_name: PACKAGE_NAME, track: OPEN_TESTING_TRACK))
+    codes = codes.map(&:to_i).select(&:positive?)
+    if codes.empty?
+      UI.user_error!(
+        "Open testing has no release to promote. Push to main and wait for the Android workflow " \
+        "to upload a build to the #{OPEN_TESTING_TRACK} track first."
+      )
+    end
+    version_code = codes.max
+    UI.message("Promoting open testing version code #{version_code} to production at #{percent}%")
+    options = supply_base.merge(
+      track: OPEN_TESTING_TRACK,
+      track_promote_to: "production",
+      track_promote_release_status: percent == 100 ? "completed" : "inProgress",
+      version_code: version_code,
+      skip_upload_aab: true,
+      skip_upload_metadata: !sync,
+      skip_upload_images: !sync,
+      skip_upload_screenshots: !sync,
+      sync_image_upload: sync
+    )
+    options[:rollout] = format("%.2f", percent / 100.0) if percent < 100
+    upload_to_play_store(options)
+    rollout_text = percent == 100 ? "100% (everyone)" : "#{percent}% staged rollout"
+    listing_text = sync ? "Store listing uploaded." : "Store listing left unchanged."
+    UI.success("Production: version code #{version_code}, #{rollout_text}. #{listing_text}")
+    github_output("version_code", version_code)
+    github_output("rollout_percentage", percent)
+    github_summary("Promoted open testing version code **#{version_code}** to production (#{rollout_text}). #{listing_text}\n")
+  end
+end
