@@ -15,12 +15,12 @@ import java.util.Locale
 /**
  * Language and translations. The interface strings are read from the same
  * Localizable.xcstrings the Apple apps use, so all platforms say the same
- * thing in all 21 languages. Interface and content use [current], falling back to English.
+ * thing in all 24 languages. Interface and content use [current], falling back to English.
  */
 object Lang {
     /** Languages the API translates its own text into. */
     private val nordic = setOf("nb", "nn", "sv", "da", "fi", "is")
-    private val interfaceOnly = setOf("zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr")
+    private val interfaceOnly = setOf("zh", "hi", "es", "fr", "ar", "bn", "pt", "ru", "ur", "id", "de", "ja", "sw", "mr", "fa", "uk", "tr")
 
     var current: String = "en"
         private set

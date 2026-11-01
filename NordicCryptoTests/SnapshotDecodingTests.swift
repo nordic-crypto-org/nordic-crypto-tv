@@ -39,6 +39,8 @@ final class SnapshotDecodingTests: XCTestCase {
         XCTAssertEqual(AppLanguage.resolve(["ko-KR", "da"]), "da")
         XCTAssertEqual(AppLanguage.resolve(["zh-Hans-CN"]), "zh")
         XCTAssertEqual(AppLanguage.resolve([]), "en")
+        XCTAssertEqual(AppLanguage.resolve(["it-IT"]), "en")
+        XCTAssertEqual(AppLanguage.resolve(["tr-TR"]), "tr")
     }
 
     func testContentFallsBackToEnglish() throws {
@@ -82,6 +84,12 @@ final class SnapshotDecodingTests: XCTestCase {
     func testNynorskCatalogue() throws {
         let nn = try XCTUnwrap(Bundle.main.path(forResource: "nn", ofType: "lproj").flatMap(Bundle.init(path:)))
         XCTAssertEqual(String(localized: "Norway", bundle: nn), "Noreg")
+    }
+
+    func testFirstSentence() {
+        XCTAssertEqual("Handles crypto (e.g. the Act) and tax. Chair: X.".firstSentence, "Handles crypto (e.g. the Act) and tax.")
+        XCTAssertEqual("CASP licence (MiCA Art. 63) from May. More".firstSentence, "CASP licence (MiCA Art. 63) from May.")
+        XCTAssertEqual("No full stop".firstSentence, "No full stop")
     }
 
     func testNorwegianReaderSeesOriginalNorwegianHeadline() throws {

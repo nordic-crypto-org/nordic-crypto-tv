@@ -15,6 +15,7 @@ struct OrgEntity: Decodable, Identifiable, Hashable {
     var sector: String?        // "private" or "public"
     var country: String?
     var description: String?
+    var descriptionI18n: [String: String]
     var role: String?
     var org: String?           // id of the organisation a person belongs to
     var group: String?
@@ -31,6 +32,7 @@ struct OrgEntity: Decodable, Identifiable, Hashable {
         sector = try? c.decodeIfPresent(String.self, forKey: .sector)
         country = try? c.decodeIfPresent(String.self, forKey: .country)
         description = try? c.decodeIfPresent(String.self, forKey: .description)
+        descriptionI18n = (try? c.decodeIfPresent([String: String].self, forKey: .descriptionI18n)) ?? [:]
         role = try? c.decodeIfPresent(String.self, forKey: .role)
         org = try? c.decodeIfPresent(String.self, forKey: .org)
         group = try? c.decodeIfPresent(String.self, forKey: .group)
@@ -40,6 +42,13 @@ struct OrgEntity: Decodable, Identifiable, Hashable {
 
     enum CodingKeys: String, CodingKey {
         case id, name, type, sector, country, description, role, org, group, logo, image
+        case descriptionI18n = "description_i18n"
+    }
+
+    /// The description in `lang`; the English text only when `lang` is English.
+    func description(for lang: String) -> String? {
+        let text = descriptionI18n[lang] ?? (lang == "en" ? description : nil)
+        return text?.isEmpty == true ? nil : text
     }
 }
 
@@ -101,14 +110,14 @@ struct AcademiaItem: Decodable, Identifiable, Hashable {
     var url: URL?
 
     enum CodingKeys: String, CodingKey {
-        case id, name, section, institution, code, level, country, about, url
+        case id, name, title, section, institution, code, level, country, about, url
         case aboutI18n = "about_i18n"
     }
 
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         id = try c.decode(String.self, forKey: .id)
-        name = try c.decode(String.self, forKey: .name)
+        name = try (c.decodeIfPresent(String.self, forKey: .name) ?? c.decode(String.self, forKey: .title))
         section = try? c.decodeIfPresent(String.self, forKey: .section)
         institution = try? c.decodeIfPresent(String.self, forKey: .institution)
         code = try? c.decodeIfPresent(String.self, forKey: .code)
@@ -135,5 +144,14 @@ enum SpotlightItem: Identifiable, Hashable {
         case .entity(let e): "e-" + e.id
         case .academia(let a): "a-" + a.id
         }
+    }
+}
+
+extension String {
+    /// Up to the end of the first sentence ("e.g. the" and "Art. 63" do not end one).
+    var firstSentence: String {
+        let s = trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let r = s.range(of: #"[.!?؟।](?=\s+[\p{Lu}\p{Lo}]|$)|[。！？]"#, options: .regularExpression) else { return s }
+        return String(s[..<r.upperBound])
     }
 }
