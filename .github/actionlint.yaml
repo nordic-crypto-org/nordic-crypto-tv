@@ -3,3 +3,5 @@
 self-hosted-runner:
   labels:
     - xcode-27
+    # jQrgen's Mac mini. GitHub's default label for a self-hosted Mac.
+    - macOS

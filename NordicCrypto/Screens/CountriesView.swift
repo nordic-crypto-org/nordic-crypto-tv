@@ -41,7 +41,8 @@ struct CountryBand: View {
                     CountryChip(code: country.rawValue)
                     Text(country.name).font(NLFont.section).foregroundStyle(NL.textPrimary)
                     TimelineView(.periodic(from: .now, by: 30)) { context in
-                        Text(verbatim: "\(country.capitalName) \(Self.clock(context.date, in: country.timeZone))")
+                        let moment = SnapshotMode.isOn ? SnapshotMode.frozenDate : context.date
+                        Text(verbatim: "\(country.capitalName) \(Self.clock(moment, in: country.timeZone))")
                             .font(NLFont.caption)
                             .monospacedDigit()
                             .foregroundStyle(NL.textTertiary)

@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 enum AppTab: String, Hashable, CaseIterable {
     case today, countries, events, newsletter, badge, contact
@@ -46,7 +49,15 @@ struct RootView: View {
         .environment(store)
         .environment(radio)
         .task { await store.run() }
-        .onAppear { radio.start() }
+        .onAppear {
+            if SnapshotMode.isOn {
+                #if canImport(UIKit)
+                UIView.setAnimationsEnabled(false)
+                #endif
+            } else {
+                radio.start()
+            }
+        }
         #else
         tabs
         #endif
@@ -86,6 +97,15 @@ struct RootView: View {
         .onChange(of: showNFT) { _, shown in
             if !shown && router.tab == .badge { router.tab = .today }
         }
+        #if DEBUG
+        .onAppear {
+            if SnapshotMode.isOn {
+                #if canImport(UIKit)
+                UIView.setAnimationsEnabled(false)
+                #endif
+            }
+        }
+        #endif
         .onReceive(NotificationCenter.default.publisher(for: .openStory)) { note in
             guard let id = note.object as? String, let item = store.news.first(where: { $0.id == id }) else { return }
             router.tab = .today
