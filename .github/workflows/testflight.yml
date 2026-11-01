@@ -49,9 +49,9 @@ name: TestFlight
 on:
   push:
     branches: [main]
-    # The Android app has its own workflow; changes only there do not need a
-    # new Apple build.
-    paths-ignore: ["android/**", ".github/workflows/android.yml"]
+    # Android and the App Store listing have their own workflows; changes only
+    # there do not need a new Apple build.
+    paths-ignore: ["android/**", ".github/workflows/android.yml", "fastlane/metadata/**", "fastlane/screenshots/**", "fastlane/app_rating_config.json", ".github/workflows/appstore-*.yml"]
   workflow_dispatch:
     inputs:
       platform:
