@@ -131,8 +131,10 @@ export async function pollFeed(env, nowMs, fetchImpl = fetch) {
   const seen = await seenIds(db, feed.items.map((i) => i.id));
   const first = (await getState(db, "initialized")) === null;
   const { unseen, announce } = newStories(feed.items, seen, nowMs);
-  // The very first run only learns what is already published.
-  await recordStories(db, unseen, first ? [] : announce, nowMs);
+  // The very first run only learns what is already published. Only platforms with
+  // credentials are queued: the others would be skipped and retried at every send.
+  const deliverable = Object.keys(PLATFORMS).filter((p) => canDeliver(env, p));
+  await recordStories(db, unseen, first ? [] : announce, nowMs, deliverable);
   if (first) await setState(db, "initialized", new Date(nowMs).toISOString());
   if (feed.etag) {
     etags[feed.url] = feed.etag;

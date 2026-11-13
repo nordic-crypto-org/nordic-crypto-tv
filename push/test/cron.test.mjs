@@ -274,3 +274,18 @@ test("one publish sends at most one notification per device: the newest story in
   assert.equal(pixel.notification.body, "Headline no-newest");
   assert.equal(env.DB.rows("SELECT * FROM deliveries").length, 0);
 });
+
+test("devices on a platform without credentials are not queued and don't use the send budget", async () => {
+  const env = makeEnv({ FCM_SERVICE_ACCOUNT_JSON: "", SENDS_PER_RUN: "5" });
+  for (let i = 0; i < 20; i++) await register(env, "android:" + String(i).padStart(40, "0"), "android", ["NO"], "en");
+  await register(env, IPHONE, "ios", ["NO"], "en");
+  const net = network([]);
+  await runCron(env, NOW, net);
+  net.publish([story("s1", 1)]);
+  const run = await runCron(env, NOW + 5 * MIN, net);
+  assert.equal(run.queued, 1);
+  assert.equal(run.sent, 1);
+  assert.deepEqual(net.pushes().map((p) => p.url), [`https://api.push.apple.com/3/device/${IPHONE}`]);
+  assert.equal(env.DB.rows("SELECT * FROM deliveries").length, 0);
+  assert.equal(env.DB.rows("SELECT * FROM devices WHERE platform = 'android'").length, 20); // still registered
+});
